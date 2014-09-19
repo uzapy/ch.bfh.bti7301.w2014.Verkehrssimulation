@@ -1,4 +1,8 @@
-Wesentliche Leistungsmerkmale
+Projekt 1: 	https://staff.hti.bfh.ch/swp1/Projekt_1/projects.html
+Theorie:	http://de.wikipedia.org/wiki/Nagel-Schreckenberg-Modell
+GitHub:		https://github.com/uzapy/ch.bfh.bti7301.w2014.Verkehrssimulation
+
+Wesentliche Leistungsmerkmale der Applikation
 
 - Einstellungsmöglichkeiten Parameter
 - Parameter-Presets
