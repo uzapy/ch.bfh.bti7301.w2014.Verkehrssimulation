@@ -1,0 +1,10 @@
+Wesentliche Leistungsmerkmale
+
+- Einstellungsmöglichkeiten Parameter
+- Parameter-Presets
+- Parameter während der Laufzeit verändern
+- Step-by-Step-Modus
+- Baustellen
+- Geschwindigkeitsbeschränkungen
+- verschiedenes Fahrverhalten von Fahrern
+- Läuft flüssig (30FPS) und Ressourcenschonend
