@@ -30,4 +30,5 @@ Out of scope
 Hausaufgaben
 Skip-Lists
 Requirements-Dokument (alles ist möglich!)
+Alternativen zu Swing
 Gasenzer?
