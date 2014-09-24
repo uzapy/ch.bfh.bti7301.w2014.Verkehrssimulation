@@ -27,3 +27,7 @@ Soll
 Nice-to-have
 Out of scope
 
+Hausaufgaben
+Skip-Lists
+Requirements-Dokument (alles ist möglich!)
+Gasenzer?
