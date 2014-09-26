@@ -1,0 +1,27 @@
+Features:
+	-Modell
+		-Umbau von Nagel-Schreckenberg-Modell auf ein Algorithmus, welcher sich gut in ein mehr Spuriges Modell erweitern lässt
+		-Erweitern des Modells auf mehrere Spuren
+		-Weitere Anpassungen des Algorithmus:
+		-Erweiterung an der Strassenstruktur:
+			-Ein- und Ausfahrten
+			-Spurenverengungen
+			-Tempolimiten auf Streckenabschnitten
+			-Zusammenführung mehrerer mehrspurigen Strecken (Autobahnkreuzung)
+		-Einführen von verschiedenen Fahrzeugtypen:
+			-Fahrzeugtypen können sich in folgenden Merkmalen unterscheiden:
+			-Dimensionen: Länge, Breite, Höhe
+			-Höchstgeschwindigkeit
+		-Einführen von verschiedenen Fahrertypen:
+			-Risikobereitschaft
+			-Bevorzugte Geschwindigkeit
+			-Ziel + Ankunftszeit
+			-Merkmale zusammenfassen in Fahrertypen:
+				-Raser
+				-Mittelspurschleicher
+				-Nach Lehrbuch Fahrer
+	-Darstellung/View:
+		-Darstellung der simulierten Daten mit einer graphischen Oberfläche.
+		-Die graphische Ausgabe der Simulation soll simpel, aber übersichtlich und nachvollziehbar sein. Zum Beispiel sollte es möglich sein, dass ein Beobachter sowohl das Gesamtgeschehen, sowie einzelne Verkehrsteilnehmer beobachten kann.
+
+
