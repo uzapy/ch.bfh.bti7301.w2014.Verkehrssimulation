@@ -2,7 +2,6 @@ Hauptziele:
 Algorithmus umsetzen und weiterentwickeln
 	- Nagel-Schreckenberg-Modell
 	- Mehrere Fahrspuren
-	- "Karte" mit Zoom
 Messgrössen visualisieren und verändern (Verkehrsfluss / Verkehrssituation)
 	- km/h
 	- Autos pro Minute auf einem Teilstück
@@ -13,6 +12,7 @@ Messgrössen visualisieren und verändern (Verkehrsfluss / Verkehrssituation)
 Ansprechende Darstellung (30 FPS / Interpolierte Zwischenschritte / Animierte Spurwechsel)
 	- Läuft flüssig (30FPS) und Ressourcenschonend
 	- Step-by-Step-Modus
+	- "Karte" mit Zoom
 Realitsnahes Modell
 	- Autos / Fahrer haben ein Ziel
 	- Baustellen
