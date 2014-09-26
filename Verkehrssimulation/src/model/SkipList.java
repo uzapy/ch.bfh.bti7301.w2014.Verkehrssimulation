@@ -1,5 +1,13 @@
 package model;
 
+
+
+/**
+ * @author stahr2
+ *
+ * @param <T>
+ */
+
 public class SkipList<T> {
 	private SkipListNode<T> head;
     private int maxLevel;

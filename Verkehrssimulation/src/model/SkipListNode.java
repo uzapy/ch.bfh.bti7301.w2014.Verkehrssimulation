@@ -2,6 +2,12 @@ package model;
 
 import java.util.*;
 
+/**
+ * @author stahr2
+ *
+ * @param <T>
+ */
+
 public class SkipListNode<T> {
     private T element;
     public List<SkipListNode<T>> nextNodes;
