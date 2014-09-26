@@ -11,7 +11,7 @@ public class SkipList<T> {
     	this.maxLevel = 0;
     	this.head = new SkipListNode<T>(null); //Anfang der Liste ist ein null-Objekt
     	
-    	//!! HIER DAS TAIL ELEMENT EINFÜGEN SOBALD DIE ADD METHODE IMPLEMENTIERT IST!!
+    	this.head.nextNodes.add(null); //Ende der Liste ebenfalls ein null-Objekt
     }
     
     public SkipListNode<T> getHeadNode(){
