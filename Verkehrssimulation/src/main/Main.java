@@ -10,7 +10,7 @@ public class Main {
     	ArrayList<Car> cars = new ArrayList<Car>();
     	Random random = new Random();
     	for (int i = 0; i < 100; i++) {
-			cars.add(new Car(i, random.nextInt(10)));
+			cars.add(new Car(i, random.nextInt(10), 0));
 		}
     	
     	cars.clear();
