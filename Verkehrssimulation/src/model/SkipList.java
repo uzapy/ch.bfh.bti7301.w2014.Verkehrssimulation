@@ -19,7 +19,6 @@ public class SkipList<T> {
     	this.size = 0;
     	this.maxLevel = 0;
     	this.head = new SkipListNode<Integer, T>(Integer.MIN_VALUE, null); //Anfang der Liste ist ein null-Objekt
-    	
     	this.head.nextNodes.add(null); //Ende der Liste ebenfalls ein null-Objekt
     }
     
