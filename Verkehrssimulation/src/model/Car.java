@@ -11,5 +11,9 @@ public class Car {
 		this.factor = rand;
 		this.position = position;
 	}
+	
+	public int getPostition(){
+		return this.position;
+	}
 
 }

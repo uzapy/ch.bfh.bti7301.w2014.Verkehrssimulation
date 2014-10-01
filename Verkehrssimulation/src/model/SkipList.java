@@ -6,10 +6,11 @@ package model;
  * @author stahr2
  *
  * @param <T>
+ * Implementet with help of article http://www.csee.umbc.edu/courses/undergraduate/341/fall01/Lectures/SkipLists/skip_lists/skip_lists.html
  */
 
 public class SkipList<T> {
-	private SkipListNode<T> head;
+	private SkipListNode<Integer, T> head;
     private int maxLevel;
     private int size;
     
@@ -17,30 +18,30 @@ public class SkipList<T> {
     {
     	this.size = 0;
     	this.maxLevel = 0;
-    	this.head = new SkipListNode<T>(null); //Anfang der Liste ist ein null-Objekt
+    	this.head = new SkipListNode<Integer, T>(Integer.MIN_VALUE, null); //Anfang der Liste ist ein null-Objekt
     	
     	this.head.nextNodes.add(null); //Ende der Liste ebenfalls ein null-Objekt
     }
     
-    public SkipListNode<T> getHeadNode(){
+    public SkipListNode<Integer, T> getHeadNode(){
     	return this.head;
     }
     
-    public boolean addNode(T newNode){
+    public boolean addNode(SkipListNode<Integer,T> newNode){
     	return true;
     }
     
-    public boolean removeNode(T Node){
+    public boolean removeNode(Integer Node){
     	return true;
     }
     
-    public boolean containsNode(T Node){
+    public boolean containsNode(Integer Node){
     	return true;
     }
     
-    public SkipListNode<T> find(T findNode)
+    public SkipListNode<Integer, T> find(Integer findNode)
     {
-    	return new SkipListNode<T>(null);
+    	return new SkipListNode<Integer, T>(Integer.MAX_VALUE,null);
     }
 
 }
