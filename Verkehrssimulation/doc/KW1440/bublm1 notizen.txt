@@ -1,0 +1,9 @@
+Einfache Transition: http://docs.oracle.com/javafx/2/api/javafx/animation/TranslateTransition.html
+
+JavaFX Animation Basics: http://docs.oracle.com/javafx/2/animations/basics.htm
+Grid Layout mit JavaFX: http://docs.oracle.com/javase/8/javafx/get-started-tutorial/form.htm
+Alle Layouts in JavaFX: http://docs.oracle.com/javafx/2/layout/builtin_layouts.htm
+
+(Arbeiten mit Canvas in JavaFX: http://docs.oracle.com/javafx/2/canvas/jfxpub-canvas.htm)
+
+Animation nach Pfad: http://java.dzone.com/articles/javafx-2-animation-path
