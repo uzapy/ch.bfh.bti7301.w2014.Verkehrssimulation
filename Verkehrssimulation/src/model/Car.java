@@ -5,8 +5,7 @@ public class Car {
 	private int id;
 	private double factor;
 	private int position;
-	private int speed;
-	
+	private int speed;	
 
 
 	public Car(int id,int speed, double rand, int position) {

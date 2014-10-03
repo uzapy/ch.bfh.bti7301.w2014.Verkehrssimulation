@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * @author stahr2
@@ -38,11 +39,16 @@ public class Track {
 			
 			while(!car.equals(null))
 			{
+				Random rn = new Random();
+				double res = rn.nextDouble();
 				if(car.getSpeed() < lane.getMaxVelocity()){
 					car.setSpeed(car.getSpeed() + 1);
 				}
 				if((lane.getNextCar(car).getPosition() - car.getPosition()) < car.getSpeed()){
 					car.setSpeed(lane.getNextCar(car).getPosition() - car.getPosition());
+				}
+				if(res <= car.getFactor()){
+					car.setSpeed(car.getSpeed()-1);
 				}
 				
 				car = lane.getNextCar(car);
