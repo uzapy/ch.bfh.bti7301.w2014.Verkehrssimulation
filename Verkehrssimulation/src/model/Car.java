@@ -15,7 +15,7 @@ public class Car {
 		this.position = position;
 		this.speed = speed;
 	}
-
+	
 	/**
 	 * @return the id
 	 */
