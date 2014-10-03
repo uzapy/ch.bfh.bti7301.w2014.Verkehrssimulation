@@ -10,12 +10,12 @@ public class Lane {
 	private SimulationSkipList<Integer, Car> Lane;
 	private boolean passableLeft, passableRight;
 	private int maxVelocity;
+	private int Length;
 	
-	
-	
-	public Lane(boolean passableLeft, boolean passableright, int maxVelocity){
+	public Lane(boolean passableLeft, boolean passableright, int maxVelocity, int Length){
 		this.passableLeft = passableLeft;
 		this.passableRight = passableRight;
+		this.Length = Length;
 		this.maxVelocity = maxVelocity;
 		this.Lane = new SimulationSkipList<Integer, Car>();
 	}
