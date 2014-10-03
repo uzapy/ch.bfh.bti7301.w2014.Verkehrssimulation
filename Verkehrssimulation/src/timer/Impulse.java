@@ -25,6 +25,6 @@ public class Impulse implements ActionListener {
 	}
 	
 	public void actionPerformed(ActionEvent ae) {
-		this.impulsable.poke();
+		this.impulsable.pulse();
 	}
 }

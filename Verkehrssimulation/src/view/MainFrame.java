@@ -5,7 +5,6 @@ import java.awt.Container;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JTextArea;
 
 import timer.IImpulsable;
 import timer.Impulse;
@@ -17,12 +16,10 @@ import timer.Impulse;
 public class MainFrame extends JFrame implements IImpulsable {
 	
 	private CarPanel car1 = new CarPanel();
-	private Impulse impulse;
-	
 	public MainFrame(String title) {
 		super(title);
 		
-		this.impulse = new Impulse(this);		
+		new Impulse(this);		
 
 		// Layout manager
 		setLayout(new BorderLayout());
@@ -41,7 +38,7 @@ public class MainFrame extends JFrame implements IImpulsable {
 	 * @see timer.IImpulsable#poke()
 	 */
 	@Override
-	public void poke() {
+	public void pulse() {
 		car1.moveForward();
 	}
 }
