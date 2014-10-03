@@ -20,7 +20,7 @@ public class CarPanel extends JPanel {
 		super.paintComponent(g);
 		
 		g.setColor(Color.BLUE);
-		g.fillRect(x, 20, 40, 20);
+		g.fillRect(x, 20, 70, 40);
 	}
 	
 	public void moveForward() {
