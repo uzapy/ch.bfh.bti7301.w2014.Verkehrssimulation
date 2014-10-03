@@ -21,6 +21,7 @@ public class MainFrame extends JFrame implements IImpulsable {
 	
 	public MainFrame(String title) {
 		super(title);
+		
 		this.impulse = new Impulse(this);		
 
 		// Layout manager
