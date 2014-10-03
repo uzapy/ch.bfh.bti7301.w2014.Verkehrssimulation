@@ -42,22 +42,25 @@ public class TrackPanel  extends JPanel  {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		
-		
+		g.setColor(Color.BLACK);
+		g.fillRect(0,0, 25 * track.length ,10);
 
 		for(int i = 0; i < track.length; i++){
 			
-			
-			
+
 			if(track[i] != null){
 				Car currentCar = track[i];
 				g.setColor(colorMap[currentCar.getId() % colorMap.length]);
 				
-				g.fillRect(currentCar.getPosition()*75, 20, 70, 40);
+				g.fillRect(currentCar.getPosition()*25, 20, 20, 10);
 				
 			}
-
 			
 		}
+		
+		g.setColor(Color.BLACK);
+		g.fillRect(0,40, 25 * track.length ,10);
+		
 	}
 	
 	public void setTrack(Car[] track) {

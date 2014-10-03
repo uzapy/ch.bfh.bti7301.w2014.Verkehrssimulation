@@ -136,7 +136,7 @@ public void start() {
 				
 				Random rn = new Random();
 				double res = rn.nextDouble();
-				if(res < troedelFactor)	{
+				if(res < track[i].getFactor())	{
 					if(track[i].getSpeed() > 0){
 						track[i].setSpeed(track[i].getSpeed() - 1);	
 					} 
