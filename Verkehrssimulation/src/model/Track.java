@@ -1,5 +1,7 @@
 package model;
 
+import java.util.ArrayList;
+
 /**
  * @author stahr2
  * 
@@ -8,25 +10,44 @@ package model;
  */
 
 public class Track {
-	private Lane[] Track;
+	private ArrayList<Lane> Track;
 	
-	public Track(int Lanes){
-		this.setTrack(new Lane[Lanes]);
-		for (int i = 0; i < Track.length; i++) {
-			Track[i] = new Lane(true, true,120, 10000);
+	public Track(ArrayList<Lane> Lanes){
+		this.setTrack(Lanes);
+		for (Lane lane : Track) {
+			lane = new Lane(true, true,120, 10000);
 		}
 	}
 
-	public Lane[] getTrack() {
+	public ArrayList<Lane> getTrack() {
 		return Track;
 	}
 
-	public void setTrack(Lane[] track) {
-		Track = track;
+	public void setTrack(ArrayList<Lane> lanes) {
+		Track = lanes;
 	}
 	
 	public Lane getLane(int Lane){
-		return this.Track[Lane];
+		return this.Track.get(Lane);
+	}
+	
+	public void update(){
+		for (Lane lane : Track) {
+			Car car = lane.getLane().firstEntry().getValue();
+			Lane nextLane = Track.iterator().next();
+			
+			while(!car.equals(null))
+			{
+				if(car.getSpeed() < lane.getMaxVelocity()){
+					car.setSpeed(car.getSpeed() + 1);
+				}
+				if((lane.getNextCar(car).getPosition() - car.getPosition()) < car.getSpeed()){
+					car.setSpeed(lane.getNextCar(car).getPosition() - car.getPosition());
+				}
+				
+				car = lane.getNextCar(car);
+			}
+		}
 	}
 
 }
