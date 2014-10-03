@@ -56,6 +56,10 @@ public class Lane {
 		return this.Lane.put(car.getPosition(), car);
 	}
 	
+	public boolean removeCar(Car car){
+		return this.Lane.remove(car.getPosition(), car);
+	}
+	
 	public Car getCarByPostition(int position) {
 		return this.Lane.get(position);
 	}
