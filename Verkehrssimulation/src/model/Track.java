@@ -3,19 +3,27 @@ package model;
 /**
  * @author stahr2
  * 
- * Repräsentiert die Strasse
+ * Repräsentiert die Strecke
  *
  */
+
 public class Track {
-	private SkipList<Car> Track;
+	private Lane[] Track;
 	
-	public Track(){
-		this.Track = new SkipList<Car>();
+	public Track(int Lanes){
+		this.setTrack(new Lane[Lanes]);		
+	}
+
+	public Lane[] getTrack() {
+		return Track;
+	}
+
+	public void setTrack(Lane[] track) {
+		Track = track;
 	}
 	
-	public boolean addCar(Car car)
-	{
-		return this.Track.addNode(new SkipListNode(car.getPostition(),car));
+	public Lane getLane(int Lane){
+		return this.Track[Lane];
 	}
 
 }

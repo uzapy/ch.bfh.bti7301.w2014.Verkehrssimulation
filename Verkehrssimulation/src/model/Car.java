@@ -16,14 +16,6 @@ public class Car {
 		this.speed = speed;
 	}
 	
-	public int getPostition(){
-		return this.position;
-	}
-	
-	public void setPostition(int position){
-		this.position = position;		
-	}
-
 	/**
 	 * @return the id
 	 */
