@@ -48,7 +48,10 @@ public class Track {
 					car.setSpeed(lane.getNextCar(car).getPosition() - car.getPosition());
 				}
 				if(res <= car.getFactor()){
-					car.setSpeed(car.getSpeed()-1);
+					if(car.getSpeed() > 0){
+						car.setSpeed(car.getSpeed()-1);
+					}
+
 				}
 				
 				car = lane.getNextCar(car);
