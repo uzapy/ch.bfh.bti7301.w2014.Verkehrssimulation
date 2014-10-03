@@ -7,7 +7,7 @@ import view.MainRunnable;
 
 public class Main {
     public static void main(String[] args) {
-    	//SwingUtilities.invokeLater(new MainRunnable());
-		new Nagel_SchreckenbergSimulation().start();
+    	SwingUtilities.invokeLater(new MainRunnable());
+		//new Nagel_SchreckenbergSimulation().start();
     }
 }

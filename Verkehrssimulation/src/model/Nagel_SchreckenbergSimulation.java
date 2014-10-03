@@ -14,17 +14,24 @@ public class Nagel_SchreckenbergSimulation {
 	private double troedelFactor = 0.2;
 	private int maxSpeed = 5;
 	
+	public Car[] initializeSimulation(){
+		initTrack();
+		return track;
+	}
 	
+	public Car[] preformStep(){
+		calculateSpeeds();
+		moveCars();
+		return track;
+	}
 
-	public void start(){
+public void start() {
 		
 		initTrack();
 		int n = 0;
-		try {
+		try {	
+			printCars();
 			Thread.sleep(1000);
-	
-		printCars();
-
 
 			while(n<=100){
 				
@@ -36,11 +43,10 @@ public class Nagel_SchreckenbergSimulation {
 				Thread.sleep(1000);
 				n = n +1;
 			}
-		} 
-		catch (InterruptedException e) {	
+		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}		
+		}
 	}
 	
 	

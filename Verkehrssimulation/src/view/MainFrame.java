@@ -6,6 +6,8 @@ import java.awt.Container;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
+import model.Car;
+import model.Nagel_SchreckenbergSimulation;
 import timer.IImpulsable;
 import timer.Impulse;
 
@@ -14,11 +16,14 @@ import timer.Impulse;
  */
 @SuppressWarnings("serial")
 public class MainFrame extends JFrame implements IImpulsable {
-	
-	private CarPanel car1 = new CarPanel();
+	private Nagel_SchreckenbergSimulation simulation;
+	private TrackPanel trackPanel;
 	public MainFrame(String title) {
 		super(title);
 		
+		simulation = new Nagel_SchreckenbergSimulation();
+		Car[] track = simulation.initializeSimulation();
+		trackPanel = new TrackPanel(track);
 		new Impulse(this);		
 
 		// Layout manager
@@ -29,7 +34,7 @@ public class MainFrame extends JFrame implements IImpulsable {
 		
 		// Add Swing Components
 		Container container = getContentPane();
-		container.add(car1, BorderLayout.CENTER);
+		container.add(trackPanel, BorderLayout.CENTER);
 		container.add(button, BorderLayout.SOUTH);
 		// Tutorial: http://www.youtube.com/watch?v=svM0SBFqp4s
 	}
@@ -39,6 +44,8 @@ public class MainFrame extends JFrame implements IImpulsable {
 	 */
 	@Override
 	public void pulse() {
-		car1.moveForward();
+		Car[] track = simulation.preformStep();
+		trackPanel.setTrack(track);
+		
 	}
 }
