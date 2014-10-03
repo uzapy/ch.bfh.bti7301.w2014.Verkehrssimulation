@@ -44,7 +44,7 @@ public class Lane {
 
 	private int Length;
 	
-	public Lane(boolean passableLeft, boolean passableright, int maxVelocity, int Length){
+	public Lane(boolean passableLeft, boolean passableRight, int maxVelocity, int Length){
 		this.passableLeft = passableLeft;
 		this.passableRight = passableRight;
 		this.Length = Length;
@@ -56,16 +56,16 @@ public class Lane {
 		return this.Lane.put(car.getPosition(), car);
 	}
 	
-	public Car getCarByKey(int key) {
-		return this.Lane.get(key);
+	public Car getCarByPostition(int position) {
+		return this.Lane.get(position);
 	}
 	
 	public Car getNextCar(Car car) {
-		return this.getCarByKey((this.Lane.higherKey(car.getPosition())));
+		return this.getCarByPostition((this.Lane.higherKey(car.getPosition())));
 	}
 	
 	public Car getPreviousCar(Car car) {
-		return this.getCarByKey(this.Lane.lowerKey(car.getPosition()));
+		return this.getCarByPostition(this.Lane.lowerKey(car.getPosition()));
 	}
 	
 	public SimulationSkipList<Integer, Car> getLane(){
