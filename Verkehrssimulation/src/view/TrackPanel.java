@@ -13,6 +13,7 @@ import model.Car;
 /**
  * @author burkt4
  */
+@SuppressWarnings("serial")
 public class TrackPanel  extends JPanel  {
 	private Car[] track;
 	private Color[] colorMap;
