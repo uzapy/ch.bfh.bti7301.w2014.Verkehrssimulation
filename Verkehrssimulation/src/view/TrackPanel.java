@@ -48,7 +48,7 @@ public class TrackPanel  extends JPanel  {
 		g.fillRect(0,0, 25 * track.getLane(0).getLength() ,10);
 		Car currentCar = track.getLane(0).getFirstCar();
 
-		while(track.getLane(0).getNextCar(currentCar) != null){
+		while(!(currentCar == null)){
 			g.setColor(colorMap[currentCar.getId() % colorMap.length]);
 			g.fillRect(currentCar.getPosition()*25, 20, 20, 10);
 			currentCar = track.getLane(0).getNextCar(currentCar);			
