@@ -63,7 +63,7 @@ public class Track {
 					car.setSpeed(rest + firstCarPosition);
 				}		
 			}
-			if(res <= car.getFactor()){
+			if(res <= car.getFactor() && car.getSpeed() > 0){
 				car.setSpeed(car.getSpeed()-1);
 			}
 			if((car.getPosition() + car.getSpeed()) > lane.getLength()){

@@ -65,7 +65,7 @@ public class Lane {
 	}
 	
 	public Car getNextCar(Car car) {
-		return car;
+		return this.Lane.higherEntry(car.getId()).getValue();
 	}
 	
 	public Car getPreviousCar(Car car) {
