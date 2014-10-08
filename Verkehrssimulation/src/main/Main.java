@@ -2,7 +2,7 @@ package main;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import javax.swing.SwingUtilities;
@@ -22,11 +22,11 @@ public class Main extends Application {
 	 */
 	@Override
 	public void start(Stage stage) throws Exception {		
-		VBox vBox = new VBox();
-		MainBox mainBox = new MainBox(vBox);
-		vBox.getChildren().addAll(mainBox.getAllNodes());
+		Pane pane = new Pane();
+		MainBox mainBox = new MainBox(pane);
+		pane.getChildren().addAll(mainBox.getAllNodes());
 		
-		Scene scene = new Scene(vBox);
+		Scene scene = new Scene(pane);
 		stage.setScene(scene);
 		stage.setTitle("Verkehrssimulation");
 		stage.centerOnScreen();

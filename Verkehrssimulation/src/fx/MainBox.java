@@ -9,12 +9,10 @@ import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
-import timer.IImpulsable;
-import timer.Impulse;
 
 /**
  * @author bublm1
@@ -32,9 +30,9 @@ public class MainBox {
 
 	/**
 	 * @author bublm1
-	 * @param vBox
+	 * @param pane
 	 */
-	public MainBox(VBox vBox) {
+	public MainBox(Pane pane) {
 //		acceleratingCar.setX(20);
 //		acceleratingCar.setY(30);
 		acceleratingCar.setWidth(40);
