@@ -1,5 +1,9 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Map.Entry;
+
 /**
  * @author stahr2
  * 
@@ -65,15 +69,28 @@ public class Lane {
 	}
 	
 	public Car getNextCar(Car car) {
-		return this.getCarByPostition((this.Lane.higherKey(car.getPosition())));
+		Entry<Integer, Car> next = this.Lane.higherEntry(car.getPosition());
+		if (!(next == null)){
+			return next.getValue();
+		}
+		return null;
 	}
 	
 	public Car getPreviousCar(Car car) {
 		return this.getCarByPostition(this.Lane.lowerKey(car.getPosition()));
 	}
 	
+	public Car getFirstCar(){
+		return this.Lane.firstEntry().getValue();
+	}
+	
 	public SimulationSkipList<Integer, Car> getLane(){
 		return this.Lane;
 	}
-
+	
+	public Collection<Car> getAllCars(){
+		
+		return this.Lane.values();
+	}
+	
 }

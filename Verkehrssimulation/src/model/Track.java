@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Random;
 
 /**
@@ -19,9 +20,17 @@ public class Track {
 			lane = new Lane(true, true, 120, 10000);
 		}
 	}
+	
+	public Track(){
+		this.Track = new ArrayList<Lane>();		
+	}
 
 	public ArrayList<Lane> getTrack() {
 		return Track;
+	}
+	
+	public void addLane(Lane lane){
+		this.Track.add(lane);
 	}
 
 	public void setTrack(ArrayList<Lane> lanes) {
@@ -32,31 +41,54 @@ public class Track {
 		return this.Track.get(Lane);
 	}
 	
-	public void update(){
-		for (Lane lane : Track) {
-			Car car = lane.getLane().firstEntry().getValue();
-			Lane nextLane = Track.iterator().next();
-			
-			while(!car.equals(null))
-			{
-				Random rn = new Random();
-				double res = rn.nextDouble();
-				if(car.getSpeed() < lane.getMaxVelocity()){
-					car.setSpeed(car.getSpeed() + 1);
-				}
-				if((lane.getNextCar(car).getPosition() - car.getPosition()) < car.getSpeed()){
-					car.setSpeed(lane.getNextCar(car).getPosition() - car.getPosition());
-				}
-				if(res <= car.getFactor()){
-					if(car.getSpeed() > 0){
-						car.setSpeed(car.getSpeed()-1);
-					}
+	public Track update(){
+		Lane lane = this.Track.get(0);
+		Car car = lane.getLane().firstEntry().getValue();
 
-				}
-				
-				car = lane.getNextCar(car);
+		while(!(car == null))
+		{
+			Random rn = new Random();
+			double res = rn.nextDouble();
+			if(car.getSpeed() < lane.getMaxVelocity()){
+				car.setSpeed(car.getSpeed() + 1);
+			}
+			if(!(lane.getNextCar(car) == null)){
+				if(((lane.getNextCar(car).getPosition() - car.getPosition()) - 1) < car.getSpeed()){
+					car.setSpeed(lane.getNextCar(car).getPosition() - car.getPosition() - 1);
+				}	
+			}
+			else{
+				int rest = lane.getLength() - car.getPosition();
+				int firstCarPosition = lane.getFirstCar().getPosition();
+				if(rest + firstCarPosition -1 < car.getSpeed()){
+					car.setSpeed(rest + firstCarPosition -1);
+				}		
+			}
+			if(res <= car.getFactor() && car.getSpeed() > 0){
+				car.setSpeed(car.getSpeed()-1);
+			}
+
+			car = lane.getNextCar(car);
+		}
+		car = lane.getLane().firstEntry().getValue();
+
+		
+		Collection<Car> cars = lane.getAllCars();
+		for (Car  currentCar : cars){
+			if((currentCar.getPosition() + currentCar.getSpeed()) > lane.getLength()){
+				lane.removeCar(currentCar);
+				currentCar.setPosition((currentCar.getPosition() + currentCar.getSpeed()) % lane.getLength());
+				lane.addCar(currentCar);
+			}
+			else{
+				currentCar.setPosition(currentCar.getPosition() + currentCar.getSpeed());
 			}
 		}
+		
+		return this;
+		
+		
+		
 	}
 
 }
