@@ -19,9 +19,17 @@ public class Track {
 			lane = new Lane(true, true,120, 10000);
 		}
 	}
+	
+	public Track(){
+		this.Track = new ArrayList<Lane>();		
+	}
 
 	public ArrayList<Lane> getTrack() {
 		return Track;
+	}
+	
+	public void addLane(Lane lane){
+		this.Track.add(lane);
 	}
 
 	public void setTrack(ArrayList<Lane> lanes) {
@@ -32,31 +40,43 @@ public class Track {
 		return this.Track.get(Lane);
 	}
 	
-	public void update(){
-		for (Lane lane : Track) {
-			Car car = lane.getLane().firstEntry().getValue();
-			Lane nextLane = Track.iterator().next();
-			
-			while(!car.equals(null))
-			{
-				Random rn = new Random();
-				double res = rn.nextDouble();
-				if(car.getSpeed() < lane.getMaxVelocity()){
-					car.setSpeed(car.getSpeed() + 1);
-				}
+	public Track update(){
+		Lane lane = this.Track.get(0);
+		Car car = lane.getLane().firstEntry().getValue();
+
+		while(!(car == null))
+		{
+			Random rn = new Random();
+			double res = rn.nextDouble();
+			if(car.getSpeed() < lane.getMaxVelocity()){
+				car.setSpeed(car.getSpeed() + 1);
+			}
+			if(!(lane.getNextCar(car) == null)){
 				if((lane.getNextCar(car).getPosition() - car.getPosition()) < car.getSpeed()){
 					car.setSpeed(lane.getNextCar(car).getPosition() - car.getPosition());
-				}
-				if(res <= car.getFactor()){
-					if(car.getSpeed() > 0){
-						car.setSpeed(car.getSpeed()-1);
-					}
-
-				}
-				
-				car = lane.getNextCar(car);
+				}	
 			}
+			else{
+				int rest = lane.getLength() - car.getPosition();
+				int firstCarPosition = lane.getFirstCar().getPosition();
+				if(rest + firstCarPosition < car.getSpeed()){
+					car.setSpeed(rest + firstCarPosition);
+				}		
+			}
+			if(res <= car.getFactor()){
+				car.setSpeed(car.getSpeed()-1);
+			}
+			if((car.getPosition() + car.getSpeed()) > lane.getLength()){
+				lane.removeCar(car);
+				car.setPosition((car.getPosition() + car.getSpeed()) % lane.getLength());
+				lane.addCar(car);
+			}
+			else{
+				car.setPosition(car.getPosition() + car.getSpeed());		
+			}
+			car = lane.getNextCar(car);
 		}
+		return this;
 	}
 
 }

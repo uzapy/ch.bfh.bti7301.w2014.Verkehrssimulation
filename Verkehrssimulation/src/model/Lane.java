@@ -65,11 +65,15 @@ public class Lane {
 	}
 	
 	public Car getNextCar(Car car) {
-		return this.getCarByPostition((this.Lane.higherKey(car.getPosition())));
+		return car;
 	}
 	
 	public Car getPreviousCar(Car car) {
 		return this.getCarByPostition(this.Lane.lowerKey(car.getPosition()));
+	}
+	
+	public Car getFirstCar(){
+		return this.Lane.firstEntry().getValue();
 	}
 	
 	public SimulationSkipList<Integer, Car> getLane(){

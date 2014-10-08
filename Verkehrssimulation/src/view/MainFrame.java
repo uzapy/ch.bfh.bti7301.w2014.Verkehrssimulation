@@ -8,6 +8,8 @@ import javax.swing.JFrame;
 
 import model.Car;
 import model.Nagel_SchreckenbergSimulation;
+import model.Nagel_SchreckenbergSimulation_SkipList;
+import model.Track;
 import timer.IImpulsable;
 import timer.Impulse;
 
@@ -16,13 +18,13 @@ import timer.Impulse;
  */
 @SuppressWarnings("serial")
 public class MainFrame extends JFrame implements IImpulsable {
-	private Nagel_SchreckenbergSimulation simulation;
+	private Nagel_SchreckenbergSimulation_SkipList simulation;
 	private TrackPanel trackPanel;
 	public MainFrame(String title) {
 		super(title);
 		
-		simulation = new Nagel_SchreckenbergSimulation();
-		Car[] track = simulation.initializeSimulation();
+		simulation = new Nagel_SchreckenbergSimulation_SkipList();
+		Track track = simulation.initializeSimulation();
 		trackPanel = new TrackPanel(track);
 		new Impulse(this);		
 
@@ -44,7 +46,7 @@ public class MainFrame extends JFrame implements IImpulsable {
 	 */
 	@Override
 	public void pulse() {
-		Car[] track = simulation.preformStep();
+		Track track = simulation.performStep();
 		trackPanel.setTrack(track);
 		
 	}
