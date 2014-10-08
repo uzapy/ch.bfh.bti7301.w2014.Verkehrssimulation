@@ -16,7 +16,7 @@ public class Track {
 	public Track(ArrayList<Lane> Lanes){
 		this.setTrack(Lanes);
 		for (Lane lane : Track) {
-			lane = new Lane(true, true,120, 10000);
+			lane = new Lane(true, true, 120, 10000);
 		}
 	}
 	

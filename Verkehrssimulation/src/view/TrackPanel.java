@@ -14,6 +14,7 @@ import model.Track;
 /**
  * @author burkt4
  */
+@SuppressWarnings("serial")
 public class TrackPanel  extends JPanel  {
 	private Track track;
 	private Color[] colorMap;

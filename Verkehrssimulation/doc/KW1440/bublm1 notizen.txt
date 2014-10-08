@@ -7,3 +7,50 @@ Alle Layouts in JavaFX: http://docs.oracle.com/javafx/2/layout/builtin_layouts.h
 (Arbeiten mit Canvas in JavaFX: http://docs.oracle.com/javafx/2/canvas/jfxpub-canvas.htm)
 
 Animation nach Pfad: http://java.dzone.com/articles/javafx-2-animation-path
+
+
+		
+//		VBox root = new VBox();
+//		root.getChildren().add(label);
+
+
+		
+		Pane pane = new Pane();
+		pane.getChildren().addAll(label1, label2);
+
+
+		
+		Group group = new Group();
+		Canvas canvas = new Canvas(400, 300);
+		GraphicsContext gc = canvas.getGraphicsContext2D();
+		
+		drawShapes(gc);
+		
+		group.getChildren().add(canvas);
+		
+		// Fenster-Inhalt
+		Scene scene = new Scene(group);
+
+
+	/**
+	 * @author bublm1
+	 * @param gc
+	 */
+	private void drawShapes(GraphicsContext gc) {
+		Rectangle rect1 = new Rectangle();
+		rect1.setX(20);
+		rect1.setY(30);
+		rect1.setWidth(40);
+		rect1.setHeight(20);
+		rect1.setFill(Color.BLUE);
+		
+	}
+
+
+		Canvas canvas = new Canvas();
+		canvas.setHeight(600);
+		canvas.setWidth(500);
+		gc = canvas.getGraphicsContext2D();
+		
+		gc.setFill(Color.BLUE);
+		gc.fillRect(0, 10, 40, 20);
