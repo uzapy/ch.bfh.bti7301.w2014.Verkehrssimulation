@@ -38,32 +38,39 @@ public class Track {
 		for (Lane lane : this.Lanes) {
 			Car car = lane.getLane().firstEntry().getValue();
 
+			int speedDelta = 5;
+			
 			while (!(car == null)) {
 				if (car.getSpeed() < lane.getMaxVelocity()) {
-					car.setSpeed(car.getSpeed() + 1);
+					car.setSpeed(car.getSpeed() + speedDelta);
 				}
 
 				if (!(lane.getNextCar(car) == null)) {
-					if (((lane.getNextCar(car).getPosition() - car.getPosition()) - 1) < car.getSpeed()) {
-						car.setSpeed(lane.getNextCar(car).getPosition() - car.getPosition() - 1);
+					int availableSpace = lane.getNextCar(car).getBackPosition() - car.getPosition() - 1; // Sicherheitsabstand
+					if (availableSpace < car.getSpeed()) {
+						car.setSpeed(availableSpace);
 					}
 				} else {
 					int rest = lane.getLength() - car.getPosition();
-					int firstCarPosition = lane.getFirstCar().getPosition();
+					int firstCarPosition = lane.getFirstCar().getBackPosition();
+					int availableSpace = rest + firstCarPosition - 1;
 					
-					if (rest + firstCarPosition - 1 < car.getSpeed()) {
-						car.setSpeed(rest + firstCarPosition - 1);
+					if (availableSpace < car.getSpeed()) {
+						car.setSpeed(availableSpace);
 					}
 				}
 
 				double result = this.random.nextDouble();
-				if (result <= car.getTrödelFactor() && car.getSpeed() > 0) {
-					car.setSpeed(car.getSpeed() - 1);
+				if (result <= car.getTrödelFactor()) {
+					if (car.getSpeed() > speedDelta) {
+						car.setSpeed(car.getSpeed() - speedDelta);						
+					}else {
+						car.setSpeed(0);
+					}
 				}
 
 				car = lane.getNextCar(car);
 			}
-			car = lane.getLane().firstEntry().getValue();
 
 			Collection<Car> cars = lane.getAllCars();
 			for (Car currentCar : cars) {

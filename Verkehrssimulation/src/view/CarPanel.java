@@ -6,7 +6,8 @@ import java.awt.Graphics;
 import javax.swing.JPanel;
 
 import model.Car;
-import util.ColorPool;
+import util.MetricToPixel;
+import util.RandomPool;
 
 /**
  * @author bublm1
@@ -23,7 +24,7 @@ public class CarPanel extends JPanel {
 	 */
 	public CarPanel(Car car) {
 		this.car = car;
-		this.color = ColorPool.getNewColor();
+		this.color = RandomPool.getNewColor();
 	}
 
 	/**
@@ -33,6 +34,11 @@ public class CarPanel extends JPanel {
 		super.paintComponent(g);
 
 		g.setColor(this.color);
-		g.fillRect(car.getPosition() * 25, 25 + car.getLane().getFastLaneIndex() * 15, 20, 10);
+		
+		int xPosition = MetricToPixel.scale(car.getBackPosition());
+		int yPosition = 20 + car.getLane().getFastLaneIndex() * 15;
+		int length = MetricToPixel.scale(car.getLength());
+		int width = MetricToPixel.scale(2);
+		g.fillRect(xPosition, yPosition, length, width);
 	}
 }

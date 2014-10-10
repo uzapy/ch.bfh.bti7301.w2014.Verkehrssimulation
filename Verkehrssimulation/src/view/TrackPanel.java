@@ -10,6 +10,7 @@ import java.util.LinkedList;
 
 import javax.swing.JPanel;
 
+import util.MetricToPixel;
 import model.Car;
 import model.Lane;
 import model.Track;
@@ -39,7 +40,7 @@ public class TrackPanel extends JPanel {
 		super.paintComponent(g);
 		
 		g.setColor(Color.BLACK);
-		g.fillRect(0,0, 25 * track.getLane(0).getLength() ,10);
+		g.fillRect(0,0, MetricToPixel.scale(track.getLane(0).getLength()) ,10);
 		
 		for (LanePanel lanePanel : this.lanePanels) {
 			lanePanel.paintComponent(g);
@@ -48,7 +49,7 @@ public class TrackPanel extends JPanel {
 		int yPositionOtherBlackBar = this.lanePanels.size()*15+25;
 		
 		g.setColor(Color.BLACK);
-		g.fillRect(0, yPositionOtherBlackBar, 25 * track.getLane(0).getLength() ,10);
+		g.fillRect(0, yPositionOtherBlackBar, MetricToPixel.scale(track.getLane(0).getLength()) ,10);
 		
 	}
 

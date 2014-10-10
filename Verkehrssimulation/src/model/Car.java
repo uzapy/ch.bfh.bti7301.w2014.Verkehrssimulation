@@ -4,16 +4,18 @@ public class Car {
 
 	private int id;
 	private double trödelFactor;
-	private int position;
-	private int speed;
-	private Lane lane;	
+	private int position; 			// Position in Meter
+	private int speed; 				// Gesschwindigkeit in Meter pro Sekunde
+	private int length;				// Länge des Autos in Meter
+	private Lane lane;
 
-	public Car(int id,int speed, double trödelFactor, int position, Lane lane) {
+	public Car(int id,int speed, double trödelFactor, int position, int length, Lane lane) {
 		this.id = id;
 		this.trödelFactor = trödelFactor;
 		this.position = position;
 		this.speed = speed;
 		this.lane = lane;
+		this.length = length;
 	}
 
 	public int getId() {
@@ -31,6 +33,11 @@ public class Car {
 	public void setPosition(int position) {
 		this.position = position;
 	}
+	
+	public int getBackPosition() {
+		return this.position - this.length;
+	}
+	
 	public int getSpeed() {
 		return speed;
 	}
@@ -41,5 +48,9 @@ public class Car {
 
 	public Lane getLane() {
 		return this.lane;
+	}
+
+	public int getLength() {
+		return this.length;
 	}
 }

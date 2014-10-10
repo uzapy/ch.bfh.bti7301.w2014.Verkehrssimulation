@@ -11,7 +11,7 @@ import java.util.Map.Entry;
  */
 public class Lane {
 	private SimulationSkipList<Integer, Car> Lane;
-	private int maxVelocity;
+	private int maxVelocity;	// erlaubte Höchstgeschwindigkeit in Meter pro Sekunde
 	private int fastLaneIndex;
 	private int length;
 	
