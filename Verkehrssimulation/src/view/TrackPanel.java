@@ -56,13 +56,12 @@ public class TrackPanel  extends JPanel  {
 		for(Lane lane : track.getAllLanes()){
 			for(Car car: lane.getAllCars()){
 				g.fillRect(car.getPosition()*25, 25+lane.getFastLaneIndex()*15, 20, 10);
-				g.setColor(colorMap[car.getId() - 1]);
+				g.setColor(colorMap[car.getId() % colorMap.length]);
 			}	
 		}
-			
 
 		g.setColor(Color.BLACK);
-		g.fillRect(0,60, 25 * track.getLane(0).getLength() ,10);
+		g.fillRect(0,90, 25 * track.getLane(0).getLength() ,10);
 		
 	}
 	

@@ -18,8 +18,10 @@ public class Nagel_SchreckenbergSimulation_SkipList {
 		this.track = new Track();
 		this.lane1 = new Lane(false,false,5,15,0);
 		this.lane2 = new Lane(false,false,7,15,1);
+		this.lane3 = new Lane(false,false,8,15,2);
 		this.track.addLane(lane2);
 		this.track.addLane(lane1);
+		this.track.addLane(lane3);
 		initTrack();
 		return track;
 	}
@@ -43,6 +45,12 @@ public class Nagel_SchreckenbergSimulation_SkipList {
 		lane2.addCar(new Car(8,0,troedelFactor,5));
 		lane2.addCar(new Car(9,0,troedelFactor,6));
 		lane2.addCar(new Car(10,0,troedelFactor,8));
+		
+		lane3.addCar(new Car(11,0,troedelFactor,1));
+		lane3.addCar(new Car(12,0,troedelFactor,4));
+		lane3.addCar(new Car(13,0,troedelFactor,5));
+		lane3.addCar(new Car(14,0,troedelFactor,6));
+		lane3.addCar(new Car(15,0,troedelFactor,8));
 	}
 
 }
