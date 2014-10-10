@@ -76,9 +76,12 @@ public class Track {
 		Collection<Car> cars = lane.getAllCars();
 		for (Car  currentCar : cars){
 			//if((currentCar.getPosition() + currentCar.getSpeed()) > lane.getLength()){
-				lane.removeCar(currentCar);
+				//lane.removeCar(currentCar);
+				//Car oldCar = currentCar;
+				int oldPosition = currentCar.getPosition();
 				currentCar.setPosition((currentCar.getPosition() + currentCar.getSpeed()) % lane.getLength());
-				lane.addCar(currentCar);
+				lane.getLane().updatePosition(oldPosition, currentCar.getPosition());
+				//lane.addCar(currentCar);
 			//}
 			//else{
 			//	currentCar.setPosition(currentCar.getPosition() + currentCar.getSpeed());
