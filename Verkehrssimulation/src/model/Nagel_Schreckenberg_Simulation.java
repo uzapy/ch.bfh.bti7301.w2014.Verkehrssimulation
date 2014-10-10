@@ -10,7 +10,7 @@ public class Nagel_Schreckenberg_Simulation {
 
 	private Track track;
 	private Lane lane1, lane2, lane3;
-	private double troedelFactor = 0.2;
+	private double trödelFactor = 0.2;
 	
 	/**
 	 * @author bublm1
@@ -25,23 +25,23 @@ public class Nagel_Schreckenberg_Simulation {
 		this.track.addLane(lane1);
 		this.track.addLane(lane3);
 		
-		lane1.addCar(new Car(1,0,troedelFactor,0, lane1));
-		lane1.addCar(new Car(2,0,troedelFactor,3, lane1));
-		lane1.addCar(new Car(3,0,troedelFactor,4, lane1));
-		lane1.addCar(new Car(4,0,troedelFactor,6, lane1));
-		lane1.addCar(new Car(5,0,troedelFactor,9, lane1));
+		lane1.addCar(new Car(1,0,trödelFactor,0, lane1));
+		lane1.addCar(new Car(2,0,trödelFactor,3, lane1));
+		lane1.addCar(new Car(3,0,trödelFactor,4, lane1));
+		lane1.addCar(new Car(4,0,trödelFactor,6, lane1));
+		lane1.addCar(new Car(5,0,trödelFactor,9, lane1));
 		
-		lane2.addCar(new Car(6,0,troedelFactor,1, lane2));
-		lane2.addCar(new Car(7,0,troedelFactor,4, lane2));
-		lane2.addCar(new Car(8,0,troedelFactor,5, lane2));
-		lane2.addCar(new Car(9,0,troedelFactor,6, lane2));
-		lane2.addCar(new Car(10,0,troedelFactor,8, lane2));
+		lane2.addCar(new Car(6,0,trödelFactor,1, lane2));
+		lane2.addCar(new Car(7,0,trödelFactor,4, lane2));
+		lane2.addCar(new Car(8,0,trödelFactor,5, lane2));
+		lane2.addCar(new Car(9,0,trödelFactor,6, lane2));
+		lane2.addCar(new Car(10,0,trödelFactor,8, lane2));
 		
-		lane3.addCar(new Car(11,0,troedelFactor,1, lane3));
-		lane3.addCar(new Car(12,0,troedelFactor,4, lane3));
-		lane3.addCar(new Car(13,0,troedelFactor,5, lane3));
-		lane3.addCar(new Car(14,0,troedelFactor,6, lane3));
-		lane3.addCar(new Car(15,0,troedelFactor,8, lane3));
+		lane3.addCar(new Car(11,0,trödelFactor,1, lane3));
+		lane3.addCar(new Car(12,0,trödelFactor,4, lane3));
+		lane3.addCar(new Car(13,0,trödelFactor,5, lane3));
+		lane3.addCar(new Car(14,0,trödelFactor,6, lane3));
+		lane3.addCar(new Car(15,0,trödelFactor,8, lane3));
 	}
 	
 	public Track performStep(){
