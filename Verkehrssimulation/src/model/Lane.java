@@ -1,6 +1,5 @@
 package model;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map.Entry;
 
@@ -12,57 +11,29 @@ import java.util.Map.Entry;
  */
 public class Lane {
 	private SimulationSkipList<Integer, Car> Lane;
-	private boolean passableLeft, passableRight;
 	private int maxVelocity;
 	private int fastLaneIndex;
+	private int length;
+	
+	public Lane(int maxVelocity, int length, int fastLaneIndex){
+		this.length = length;
+		this.maxVelocity = maxVelocity;
+		this.Lane = new SimulationSkipList<Integer, Car>();
+		this.fastLaneIndex = fastLaneIndex;
+	}
 	
 	public int getFastLaneIndex() {
 		return fastLaneIndex;
-	}
-
-	public boolean isPassableLeft() {
-		return passableLeft;
-	}
-
-	public void setPassableLeft(boolean passableLeft) {
-		this.passableLeft = passableLeft;
-	}
-
-	public boolean isPassableRight() {
-		return passableRight;
-	}
-
-	public void setPassableRight(boolean passableRight) {
-		this.passableRight = passableRight;
 	}
 
 	public int getMaxVelocity() {
 		return maxVelocity;
 	}
 
-	public void setMaxVelocity(int maxVelocity) {
-		this.maxVelocity = maxVelocity;
-	}
-
 	public int getLength() {
-		return Length;
+		return length;
 	}
 
-	public void setLength(int length) {
-		Length = length;
-	}
-
-	private int Length;
-	
-	public Lane(boolean passableLeft, boolean passableRight, int maxVelocity, int Length, int fastLaneIndex){
-		this.passableLeft = passableLeft;
-		this.passableRight = passableRight;
-		this.Length = Length;
-		this.maxVelocity = maxVelocity;
-		this.Lane = new SimulationSkipList<Integer, Car>();
-		this.fastLaneIndex = fastLaneIndex;
-	}
-	
 	public Car addCar(Car car) {
 		return this.Lane.put(car.getPosition(), car);
 	}
