@@ -6,9 +6,7 @@ import java.awt.Container;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
-import model.Car;
-import model.Nagel_SchreckenbergSimulation;
-import model.Nagel_SchreckenbergSimulation_SkipList;
+import model.Nagel_Schreckenberg_Simulation;
 import model.Track;
 import timer.IImpulsable;
 import timer.Impulse;
@@ -18,14 +16,17 @@ import timer.Impulse;
  */
 @SuppressWarnings("serial")
 public class MainFrame extends JFrame implements IImpulsable {
-	private Nagel_SchreckenbergSimulation_SkipList simulation;
+	
+	private Nagel_Schreckenberg_Simulation simulation;
 	private TrackPanel trackPanel;
+	
 	public MainFrame(String title) {
 		super(title);
 		
-		simulation = new Nagel_SchreckenbergSimulation_SkipList();
-		Track track = simulation.initializeSimulation();
+		simulation = new Nagel_Schreckenberg_Simulation();
+		Track track = simulation.getTrack();
 		trackPanel = new TrackPanel(track);
+		
 		new Impulse(this);		
 
 		// Layout manager
