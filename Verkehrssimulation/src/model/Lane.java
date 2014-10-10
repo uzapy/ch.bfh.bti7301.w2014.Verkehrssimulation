@@ -14,6 +14,12 @@ public class Lane {
 	private SimulationSkipList<Integer, Car> Lane;
 	private boolean passableLeft, passableRight;
 	private int maxVelocity;
+	private int fastLaneIndex;
+	
+	public int getFastLaneIndex() {
+		return fastLaneIndex;
+	}
+
 	public boolean isPassableLeft() {
 		return passableLeft;
 	}
@@ -48,12 +54,13 @@ public class Lane {
 
 	private int Length;
 	
-	public Lane(boolean passableLeft, boolean passableRight, int maxVelocity, int Length){
+	public Lane(boolean passableLeft, boolean passableRight, int maxVelocity, int Length, int fastLaneIndex){
 		this.passableLeft = passableLeft;
 		this.passableRight = passableRight;
 		this.Length = Length;
 		this.maxVelocity = maxVelocity;
 		this.Lane = new SimulationSkipList<Integer, Car>();
+		this.fastLaneIndex = fastLaneIndex;
 	}
 	
 	public Car addCar(Car car) {

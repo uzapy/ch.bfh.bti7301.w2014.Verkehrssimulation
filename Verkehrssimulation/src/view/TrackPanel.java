@@ -9,6 +9,7 @@ import java.awt.Graphics;
 import javax.swing.JPanel;
 
 import model.Car;
+import model.Lane;
 import model.Track;
 
 /**
@@ -33,12 +34,17 @@ public class TrackPanel  extends JPanel  {
 	 * @author burkt4
 	 */
 	private void initColorMap() {
-		colorMap = new Color[5];
+		colorMap = new Color[10];
 		colorMap[0] = Color.BLACK;
 		colorMap[1] = Color.WHITE;
 		colorMap[2] = Color.RED;
 		colorMap[3] = Color.GREEN;
 		colorMap[4] = Color.BLUE;
+		colorMap[5] = Color.CYAN;
+		colorMap[6] = Color.MAGENTA;
+		colorMap[8] = Color.YELLOW;
+		colorMap[8] = Color.GRAY;
+		colorMap[9] = Color.ORANGE;
 	}
 
 	public void paintComponent(Graphics g) {
@@ -46,16 +52,17 @@ public class TrackPanel  extends JPanel  {
 		
 		g.setColor(Color.BLACK);
 		g.fillRect(0,0, 25 * track.getLane(0).getLength() ,10);
-		Car currentCar = track.getLane(0).getFirstCar();
 		
-		while(!(currentCar == null)){
-			g.setColor(colorMap[currentCar.getId() % colorMap.length]);
-			g.fillRect(currentCar.getPosition()*25, 20, 20, 10);
-			currentCar = track.getLane(0).getNextCar(currentCar);			
+		for(Lane lane : track.getAllLanes()){
+			for(Car car: lane.getAllCars()){
+				g.fillRect(car.getPosition()*25, 25+lane.getFastLaneIndex()*15, 20, 10);
+				g.setColor(colorMap[car.getId() - 1]);
+			}	
 		}
-		
+			
+
 		g.setColor(Color.BLACK);
-		g.fillRect(0,40, 25 * track.getLane(0).getLength() ,10);
+		g.fillRect(0,60, 25 * track.getLane(0).getLength() ,10);
 		
 	}
 	
