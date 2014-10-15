@@ -49,6 +49,5 @@ public class MainFrame extends JFrame implements IImpulsable {
 	public void pulse() {
 		Track track = simulation.performStep();
 		trackPanel.setTrack(track);
-		
 	}
 }

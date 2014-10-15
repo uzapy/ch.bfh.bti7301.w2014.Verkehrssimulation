@@ -13,16 +13,15 @@ import util.RandomPool;
 public class Nagel_Schreckenberg_Simulation {
 
 	private Track track;
-	private Lane lane1, lane2, lane3;
 	private double trödelFactor = 0.2;
 	
 	/**
 	 * @author bublm1
 	 */
 	public Nagel_Schreckenberg_Simulation() {
-		this.lane1 = new Lane(22,100,0);
-		this.lane2 = new Lane(28,100,1);
-		this.lane3 = new Lane(33,100,2);
+		Lane lane1 = new Lane(22,100,0);
+		Lane lane2 = new Lane(28,100,1);
+		Lane lane3 = new Lane(33,100,2);
 		
 		this.track = new Track();
 		this.track.addLane(lane2);

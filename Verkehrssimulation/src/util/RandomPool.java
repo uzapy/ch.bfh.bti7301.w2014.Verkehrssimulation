@@ -7,6 +7,8 @@ import java.awt.Color;
 import java.util.Random;
 
 import model.Car;
+import model.Lane;
+import model.Track;
 
 /**
  * @author bublm1
@@ -43,11 +45,13 @@ public class RandomPool {
 		return r.nextInt(longest - shortest) + shortest;
 	}
 	
-	public static Car getNewCar(){
+	public static Car getNewCar(Track track){
+		
 		int speed = r.nextInt(120 - 80) + 80;
 		double trödelFactor = r.nextDouble() * (0.8 - 0.2) + 0.2;
-		int laneID = r.nextInt(1 - 3) + 3;
+		Lane lane = track.getAllLanes().get(r.nextInt(1 - 3) + 3);
 		int length = getNewCarLength();
-		return new Car(id, speed, trödelFactor, 0, length, laneID);
+		
+		return new Car(id, speed, trödelFactor, 0, length, lane);
 	}
 }

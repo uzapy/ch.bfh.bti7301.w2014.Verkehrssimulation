@@ -2,8 +2,6 @@ package model;
 
 import java.util.concurrent.ConcurrentSkipListMap;
 
-
-
 /**
  * @author stahr2
  *
