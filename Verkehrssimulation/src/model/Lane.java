@@ -12,7 +12,7 @@ import java.util.Map.Entry;
 public class Lane {
 	public static final int WIDTH = 4;	// Breite der Fahrspur in Metern
 	
-	private SimulationSkipList<Integer, Car> lane;
+	private SimulationSkipList lane;
 	private int maxVelocity;			// erlaubte Höchstgeschwindigkeit in Meter pro Sekunde
 	private int fastLaneIndex;
 	private int length;
@@ -20,7 +20,7 @@ public class Lane {
 	public Lane(int maxVelocity, int length, int fastLaneIndex){
 		this.length = length;
 		this.maxVelocity = maxVelocity;
-		this.lane = new SimulationSkipList<Integer, Car>();
+		this.lane = new SimulationSkipList();
 		this.fastLaneIndex = fastLaneIndex;
 	}
 	
@@ -64,7 +64,7 @@ public class Lane {
 		return this.lane.firstEntry().getValue();
 	}
 	
-	public SimulationSkipList<Integer, Car> getLane(){
+	public SimulationSkipList getLane(){
 		return this.lane;
 	}
 	

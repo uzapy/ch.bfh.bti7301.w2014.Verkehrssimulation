@@ -19,13 +19,15 @@ public class MainFrame extends JFrame implements IImpulsable {
 	
 	private Nagel_Schreckenberg_Simulation simulation;
 	private TrackPanel trackPanel;
+	private int skippedPulses;
 	
 	public MainFrame(String title) {
 		super(title);
 		
-		simulation = new Nagel_Schreckenberg_Simulation();
+		this.simulation = new Nagel_Schreckenberg_Simulation();
 		Track track = simulation.getTrack();
-		trackPanel = new TrackPanel(track);
+		this.trackPanel = new TrackPanel(track);
+		this.skippedPulses = simulation.getSimulationSpeed();
 		
 		new Impulse(this);		
 
@@ -37,7 +39,7 @@ public class MainFrame extends JFrame implements IImpulsable {
 		
 		// Add Swing Components
 		Container container = getContentPane();
-		container.add(trackPanel, BorderLayout.CENTER);
+		container.add(this.trackPanel, BorderLayout.CENTER);
 		container.add(button, BorderLayout.SOUTH);
 		// Tutorial: http://www.youtube.com/watch?v=svM0SBFqp4s
 	}
@@ -47,7 +49,21 @@ public class MainFrame extends JFrame implements IImpulsable {
 	 */
 	@Override
 	public void pulse() {
-		Track track = simulation.performStep();
-		trackPanel.setTrack(track);
+		if (this.skippedPulses >= this.simulation.getSimulationSpeed()) {
+			Track track = simulation.performStep();			
+			this.trackPanel.setTrack(track);
+			this.skippedPulses = 0;
+		} else {
+			this.trackPanel.performSimStep(this.skippedPulses);
+			this.skippedPulses++;
+		}
+	}
+
+	/* (non-Javadoc)
+	 * @see timer.IImpulsable#getInterval()
+	 */
+	@Override
+	public int getInterval() {
+		return this.simulation.getSimulationSpeed();
 	}
 }

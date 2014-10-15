@@ -19,4 +19,13 @@ public class MetricToPixel {
 		return distance * MetricToPixel.scalingFactor;
 	}
 
+	/**
+	 * @author bublm1
+	 * @param stepBackPosition
+	 * @return
+	 */
+	public static int scale(float distance) {
+		return (int)distance * MetricToPixel.scalingFactor;
+	}
+
 }

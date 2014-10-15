@@ -57,4 +57,14 @@ public class TrackPanel extends JPanel {
 		this.repaint();
 	}
 
+	/**
+	 * @author bublm1
+	 */
+	public void performSimStep(int delta) {
+		for (LanePanel lanePanel : this.lanePanels) {
+			lanePanel.performSimStep(delta);
+		}
+		this.repaint();
+	}
+
 }

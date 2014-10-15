@@ -12,6 +12,7 @@ import javax.swing.Timer;
  * @author bublm1
  */
 public class Impulse implements ActionListener {
+	private static final int second = 1000;
 	private Timer timer;
 	private IImpulsable impulsable;
 	
@@ -20,7 +21,7 @@ public class Impulse implements ActionListener {
 	 */
 	public Impulse(IImpulsable impulsable) {
 		this.impulsable = impulsable;
-		this.timer = new Timer(1000, this);
+		this.timer = new Timer(Impulse.second / impulsable.getInterval(), this);
 		this.timer.start();
 	}
 	

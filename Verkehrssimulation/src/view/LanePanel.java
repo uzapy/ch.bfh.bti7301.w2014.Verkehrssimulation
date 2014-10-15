@@ -55,4 +55,13 @@ public class LanePanel extends JPanel  {
 		// TODO: add gschtrichleti linie
 	}
 
+	/**
+	 * @author bublm1
+	 */
+	public void performSimStep(int delta) {
+		for (CarPanel carPanel : this.carPanels) {
+			carPanel.performSimStep(delta);
+		}
+	}
+
 }
