@@ -2,11 +2,12 @@ package model;
 
 public class Car {
 
+	public static final int WIDTH = 2;	// Breite eines Autos in Meter
 	private int id;
 	private double trödelFactor;
-	private int position; 			// Position in Meter
-	private int speed; 				// Gesschwindigkeit in Meter pro Sekunde
-	private int length;				// Länge des Autos in Meter
+	private int position; 				// Position in Meter
+	private int speed; 					// Gesschwindigkeit in Meter pro Sekunde
+	private int length;					// Länge des Autos in Meter
 	private Lane lane;
 
 	public Car(int id,int speed, double trödelFactor, int position, int length, Lane lane) {
@@ -18,7 +19,7 @@ public class Car {
 		this.length = length;
 	}
 
-	public Car(int id, int speed, double trödelFactor, int position,int length, int laneID) {
+	public Car(int id, int speed, double trödelFactor, int position, int length, int laneID) {
 		// TODO Auto-generated constructor stub
 		// TODO: Add constructor with Lane ID --> Place car on the Lane with the given ID
 	}
@@ -57,5 +58,9 @@ public class Car {
 
 	public int getLength() {
 		return this.length;
+	}
+
+	public int getWidth() {
+		return Car.WIDTH;
 	}
 }

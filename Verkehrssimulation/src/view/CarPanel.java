@@ -30,15 +30,17 @@ public class CarPanel extends JPanel {
 	/**
 	 * @author bublm1
 	 */
-	public void paintComponent(Graphics g) {
+	public void paintComponent(Graphics g, int trackOffset) {
 		super.paintComponent(g);
 
 		g.setColor(this.color);
 		
 		int xPosition = MetricToPixel.scale(car.getBackPosition());
-		int yPosition = 20 + car.getLane().getFastLaneIndex() * 15;
+		int yPosition = MetricToPixel.scale(trackOffset) +
+				car.getLane().getFastLaneIndex() * MetricToPixel.scale(car.getLane().getWidth()) +
+				MetricToPixel.scale((car.getLane().getWidth() - car.getWidth()) / 2);
 		int length = MetricToPixel.scale(car.getLength());
-		int width = MetricToPixel.scale(2);
+		int width = MetricToPixel.scale(car.getWidth());
 		g.fillRect(xPosition, yPosition, length, width);
 	}
 }

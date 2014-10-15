@@ -3,6 +3,8 @@
  */
 package model;
 
+import java.util.Collection;
+
 import util.RandomPool;
 
 /**
@@ -47,7 +49,50 @@ public class Nagel_Schreckenberg_Simulation {
 	}
 	
 	public Track performStep(){
-		this.track.update();
+		for (Lane lane : this.track.getAllLanes()) {
+			Car car = lane.getLane().firstEntry().getValue();
+
+			int speedDelta = 5;
+			
+			while (!(car == null)) {
+				if (car.getSpeed() < lane.getMaxVelocity()) {
+					car.setSpeed(car.getSpeed() + speedDelta);
+				}
+
+				if (!(lane.getNextCar(car) == null)) {
+					int availableSpace = lane.getNextCar(car).getBackPosition() - car.getPosition() - 1; // Sicherheitsabstand
+					if (availableSpace < car.getSpeed()) {
+						car.setSpeed(availableSpace);
+					}
+				} else {
+					int rest = lane.getLength() - car.getPosition();
+					int firstCarPosition = lane.getFirstCar().getBackPosition();
+					int availableSpace = rest + firstCarPosition - 1;
+					
+					if (availableSpace < car.getSpeed()) {
+						car.setSpeed(availableSpace);
+					}
+				}
+
+				if (RandomPool.nextDouble() <= car.getTrödelFactor()) {
+					if (car.getSpeed() > speedDelta) {
+						car.setSpeed(car.getSpeed() - speedDelta);						
+					}else {
+						car.setSpeed(0);
+					}
+				}
+
+				car = lane.getNextCar(car);
+			}
+
+			Collection<Car> cars = lane.getAllCars();
+			for (Car currentCar : cars) {
+				int oldPosition = currentCar.getPosition();
+				currentCar.setPosition((currentCar.getPosition() + currentCar.getSpeed()) % lane.getLength());
+				lane.getLane().updatePosition(oldPosition,currentCar.getPosition());
+			}
+		}
+
 		return track;
 	}
 

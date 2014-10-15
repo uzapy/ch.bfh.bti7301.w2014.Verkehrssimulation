@@ -13,6 +13,7 @@ import java.util.concurrent.ConcurrentSkipListMap;
 
 @SuppressWarnings("serial")
 public class SimulationSkipList<Integer, Car> extends ConcurrentSkipListMap<Integer, Car> {
+
 	//Hier eigene Methoden implementieren. z.B update Methode
 	public void updatePosition(Integer oldPosition, Integer newPosition){
 		if(oldPosition != newPosition){
