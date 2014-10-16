@@ -25,7 +25,7 @@ public class MetricToPixel {
 	 * @return
 	 */
 	public static int scale(float distance) {
-		return (int)distance * MetricToPixel.scalingFactor;
+		return (int) distance * MetricToPixel.scalingFactor;
 	}
 
 }
