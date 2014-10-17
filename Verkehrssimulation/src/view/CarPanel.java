@@ -18,7 +18,8 @@ import util.RandomPool;
 public class CarPanel extends JPanel {
 
 	private Car car;
-	private float stepBackPosition;
+	private float xSimPosition;
+	private float ySimPosition;
 	private Color color;
 
 	/**
@@ -27,7 +28,7 @@ public class CarPanel extends JPanel {
 	 */
 	public CarPanel(Car car) {
 		this.car = car;
-		this.stepBackPosition = this.car.getPosition();
+		this.xSimPosition = this.car.getPosition();
 		this.color = RandomPool.getNewColor();
 	}
 
@@ -39,10 +40,8 @@ public class CarPanel extends JPanel {
 
 		g.setColor(this.color);
 		
-		int xPosition = MetricToPixel.scale(this.stepBackPosition);
-		int yPosition = MetricToPixel.scale(trackOffset) +
-				car.getLane().getFastLaneIndex() * MetricToPixel.scale(Lane.WIDTH) +
-				MetricToPixel.scale((Lane.WIDTH - Car.WIDTH) / 2);
+		int xPosition = MetricToPixel.scale(this.xSimPosition);
+		int yPosition = MetricToPixel.scale(trackOffset) + MetricToPixel.scale(this.ySimPosition);
 		int length = MetricToPixel.scale(car.getLength());
 		int width = MetricToPixel.scale(Car.WIDTH);
 		
@@ -55,16 +54,28 @@ public class CarPanel extends JPanel {
 	 */
 	public void performSimStep(int simStep) {
 		
-		float simProgress = (float)this.car.getSpeed() / Nagel_Schreckenberg_Simulation.FRAMES_PER_SECOND * (float)simStep;
-		this.stepBackPosition = ((float)this.car.getBackPosition() + simProgress);
+		float xSimProgress = (float)this.car.getSpeed() / Nagel_Schreckenberg_Simulation.FRAMES_PER_SECOND * (float)simStep;
+		this.xSimPosition = ((float)this.car.getBackPosition() + xSimProgress);
 	
-		if (this.stepBackPosition > this.car.getLane().getLength()) {
-			this.stepBackPosition = this.stepBackPosition - this.car.getLane().getLength();
+		if (this.xSimPosition > this.car.getLane().getLength()) {
+			this.xSimPosition = this.xSimPosition - this.car.getLane().getLength();
 		}
 		
-		if (this.car.getId() == 1) {
+		this.ySimPosition = car.getLane().getFastLaneIndex() * Lane.WIDTH  + (Lane.WIDTH - Car.WIDTH) / 2;
+		
+		if (this.car.getLane().getFastLaneIndex() != this.car.getPreviousLane().getFastLaneIndex()) {
+			float ySimProgress = (float)Lane.WIDTH / Nagel_Schreckenberg_Simulation.FRAMES_PER_SECOND * (float)simStep;
+			
+			if (this.car.getLane().getFastLaneIndex() > this.car.getPreviousLane().getFastLaneIndex()) {
+				this.ySimPosition = this.ySimPosition - ySimProgress; // Überholt				
+			} else {
+				this.ySimPosition = this.ySimPosition + ySimProgress; // Zurück auf normale spur	
+			}
+		}
+		
+//		if (this.car.getId() == 1) {
 //			System.out.println(this.car.getBackPosition() + "|" + this.car.getSpeed() + "|" + simStep + "|" + this.stepBackPosition);
 //			System.out.println(MetricToPixel.scale(this.stepBackPosition) + "|" + this.stepBackPosition);
-		}
+//		}
 	}
 }
