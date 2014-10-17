@@ -7,7 +7,7 @@ package util;
  * @author bublm1
  */
 public class MetricToPixel {
-	private static int scalingFactor = 6;
+	private static int scalingFactor = 8;
 
 	/**
 	 * @author bublm1

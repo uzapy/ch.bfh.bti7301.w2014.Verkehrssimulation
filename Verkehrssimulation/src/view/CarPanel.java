@@ -57,7 +57,7 @@ public class CarPanel extends JPanel {
 		float simProgress = (float)this.car.getSpeed() / 30 * (float)simStep;
 		this.stepBackPosition = ((float)this.car.getBackPosition() + simProgress);
 	
-		if ((this.stepBackPosition + this.car.getLength()) > this.car.getLane().getLength()) {
+		if (this.stepBackPosition > this.car.getLane().getLength()) {
 			this.stepBackPosition = this.stepBackPosition - this.car.getLane().getLength();
 		}
 		
