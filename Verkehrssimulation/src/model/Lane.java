@@ -68,13 +68,7 @@ public class Lane {
 		return this.lane;
 	}
 	
-	public Collection<Car> getAllCars(){
-		
+	public Collection<Car> getCars(){
 		return this.lane.values();
 	}
-
-	public int getWidth() {
-		return Lane.WIDTH;
-	}
-	
 }

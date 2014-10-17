@@ -29,7 +29,7 @@ public class TrackPanel extends JPanel {
 		super();
 		this.track = track;
 
-		for (Lane lane : this.track.getAllLanes()) {
+		for (Lane lane : this.track.getLanes()) {
 			this.lanePanels.add(new LanePanel(lane));
 		}
 	}
@@ -46,10 +46,13 @@ public class TrackPanel extends JPanel {
 			lanePanel.paintComponent(g, trackOffset);
 		}
 
-		int yPositionOtherBlackBar = this.lanePanels.size() * MetricToPixel.scale(Lane.WIDTH) + MetricToPixel.scale(trackOffset);
-
+		int xPosition = 0;
+		int yPosition = this.lanePanels.size() * MetricToPixel.scale(Lane.WIDTH) + MetricToPixel.scale(trackOffset);
+		int length = MetricToPixel.scale(track.getLane(0).getLength());
+		int width = MetricToPixel.scale(trackOffset);
+		
 		g.setColor(Color.BLACK);
-		g.fillRect(0, yPositionOtherBlackBar, MetricToPixel.scale(track.getLane(0).getLength()), MetricToPixel.scale(trackOffset));
+		g.fillRect(xPosition, yPosition, length, width);
 	}
 
 	public void setTrack(Track track) {
@@ -60,9 +63,9 @@ public class TrackPanel extends JPanel {
 	/**
 	 * @author bublm1
 	 */
-	public void performSimStep(int delta) {
+	public void performSimStep(int simStep) {
 		for (LanePanel lanePanel : this.lanePanels) {
-			lanePanel.performSimStep(delta);
+			lanePanel.performSimStep(simStep);
 		}
 		this.repaint();
 	}

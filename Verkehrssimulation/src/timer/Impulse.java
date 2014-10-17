@@ -19,9 +19,9 @@ public class Impulse implements ActionListener {
 	/**
 	 * @author bublm1
 	 */
-	public Impulse(IImpulsable impulsable) {
+	public Impulse(IImpulsable impulsable, int interval) {
 		this.impulsable = impulsable;
-		this.timer = new Timer(Impulse.second / impulsable.getInterval(), this);
+		this.timer = new Timer(Impulse.second / interval, this);
 		this.timer.start();
 	}
 	

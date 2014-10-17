@@ -29,7 +29,7 @@ public class LanePanel extends JPanel  {
 	public LanePanel(Lane lane) {
 		this.lane = lane;
 		
-		for (Car car : lane.getAllCars()) {
+		for (Car car : lane.getCars()) {
 			this.carPanels.add(new CarPanel(car));
 		}
 	}
@@ -37,16 +37,16 @@ public class LanePanel extends JPanel  {
 	public void paintComponent(Graphics g, int trackOffset) {
 		super.paintComponent(g);
 		
-		float greyBase = 1F;
 		float invertedFastlaneIndex = 1.0F / (lane.getFastLaneIndex() + 1);
-		float grayComponent = greyBase * invertedFastlaneIndex;
+		float grayComponent = invertedFastlaneIndex;
 		
 		g.setColor(new Color(grayComponent, grayComponent, grayComponent));
 		
 		int xPosition = 0;
-		int yPosition = MetricToPixel.scale(trackOffset + lane.getWidth() * lane.getFastLaneIndex());
+		int yPosition = MetricToPixel.scale(trackOffset + Lane.WIDTH * lane.getFastLaneIndex());
 		int length = MetricToPixel.scale(lane.getLength());
-		int width = MetricToPixel.scale(lane.getWidth());
+		int width = MetricToPixel.scale(Lane.WIDTH);
+		
 		g.fillRect(xPosition, yPosition, length, width);
 		
 		for (CarPanel carPanel : carPanels) {
@@ -58,9 +58,9 @@ public class LanePanel extends JPanel  {
 	/**
 	 * @author bublm1
 	 */
-	public void performSimStep(int delta) {
+	public void performSimStep(int simStep) {
 		for (CarPanel carPanel : this.carPanels) {
-			carPanel.performSimStep(delta);
+			carPanel.performSimStep(simStep);
 		}
 	}
 

@@ -17,7 +17,6 @@ public class SimulationSkipList extends ConcurrentSkipListMap<Integer, Car> {
 		if(oldPosition != newPosition){
 			Car car = this.get(oldPosition);
 			this.remove(oldPosition);
-//			System.out.println(newPosition + " für ID: " + car.getId() + " auf Lane:" + car.getLane().getFastLaneIndex());
 			this.put(newPosition, car);
 		}
 	}

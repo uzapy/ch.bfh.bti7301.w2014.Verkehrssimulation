@@ -14,25 +14,16 @@ public class Track {
 	public Track(){
 		this.Lanes = new ArrayList<Lane>();		
 	}
-
-	public ArrayList<Lane> getTrack() {
-		return Lanes;
-	}
 	
 	public void addLane(Lane lane){
 		this.Lanes.add(lane);
-	}
-
-	public void setTrack(ArrayList<Lane> lanes) {
-		Lanes = lanes;
 	}
 	
 	public Lane getLane(int Lane){
 		return this.Lanes.get(Lane);
 	}
 	
-	public ArrayList<Lane> getAllLanes() {
+	public ArrayList<Lane> getLanes() {
 		return this.Lanes;
 	}
-
 }

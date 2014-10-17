@@ -19,11 +19,6 @@ public class Car {
 		this.length = length;
 	}
 
-//	public Car(int id, int speed, double trödelFactor, int position, int length, int laneID) {
-//		// TODO Auto-generated constructor stub
-//		// TODO: Add constructor with Lane ID --> Place car on the Lane with the given ID
-//	}
-
 	public int getId() {
 		return id;
 	}
@@ -58,9 +53,5 @@ public class Car {
 
 	public int getLength() {
 		return this.length;
-	}
-
-	public int getWidth() {
-		return Car.WIDTH;
 	}
 }

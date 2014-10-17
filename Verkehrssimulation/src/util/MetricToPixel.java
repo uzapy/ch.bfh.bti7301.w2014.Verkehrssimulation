@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package util;
 
@@ -7,9 +7,8 @@ package util;
  * @author bublm1
  */
 public class MetricToPixel {
-
 	private static int scalingFactor = 6;
-	
+
 	/**
 	 * @author bublm1
 	 * @param length
@@ -25,7 +24,6 @@ public class MetricToPixel {
 	 * @return
 	 */
 	public static int scale(float distance) {
-		return (int) distance * MetricToPixel.scalingFactor;
+		return (int) (distance * (float)MetricToPixel.scalingFactor);
 	}
-
 }

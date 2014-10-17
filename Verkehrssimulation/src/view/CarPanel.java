@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import javax.swing.JPanel;
 
 import model.Car;
+import model.Lane;
 import util.MetricToPixel;
 import util.RandomPool;
 
@@ -37,16 +38,13 @@ public class CarPanel extends JPanel {
 
 		g.setColor(this.color);
 		
-//		if (this.stepBackPosition >= this.car.getBackPosition()) {
-			this.stepBackPosition = this.car.getBackPosition();
-//		}
-		
 		int xPosition = MetricToPixel.scale(this.stepBackPosition);
 		int yPosition = MetricToPixel.scale(trackOffset) +
-				car.getLane().getFastLaneIndex() * MetricToPixel.scale(car.getLane().getWidth()) +
-				MetricToPixel.scale((car.getLane().getWidth() - car.getWidth()) / 2);
+				car.getLane().getFastLaneIndex() * MetricToPixel.scale(Lane.WIDTH) +
+				MetricToPixel.scale((Lane.WIDTH - Car.WIDTH) / 2);
 		int length = MetricToPixel.scale(car.getLength());
-		int width = MetricToPixel.scale(car.getWidth());
+		int width = MetricToPixel.scale(Car.WIDTH);
+		
 		g.fillRect(xPosition, yPosition, length, width);
 	}
 
@@ -54,11 +52,14 @@ public class CarPanel extends JPanel {
 	 * @author bublm1
 	 * @param simulationStep
 	 */
-	public void performSimStep(int delta) {
-//		if (this.car.getId() == 7) {
-//			System.out.println(this.stepBackPosition + " /// " + (this.car.getBackPosition() + delta * car.getSpeed()));
+	public void performSimStep(int simStep) {
+		
+		float simProgress = (float)this.car.getSpeed() / 30 * (float)simStep;
+		this.stepBackPosition = ((float)this.car.getBackPosition() + simProgress) % (this.car.getLane().getLength());
+	
+//		if (this.car.getId() == 1) {
+//			System.out.println(this.car.getBackPosition() + "|" + this.car.getSpeed() + "|" + delta + "|" + this.stepBackPosition);
+//			System.out.println(MetricToPixel.scale(this.stepBackPosition) + "|" + this.stepBackPosition);
 //		}
-//		this.stepBackPosition = this.stepBackPosition + (int)Math.ceil(((float)car.getSpeed() / 30));
-//		this.stepBackPosition = this.car.getBackPosition() + delta * car.getSpeed();
 	}
 }

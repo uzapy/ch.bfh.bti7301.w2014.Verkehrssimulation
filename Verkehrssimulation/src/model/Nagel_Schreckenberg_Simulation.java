@@ -3,8 +3,6 @@
  */
 package model;
 
-import java.util.Collection;
-
 import util.RandomPool;
 
 /**
@@ -14,6 +12,7 @@ public class Nagel_Schreckenberg_Simulation {
 
 	private Track track;
 	private int simulationSpeed = 30;	// Simulationsgeschwindigkeit in Frames pro Sekunde
+	private int speedDelta = 5;			// Standardbeschleunigung in Meter pro Sekunde
 	private double trödelFactor = 0.2;
 	
 	/**
@@ -49,14 +48,15 @@ public class Nagel_Schreckenberg_Simulation {
 	}
 	
 	public Track performStep(){
-		for (Lane lane : this.track.getAllLanes()) {
-			Car car = lane.getLane().firstEntry().getValue();
-
-			int speedDelta = 5;
-			
-			while (!(car == null)) {
+		for (Lane lane : this.track.getLanes()) {
+			for (Car car : lane.getCars()) {
+				
+				int oldPosition = car.getPosition();
+				car.setPosition((oldPosition + car.getSpeed()) % lane.getLength());
+				lane.getLane().updatePosition(oldPosition, car.getPosition());
+				
 				if (car.getSpeed() < lane.getMaxVelocity()) {
-					car.setSpeed(car.getSpeed() + speedDelta);
+					car.setSpeed(car.getSpeed() + this.speedDelta);
 				}
 
 				if (!(lane.getNextCar(car) == null)) {
@@ -75,21 +75,12 @@ public class Nagel_Schreckenberg_Simulation {
 				}
 
 				if (RandomPool.nextDouble() <= car.getTrödelFactor()) {
-					if (car.getSpeed() > speedDelta) {
-						car.setSpeed(car.getSpeed() - speedDelta);						
+					if (car.getSpeed() > this.speedDelta) {
+						car.setSpeed(car.getSpeed() - this.speedDelta);						
 					}else {
 						car.setSpeed(0);
 					}
 				}
-
-				car = lane.getNextCar(car);
-			}
-
-			Collection<Car> cars = lane.getAllCars();
-			for (Car currentCar : cars) {
-				int oldPosition = currentCar.getPosition();
-				currentCar.setPosition((currentCar.getPosition() + currentCar.getSpeed()) % lane.getLength());
-				lane.getLane().updatePosition(oldPosition,currentCar.getPosition());
 			}
 		}
 
