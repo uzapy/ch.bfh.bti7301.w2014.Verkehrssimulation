@@ -55,11 +55,15 @@ public class CarPanel extends JPanel {
 	public void performSimStep(int simStep) {
 		
 		float simProgress = (float)this.car.getSpeed() / 30 * (float)simStep;
-		this.stepBackPosition = ((float)this.car.getBackPosition() + simProgress) % (this.car.getLane().getLength());
+		this.stepBackPosition = ((float)this.car.getBackPosition() + simProgress);
 	
-//		if (this.car.getId() == 1) {
-//			System.out.println(this.car.getBackPosition() + "|" + this.car.getSpeed() + "|" + delta + "|" + this.stepBackPosition);
+		if ((this.stepBackPosition + this.car.getLength()) > this.car.getLane().getLength()) {
+			this.stepBackPosition = this.stepBackPosition - this.car.getLane().getLength();
+		}
+		
+		if (this.car.getId() == 1) {
+//			System.out.println(this.car.getBackPosition() + "|" + this.car.getSpeed() + "|" + simStep + "|" + this.stepBackPosition);
 //			System.out.println(MetricToPixel.scale(this.stepBackPosition) + "|" + this.stepBackPosition);
-//		}
+		}
 	}
 }
