@@ -16,8 +16,10 @@ public class Lane {
 	private int maxVelocity;			// erlaubte Höchstgeschwindigkeit in Meter pro Sekunde
 	private int fastLaneIndex;
 	private int length;
-	private Lane upperLane;
-	private Lane lowerLane;
+	private Lane leftLane;
+	private Lane rightLane;
+	private boolean passableLeft;
+	private boolean passableRight;
 	private Track track;
 	
 	public Lane(int maxVelocity, int length, int fastLaneIndex){
@@ -27,30 +29,52 @@ public class Lane {
 		this.fastLaneIndex = fastLaneIndex;
 	}
 	
-	public Lane getUpperLane() {
-		return upperLane;
+	public boolean isPassableLeft() {
+		return passableLeft;
 	}
 
-	public void setUpperLane() {
+	public void setPassableLeft(boolean passableLeft) {
+		this.passableLeft = passableLeft;
+	}
+
+	public boolean isPassableRight() {
+		return passableRight;
+	}
+
+	public void setPassableRight(boolean passableRight) {
+		this.passableRight = passableRight;
+	}
+	
+	public Lane getLeftLane() {
+		return leftLane;
+	}
+
+	public void setLeftLane() {
 		if(this.fastLaneIndex != 0){
-			this.upperLane = track.getLane(this.fastLaneIndex -1);
+			this.leftLane = track.getLane(this.fastLaneIndex - 1);
+		}
+		else{
+			this.passableLeft = false;
 		}
 	}
 
-	public Lane getLowerLane() {
-		return lowerLane;
+	public Lane getRightLane() {
+		return rightLane;
 	}
 
-	public void setLowerLane() {
+	public void setRightLane() {
 		if(this.fastLaneIndex < (track.getLanes().size() - 1)){
-			this.upperLane = track.getLane(this.fastLaneIndex + 1);
+			this.leftLane = track.getLane(this.fastLaneIndex + 1);
+		}
+		else{
+			this.passableRight = false;
 		}
 	}
 
 	public void setTrack(Track track) {
 		this.track = track;
-		this.setLowerLane();
-		this.setUpperLane();
+		this.setRightLane();
+		this.setLeftLane();
 	}
 
 	public int getFastLaneIndex() {
