@@ -68,6 +68,7 @@ public class Lane {
 	public void setRightLane() {
 		if(this.fastLaneIndex < (track.getLanes().size() - 1)){
 			this.rightLane = track.getLane(this.fastLaneIndex + 1);
+			this.passableRight = true;
 		}
 		else{
 			this.passableRight = false;
@@ -96,8 +97,8 @@ public class Lane {
 		return this.lane.put(car.getPosition(), car);
 	}
 	
-	public boolean removeCar(Car car){
-		return this.lane.remove(car.getPosition(), car);
+	public boolean removeCar(int oldPosition, Car car){
+		return this.lane.remove(oldPosition, car);
 	}
 	
 	public Car getCarByPostition(int position) {
@@ -121,7 +122,11 @@ public class Lane {
 	}
 	
 	public Car getFirstCar(){
-		return this.lane.firstEntry().getValue();
+		Entry<Integer, Car> first = this.lane.firstEntry();
+		if (!(first == null)){
+			return first.getValue();
+		}
+		return null;
 	}
 	
 	public SimulationSkipList getLane(){
