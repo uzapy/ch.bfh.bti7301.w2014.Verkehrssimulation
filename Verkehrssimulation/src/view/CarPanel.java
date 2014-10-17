@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 
 import model.Car;
 import model.Lane;
+import model.Nagel_Schreckenberg_Simulation;
 import util.MetricToPixel;
 import util.RandomPool;
 
@@ -54,7 +55,7 @@ public class CarPanel extends JPanel {
 	 */
 	public void performSimStep(int simStep) {
 		
-		float simProgress = (float)this.car.getSpeed() / 30 * (float)simStep;
+		float simProgress = (float)this.car.getSpeed() / Nagel_Schreckenberg_Simulation.FRAMES_PER_SECOND * (float)simStep;
 		this.stepBackPosition = ((float)this.car.getBackPosition() + simProgress);
 	
 		if (this.stepBackPosition > this.car.getLane().getLength()) {

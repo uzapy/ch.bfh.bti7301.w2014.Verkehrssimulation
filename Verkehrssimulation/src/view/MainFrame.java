@@ -25,9 +25,9 @@ public class MainFrame extends JFrame implements IImpulsable {
 		super(title);
 		
 		this.simulation = new Nagel_Schreckenberg_Simulation();
-		Track track = simulation.getTrack();
+		Track track = this.simulation.getTrack();
 		this.trackPanel = new TrackPanel(track);
-		this.simStep = simulation.getSimulationSpeed();
+		this.simStep = Nagel_Schreckenberg_Simulation.FRAMES_PER_SECOND;
 		
 		new Impulse(this, this.simStep);		
 
@@ -49,8 +49,8 @@ public class MainFrame extends JFrame implements IImpulsable {
 	 */
 	@Override
 	public void pulse() {
-		if (this.simStep >= this.simulation.getSimulationSpeed()) {
-			Track track = simulation.performStep();			
+		if (this.simStep >= Nagel_Schreckenberg_Simulation.FRAMES_PER_SECOND) {
+			Track track = this.simulation.performStep();			
 			this.trackPanel.setTrack(track);
 			this.simStep = 0;
 		} else {

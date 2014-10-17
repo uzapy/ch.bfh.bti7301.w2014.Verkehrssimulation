@@ -10,9 +10,9 @@ import util.RandomPool;
  */
 public class Nagel_Schreckenberg_Simulation {
 
+	public static int FRAMES_PER_SECOND = 30;	// Simulationsgeschwindigkeit in Frames pro Sekunde
 	private Track track;
-	private int simulationSpeed = 30;	// Simulationsgeschwindigkeit in Frames pro Sekunde
-	private int speedDelta = 5;			// Standardbeschleunigung in Meter pro Sekunde
+	private int speedDelta = 5;					// Standardbeschleunigung in Meter pro Sekunde
 	private double trödelFactor = 0.2;
 	
 	/**
@@ -94,13 +94,4 @@ public class Nagel_Schreckenberg_Simulation {
 	public Track getTrack() {
 		return this.track;
 	}
-
-	/**
-	 * @author bublm1
-	 * @return
-	 */
-	public int getSimulationSpeed() {
-		return this.simulationSpeed;
-	}
-
 }
