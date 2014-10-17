@@ -16,6 +16,9 @@ public class Lane {
 	private int maxVelocity;			// erlaubte Höchstgeschwindigkeit in Meter pro Sekunde
 	private int fastLaneIndex;
 	private int length;
+	private Lane upperLane;
+	private Lane lowerLane;
+	private Track track;
 	
 	public Lane(int maxVelocity, int length, int fastLaneIndex){
 		this.length = length;
@@ -24,6 +27,32 @@ public class Lane {
 		this.fastLaneIndex = fastLaneIndex;
 	}
 	
+	public Lane getUpperLane() {
+		return upperLane;
+	}
+
+	public void setUpperLane() {
+		if(this.fastLaneIndex != 0){
+			this.upperLane = track.getLane(this.fastLaneIndex -1);
+		}
+	}
+
+	public Lane getLowerLane() {
+		return lowerLane;
+	}
+
+	public void setLowerLane() {
+		if(this.fastLaneIndex < (track.getLanes().size() - 1)){
+			this.upperLane = track.getLane(this.fastLaneIndex + 1);
+		}
+	}
+
+	public void setTrack(Track track) {
+		this.track = track;
+		this.setLowerLane();
+		this.setUpperLane();
+	}
+
 	public int getFastLaneIndex() {
 		return fastLaneIndex;
 	}
