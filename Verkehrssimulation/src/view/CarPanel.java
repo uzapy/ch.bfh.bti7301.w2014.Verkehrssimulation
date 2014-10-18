@@ -57,16 +57,16 @@ public class CarPanel extends JPanel {
 		float xSimProgress = (float)this.car.getSpeed() / Nagel_Schreckenberg_Simulation.FRAMES_PER_SECOND * (float)simStep;
 		this.xSimPosition = ((float)this.car.getBackPosition() + xSimProgress);
 	
-		if (this.xSimPosition > this.car.getLane().getLength()) {
-			this.xSimPosition = this.xSimPosition - this.car.getLane().getLength();
+		if (this.xSimPosition > this.car.getCurrentLane().getLength()) {
+			this.xSimPosition = this.xSimPosition - this.car.getCurrentLane().getLength();
 		}
 
 		this.ySimPosition = car.getPreviousLane().getFastLaneIndex() * Lane.WIDTH  + (Lane.WIDTH - Car.WIDTH) / 2;
 		
-		if (this.car.getLane().getFastLaneIndex() != this.car.getPreviousLane().getFastLaneIndex()) {
+		if (this.car.getCurrentLane().getFastLaneIndex() != this.car.getPreviousLane().getFastLaneIndex()) {
 			float ySimProgress = (float)Lane.WIDTH / Nagel_Schreckenberg_Simulation.FRAMES_PER_SECOND * (float)simStep;
 			
-			if (this.car.getLane().getFastLaneIndex() < this.car.getPreviousLane().getFastLaneIndex()) {
+			if (this.car.getCurrentLane().getFastLaneIndex() < this.car.getPreviousLane().getFastLaneIndex()) {
 				this.ySimPosition = this.ySimPosition - ySimProgress; // Überholt				
 			} 
 			else {

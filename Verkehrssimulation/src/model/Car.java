@@ -54,7 +54,7 @@ public class Car {
 		this.speed = speed;
 	}
 
-	public Lane getLane() { // TODO: Umbenennen nach getCurrentLane()
+	public Lane getCurrentLane() {
 		return this.currentLane;
 	}
 	

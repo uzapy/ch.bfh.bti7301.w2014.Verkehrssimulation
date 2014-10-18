@@ -30,20 +30,20 @@ public class Nagel_Schreckenberg_Simulation {
 		this.track.addLane(lane3);
 		
 		lane1.addCar(new Car(1,0,0,0, RandomPool.getNewCarLength(), lane1));
-//		lane1.addCar(new Car(2,0,trödelFactor,30, RandomPool.getNewCarLength(), lane1));
-//		lane1.addCar(new Car(3,0,trödelFactor,40, RandomPool.getNewCarLength(), lane1));
+		lane1.addCar(new Car(2,0,trödelFactor,30, RandomPool.getNewCarLength(), lane1));
+		lane1.addCar(new Car(3,0,trödelFactor,40, RandomPool.getNewCarLength(), lane1));
 //		lane1.addCar(new Car(4,0,trödelFactor,60, RandomPool.getNewCarLength(), lane1));
 //		lane1.addCar(new Car(5,0,trödelFactor,90, RandomPool.getNewCarLength(), lane1));
 		
 		lane2.addCar(new Car(6,0,0.5,10, RandomPool.getNewCarLength(), lane2));
-//		lane2.addCar(new Car(7,0,trödelFactor,40, RandomPool.getNewCarLength(), lane2));
-//		lane2.addCar(new Car(8,0,trödelFactor,50, RandomPool.getNewCarLength(), lane2));
+		lane2.addCar(new Car(7,0,trödelFactor,40, RandomPool.getNewCarLength(), lane2));
+		lane2.addCar(new Car(8,0,trödelFactor,50, RandomPool.getNewCarLength(), lane2));
 //		lane2.addCar(new Car(9,0,trödelFactor,60, RandomPool.getNewCarLength(), lane2));
 //		lane2.addCar(new Car(10,0,trödelFactor,80, RandomPool.getNewCarLength(), lane2));
 		
 //		lane3.addCar(new Car(11,0,trödelFactor,10, RandomPool.getNewCarLength(), lane3));
-//		lane3.addCar(new Car(12,0,trödelFactor,40, RandomPool.getNewCarLength(), lane3));
-//		lane3.addCar(new Car(13,0,trödelFactor,50, RandomPool.getNewCarLength(), lane3));
+		lane3.addCar(new Car(12,0,trödelFactor,40, RandomPool.getNewCarLength(), lane3));
+		lane3.addCar(new Car(13,0,trödelFactor,50, RandomPool.getNewCarLength(), lane3));
 //		lane3.addCar(new Car(14,0,trödelFactor,60, RandomPool.getNewCarLength(), lane3));
 		lane3.addCar(new Car(15,0,trödelFactor,80, RandomPool.getNewCarLength(), lane3));
 	}
@@ -56,8 +56,10 @@ public class Nagel_Schreckenberg_Simulation {
 				moveCar(lane, car);
 			}
 		}
-		
+		int total = 0;
 		for (Lane lane : this.track.getLanes()) {
+			System.out.println("Number of Cars on Lane"+ lane.getFastLaneIndex()+": "+lane.getLane().size());
+			total += lane.getLane().size();
 			for (Car car : lane.getCars()) {
 				car.setMoved(false);
 				
@@ -117,9 +119,9 @@ public class Nagel_Schreckenberg_Simulation {
 					car.setNextSpeed(speedCurrentLane);
 					calculateTrööödel(car);
 				}
-				System.out.print("Car: " + car.getId() + " LoopLane: " + lane.getFastLaneIndex()+ " CarLane: " + car.getLane().getFastLaneIndex());
-				System.out.print(" SpeedLeft: " + speedFastLane + " Speedcurrent: " + speedCurrentLane + " SpeedRight: " + speedSlowLane);
-				System.out.println(" BlinkLeft: " + car.isBlinkLeft() + " BlinkRight: " + car.isBlinkRight());
+				//System.out.print("Car: " + car.getId() + " LoopLane: " + lane.getFastLaneIndex()+ " CarLane: " + car.getLane().getFastLaneIndex());
+				//System.out.print(" SpeedLeft: " + speedFastLane + " Speedcurrent: " + speedCurrentLane + " SpeedRight: " + speedSlowLane);
+				//System.out.println(" BlinkLeft: " + car.isBlinkLeft() + " BlinkRight: " + car.isBlinkRight());
 			}
 
 		}
@@ -129,6 +131,7 @@ public class Nagel_Schreckenberg_Simulation {
 				car.setSpeed(car.getNextSpeed());
 			}
 		}
+		System.out.println("Total Number of Cars on Track:" +total);
 
 		return track;
 	}
@@ -152,8 +155,19 @@ public class Nagel_Schreckenberg_Simulation {
 				lane.getLane().updatePosition(oldPosition, car.getPosition());	
 			}
 			else{
-				lane.removeCar(oldPosition,car);
-				nextLane.addCar(car);
+				boolean successDel = lane.removeCar(oldPosition,car);
+				Car successAdd = nextLane.addCar(car);
+				if(successDel && successAdd != null){
+					System.out.println("Remove Car "+car.getId()+" from Lane: " + lane.getFastLaneIndex());
+					System.out.println("Add Car "+car.getId()+" to Lane: " + nextLane.getFastLaneIndex());	
+				}
+				else if(!successDel){
+					System.out.println("Failed to remove Car "+car.getId()+" from Lane: " + lane.getFastLaneIndex());
+				}
+				else if(successAdd == null){
+					System.out.println("Failed to add car " + car.getId() + " to Lane: " + nextLane.getFastLaneIndex());
+				}
+				
 			}
 			
 			car.setLane(nextLane);
