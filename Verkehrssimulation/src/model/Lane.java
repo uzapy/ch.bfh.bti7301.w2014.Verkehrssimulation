@@ -114,6 +114,9 @@ public class Lane {
 	}
 	
 	public Car getPreviousCar(Car car) {
+		if(this.getLane().containsKey(car.getPosition())){
+			return this.getCarByPostition(car.getPosition());
+		}
 		Entry<Integer, Car> next = this.lane.lowerEntry(car.getPosition());
 		if (!(next == null)){
 			return next.getValue();
