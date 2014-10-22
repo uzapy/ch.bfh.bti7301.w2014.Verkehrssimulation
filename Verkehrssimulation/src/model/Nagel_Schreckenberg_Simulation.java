@@ -76,7 +76,7 @@ public class Nagel_Schreckenberg_Simulation {
 
 				if (RandomPool.nextDouble() <= car.getTrödelFactor()) {
 					if (car.getSpeed() > this.speedDelta) {
-						car.setSpeed(car.getSpeed() - this.speedDelta);						
+						car.setSpeed(car.getSpeed() - 1);						
 					}else {
 						car.setSpeed(0);
 					}
