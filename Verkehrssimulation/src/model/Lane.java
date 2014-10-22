@@ -27,6 +27,8 @@ public class Lane {
 		this.maxVelocity = maxVelocity;
 		this.lane = new SimulationSkipList();
 		this.fastLaneIndex = fastLaneIndex;
+		this.passableLeft = true;
+		this.passableRight = true;
 	}
 	
 	public boolean isPassableLeft() {
@@ -52,6 +54,7 @@ public class Lane {
 	public void setLeftLane() {
 		if(this.fastLaneIndex != 0){
 			this.leftLane = track.getLane(this.fastLaneIndex - 1);
+			this.leftLane.setRightLane();
 		}
 		else{
 			this.passableLeft = false;
@@ -64,7 +67,8 @@ public class Lane {
 
 	public void setRightLane() {
 		if(this.fastLaneIndex < (track.getLanes().size() - 1)){
-			this.leftLane = track.getLane(this.fastLaneIndex + 1);
+			this.rightLane = track.getLane(this.fastLaneIndex + 1);
+			this.passableRight = true;
 		}
 		else{
 			this.passableRight = false;
@@ -93,8 +97,8 @@ public class Lane {
 		return this.lane.put(car.getPosition(), car);
 	}
 	
-	public boolean removeCar(Car car){
-		return this.lane.remove(car.getPosition(), car);
+	public boolean removeCar(int oldPosition, Car car){
+		return this.lane.remove(oldPosition, car);
 	}
 	
 	public Car getCarByPostition(int position) {
@@ -110,11 +114,22 @@ public class Lane {
 	}
 	
 	public Car getPreviousCar(Car car) {
-		return this.getCarByPostition(this.lane.lowerKey(car.getPosition()));
+		if(this.getLane().containsKey(car.getPosition())){
+			return this.getCarByPostition(car.getPosition());
+		}
+		Entry<Integer, Car> next = this.lane.lowerEntry(car.getPosition());
+		if (!(next == null)){
+			return next.getValue();
+		}
+		return null;
 	}
 	
 	public Car getFirstCar(){
-		return this.lane.firstEntry().getValue();
+		Entry<Integer, Car> first = this.lane.firstEntry();
+		if (!(first == null)){
+			return first.getValue();
+		}
+		return null;
 	}
 	
 	public SimulationSkipList getLane(){
