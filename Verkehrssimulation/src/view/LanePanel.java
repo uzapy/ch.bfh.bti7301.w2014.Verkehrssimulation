@@ -5,11 +5,9 @@ package view;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.util.LinkedList;
 
 import javax.swing.JPanel;
 
-import model.Car;
 import model.Lane;
 import util.MetricToPixel;
 
@@ -20,7 +18,6 @@ import util.MetricToPixel;
 public class LanePanel extends JPanel  {
 	
 	private Lane lane;
-	private LinkedList<CarPanel> carPanels = new LinkedList<CarPanel>();
 
 	/**
 	 * @author bublm1
@@ -28,10 +25,6 @@ public class LanePanel extends JPanel  {
 	 */
 	public LanePanel(Lane lane) {
 		this.lane = lane;
-		
-		for (Car car : lane.getCars()) {
-			this.carPanels.add(new CarPanel(car));
-		}
 	}
 	
 	public void paintComponent(Graphics g, int trackOffset) {
@@ -47,24 +40,10 @@ public class LanePanel extends JPanel  {
 		int length = MetricToPixel.scale(lane.getLength());
 		int width = MetricToPixel.scale(Lane.WIDTH);
 		
-//		g.fillRect(xPosition, yPosition, length, width);
+		g.fillRect(xPosition, yPosition, length, width);
 		// TODO: add gschtrichleti linie
 		
 		g.setColor(Color.MAGENTA);
 		g.drawString(Integer.toString(lane.getFastLaneIndex()), xPosition+10, yPosition+20);
-		
-		for (CarPanel carPanel : carPanels) {
-			carPanel.paintComponent(g, trackOffset);
-		}
 	}
-
-	/**
-	 * @author bublm1
-	 */
-	public void performSimStep(int simStep) {
-		for (CarPanel carPanel : this.carPanels) {
-			carPanel.performSimStep(simStep);
-		}
-	}
-
 }

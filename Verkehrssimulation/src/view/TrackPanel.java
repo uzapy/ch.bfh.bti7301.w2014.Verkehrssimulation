@@ -9,6 +9,7 @@ import java.util.LinkedList;
 
 import javax.swing.JPanel;
 
+import model.Car;
 import model.Lane;
 import model.Track;
 import util.MetricToPixel;
@@ -20,6 +21,7 @@ import util.MetricToPixel;
 public class TrackPanel extends JPanel {
 	private Track track;
 	private LinkedList<LanePanel> lanePanels = new LinkedList<LanePanel>();
+	private LinkedList<CarPanel> carPanels = new LinkedList<CarPanel>();
 
 	/**
 	 * @author burkt4
@@ -31,6 +33,10 @@ public class TrackPanel extends JPanel {
 
 		for (Lane lane : this.track.getLanes()) {
 			this.lanePanels.add(new LanePanel(lane));
+			
+			for (Car car : lane.getCars()) {
+				this.carPanels.add(new CarPanel(car));
+			}
 		}
 	}
 
@@ -45,6 +51,10 @@ public class TrackPanel extends JPanel {
 		for (LanePanel lanePanel : this.lanePanels) {
 			lanePanel.paintComponent(g, trackOffset);
 		}
+		
+		for (CarPanel carPanel : carPanels) {
+			carPanel.paintComponent(g, trackOffset);
+		}		
 
 		int xPosition = 0;
 		int yPosition = this.lanePanels.size() * MetricToPixel.scale(Lane.WIDTH) + MetricToPixel.scale(trackOffset);
@@ -64,8 +74,8 @@ public class TrackPanel extends JPanel {
 	 * @author bublm1
 	 */
 	public void performSimStep(int simStep) {
-		for (LanePanel lanePanel : this.lanePanels) {
-			lanePanel.performSimStep(simStep);
+		for (CarPanel carPanel : this.carPanels) {
+			carPanel.performSimStep(simStep);
 		}
 		this.repaint();
 	}
