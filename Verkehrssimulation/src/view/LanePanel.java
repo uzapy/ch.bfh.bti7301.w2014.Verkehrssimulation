@@ -18,16 +18,20 @@ import util.MetricToPixel;
 public class LanePanel extends JPanel  {
 	
 	private Lane lane;
+	private int fastLaneOffset;
+	private int trackOffset;
 
 	/**
 	 * @author bublm1
 	 * @param lane
 	 */
-	public LanePanel(Lane lane) {
+	public LanePanel(Lane lane, int fastLaneOffset, int trackOffset) {
 		this.lane = lane;
+		this.fastLaneOffset = fastLaneOffset;
+		this.trackOffset = trackOffset;
 	}
 	
-	public void paintComponent(Graphics g, int trackOffset) {
+	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		
 		float invertedFastlaneIndex = 1.0F / (lane.getFastLaneIndex() + 1);
@@ -36,7 +40,7 @@ public class LanePanel extends JPanel  {
 		g.setColor(new Color(grayComponent, grayComponent, grayComponent));
 		
 		int xPosition = 0;
-		int yPosition = MetricToPixel.scale(trackOffset + Lane.WIDTH * lane.getFastLaneIndex());
+		int yPosition = MetricToPixel.scale(trackOffset + Lane.WIDTH * fastLaneOffset);
 		int length = MetricToPixel.scale(lane.getLength());
 		int width = MetricToPixel.scale(Lane.WIDTH);
 		

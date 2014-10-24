@@ -22,6 +22,7 @@ public class TrackPanel extends JPanel {
 	private Track track;
 	private LinkedList<LanePanel> lanePanels = new LinkedList<LanePanel>();
 	private LinkedList<CarPanel> carPanels = new LinkedList<CarPanel>();
+	private int trackOffset = 2;
 
 	/**
 	 * @author burkt4
@@ -32,10 +33,12 @@ public class TrackPanel extends JPanel {
 		this.track = track;
 
 		for (Lane lane : this.track.getLanes()) {
-			this.lanePanels.add(new LanePanel(lane));
+			int fastLaneOffset = (this.track.getLanes().size() - 1) - lane.getFastLaneIndex();
+			
+			this.lanePanels.add(new LanePanel(lane, fastLaneOffset, trackOffset));
 			
 			for (Car car : lane.getCars()) {
-				this.carPanels.add(new CarPanel(car));
+				this.carPanels.add(new CarPanel(car, this.track.getLanes().size(), trackOffset));
 			}
 		}
 	}
@@ -43,17 +46,15 @@ public class TrackPanel extends JPanel {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		
-		int trackOffset = 2;
-		
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, MetricToPixel.scale(track.getLane(0).getLength()), MetricToPixel.scale(trackOffset));
 
 		for (LanePanel lanePanel : this.lanePanels) {
-			lanePanel.paintComponent(g, trackOffset);
+			lanePanel.paintComponent(g);
 		}
 		
 		for (CarPanel carPanel : carPanels) {
-			carPanel.paintComponent(g, trackOffset);
+			carPanel.paintComponent(g);
 		}		
 
 		int xPosition = 0;

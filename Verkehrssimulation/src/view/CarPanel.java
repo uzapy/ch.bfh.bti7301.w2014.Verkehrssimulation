@@ -18,6 +18,8 @@ import util.RandomPool;
 public class CarPanel extends JPanel {
 
 	private Car car;
+	private int trackOffset;
+	private int numberOfLanes;
 	private float xSimPosition;
 	private float ySimPosition;
 	private Color color;
@@ -26,8 +28,10 @@ public class CarPanel extends JPanel {
 	 * @author bublm1
 	 * @param car
 	 */
-	public CarPanel(Car car) {
+	public CarPanel(Car car, int numberOfLanes, int trackOffset) {
 		this.car = car;
+		this.trackOffset = trackOffset;
+		this.numberOfLanes = numberOfLanes;
 		this.xSimPosition = this.car.getPosition();
 		this.color = RandomPool.getNewColor();
 	}
@@ -35,7 +39,7 @@ public class CarPanel extends JPanel {
 	/**
 	 * @author bublm1
 	 */
-	public void paintComponent(Graphics g, int trackOffset) {
+	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 
 		g.setColor(this.color);
@@ -61,13 +65,16 @@ public class CarPanel extends JPanel {
 			this.xSimPosition = this.xSimPosition - this.car.getCurrentLane().getLength();
 		}
 
-		this.ySimPosition = car.getPreviousLane().getFastLaneIndex() * Lane.WIDTH  + (Lane.WIDTH - Car.WIDTH) / 2;
+		this.ySimPosition = getLaneOffset(car.getPreviousLane().getFastLaneIndex()) * Lane.WIDTH  + (Lane.WIDTH - Car.WIDTH) / 2;
 		
-		if (this.car.getCurrentLane().getFastLaneIndex() != this.car.getPreviousLane().getFastLaneIndex()) {
+		if (getLaneOffset(this.car.getCurrentLane().getFastLaneIndex()) !=
+			getLaneOffset(this.car.getPreviousLane().getFastLaneIndex())) {
+			
 			float ySimProgress = (float)Lane.WIDTH / Nagel_Schreckenberg_Simulation.FRAMES_PER_SECOND * (float)simStep;
 			
-			if (this.car.getCurrentLane().getFastLaneIndex() < this.car.getPreviousLane().getFastLaneIndex()) {
-				this.ySimPosition = this.ySimPosition - ySimProgress; // Überholt				
+			if (getLaneOffset(this.car.getCurrentLane().getFastLaneIndex()) <
+				getLaneOffset(this.car.getPreviousLane().getFastLaneIndex())) {
+				this.ySimPosition = this.ySimPosition - ySimProgress; // Überholt
 			} 
 			else {
 				this.ySimPosition = this.ySimPosition + ySimProgress; // Zurück auf normale spur	
@@ -78,5 +85,9 @@ public class CarPanel extends JPanel {
 //			System.out.println(this.car.getBackPosition() + "|" + this.car.getSpeed() + "|" + simStep + "|" + this.stepBackPosition);
 //			System.out.println(MetricToPixel.scale(this.stepBackPosition) + "|" + this.stepBackPosition);
 //		}
+	}
+	
+	public int getLaneOffset(int fastLaneIndex) {
+		return (numberOfLanes - 1) - fastLaneIndex;
 	}
 }
