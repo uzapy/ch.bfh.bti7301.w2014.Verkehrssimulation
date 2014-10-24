@@ -18,67 +18,42 @@ public class Lane {
 	private int length;
 	private Lane leftLane;
 	private Lane rightLane;
-	private boolean passableLeft;
-	private boolean passableRight;
-	private Track track;
+	private boolean isPassableLeft;
+	private boolean isPassableRight;
 	
 	public Lane(int maxVelocity, int length, int fastLaneIndex){
 		this.length = length;
 		this.maxVelocity = maxVelocity;
 		this.lane = new SimulationSkipList();
 		this.fastLaneIndex = fastLaneIndex;
-		this.passableLeft = true;
-		this.passableRight = true;
+	}
+	
+	public void setAdjacentLanes(Lane leftLane, Lane rightLane) {
+		this.isPassableLeft = (leftLane != null);
+		if (isPassableLeft) {
+			this.leftLane = leftLane;
+		}
+
+		this.isPassableRight = (rightLane != null);
+		if (isPassableRight) {
+			this.rightLane = rightLane;
+		}
 	}
 	
 	public boolean isPassableLeft() {
-		return passableLeft;
-	}
-
-	public void setPassableLeft(boolean passableLeft) {
-		this.passableLeft = passableLeft;
+		return isPassableLeft;
 	}
 
 	public boolean isPassableRight() {
-		return passableRight;
-	}
-
-	public void setPassableRight(boolean passableRight) {
-		this.passableRight = passableRight;
+		return isPassableRight;
 	}
 	
 	public Lane getLeftLane() {
 		return leftLane;
 	}
 
-	public void setLeftLane() {
-		if(this.fastLaneIndex != 0){
-			this.leftLane = track.getLane(this.fastLaneIndex - 1);
-			this.leftLane.setRightLane();
-		}
-		else{
-			this.passableLeft = false;
-		}
-	}
-
 	public Lane getRightLane() {
 		return rightLane;
-	}
-
-	public void setRightLane() {
-		if(this.fastLaneIndex < (track.getLanes().size() - 1)){
-			this.rightLane = track.getLane(this.fastLaneIndex + 1);
-			this.passableRight = true;
-		}
-		else{
-			this.passableRight = false;
-		}
-	}
-
-	public void setTrack(Track track) {
-		this.track = track;
-		this.setRightLane();
-		this.setLeftLane();
 	}
 
 	public int getFastLaneIndex() {
@@ -113,7 +88,7 @@ public class Lane {
 		return null;
 	}
 	
-	public Car getPreviousCar(Car car) {
+	public Car getPreviousCarOrSelf(Car car) {
 		if(this.getLane().containsKey(car.getPosition())){
 			return this.getCarByPostition(car.getPosition());
 		}

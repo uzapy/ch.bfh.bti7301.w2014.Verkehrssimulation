@@ -17,7 +17,6 @@ public class Track {
 	
 	public void addLane(Lane lane){
 		this.Lanes.add(lane);
-		lane.setTrack(this);
 	}
 	
 	public Lane getLane(int Lane){
