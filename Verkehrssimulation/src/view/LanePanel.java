@@ -47,7 +47,7 @@ public class LanePanel extends JPanel  {
 		int length = MetricToPixel.scale(lane.getLength());
 		int width = MetricToPixel.scale(Lane.WIDTH);
 		
-		g.fillRect(xPosition, yPosition, length, width);
+//		g.fillRect(xPosition, yPosition, length, width);
 		// TODO: add gschtrichleti linie
 		
 		g.setColor(Color.MAGENTA);
