@@ -82,8 +82,8 @@ public class CarPanel extends JPanel {
 		}
 		
 //		if (this.car.getId() == 1) {
-//			System.out.println(this.car.getBackPosition() + "|" + this.car.getSpeed() + "|" + simStep + "|" + this.stepBackPosition);
-//			System.out.println(MetricToPixel.scale(this.stepBackPosition) + "|" + this.stepBackPosition);
+//			System.out.println(this.car.getBackPosition() + "|" + this.car.getSpeed() + "|" + simStep + "|" + this.xSimPosition + "|" +
+//					this.car.getCurrentLane().getFastLaneIndex() + "|" + this.ySimPosition);
 //		}
 	}
 	
