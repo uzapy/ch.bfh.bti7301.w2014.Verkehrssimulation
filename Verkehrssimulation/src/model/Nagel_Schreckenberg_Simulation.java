@@ -36,23 +36,25 @@ public class Nagel_Schreckenberg_Simulation {
 		this.track.addLane(lane2);
 		this.track.addLane(lane3);
 		
-		lane0.addCar(new Car(1, 0, trödelFactor, 0,  RandomPool.getNewCarLength(), lane0));
-		lane0.addCar(new Car(2, 0, trödelFactor, 30, RandomPool.getNewCarLength(), lane0));
-		lane0.addCar(new Car(3, 0, trödelFactor, 40, RandomPool.getNewCarLength(), lane0));
-		lane0.addCar(new Car(4, 0, trödelFactor, 60, RandomPool.getNewCarLength(), lane0));
-		lane0.addCar(new Car(5, 0, trödelFactor, 90, RandomPool.getNewCarLength(), lane0));
-		
-		lane1.addCar(new Car(6, 0, trödelFactor, 10, RandomPool.getNewCarLength(), lane1));
-		lane1.addCar(new Car(7, 0, trödelFactor, 40, RandomPool.getNewCarLength(), lane1));
-		lane1.addCar(new Car(8, 0, trödelFactor, 50, RandomPool.getNewCarLength(), lane1));
-		lane1.addCar(new Car(9, 0, trödelFactor, 60, RandomPool.getNewCarLength(), lane1));
-		lane1.addCar(new Car(10,0, trödelFactor, 80, RandomPool.getNewCarLength(), lane1));
+//		lane0.addCar(new Car(1, 0, trödelFactor, 0,  RandomPool.getNewCarLength(), lane0));
+//		lane0.addCar(new Car(2, 0, trödelFactor, 30, RandomPool.getNewCarLength(), lane0));
+//		lane0.addCar(new Car(3, 0, trödelFactor, 40, RandomPool.getNewCarLength(), lane0));
+//		lane0.addCar(new Car(4, 0, trödelFactor, 60, RandomPool.getNewCarLength(), lane0));
+//		lane0.addCar(new Car(5, 0, trödelFactor, 90, RandomPool.getNewCarLength(), lane0));
+//		
+//		lane1.addCar(new Car(6, 0, trödelFactor, 10, RandomPool.getNewCarLength(), lane1));
+//		lane1.addCar(new Car(7, 0, trödelFactor, 40, RandomPool.getNewCarLength(), lane1));
+//		lane1.addCar(new Car(8, 0, trödelFactor, 50, RandomPool.getNewCarLength(), lane1));
+//		lane1.addCar(new Car(9, 0, trödelFactor, 60, RandomPool.getNewCarLength(), lane1));
+//		lane1.addCar(new Car(10,0, trödelFactor, 80, RandomPool.getNewCarLength(), lane1));
 
 //		lane2.addCar(new Car(11, 0, trödelFactor, 10, RandomPool.getNewCarLength(), lane2));
 //		lane2.addCar(new Car(12, 0, trödelFactor, 40, RandomPool.getNewCarLength(), lane2));
 //		lane2.addCar(new Car(13, 0, trödelFactor, 50, RandomPool.getNewCarLength(), lane2));
 //		lane2.addCar(new Car(14, 0, trödelFactor, 60, RandomPool.getNewCarLength(), lane2));
 //		lane2.addCar(new Car(15, 0, trödelFactor, 80, RandomPool.getNewCarLength(), lane2));
+
+		lane3.addCar(new Car(15, 0, trödelFactor, 80, RandomPool.getNewCarLength(), lane3));
 	}
 
 	public Track performStep() {
@@ -189,7 +191,13 @@ public class Nagel_Schreckenberg_Simulation {
 		int speed = car.getSpeed();
 		// Beschleunigen
 		if (car.getSpeed() < lane.getMaxVelocity()) {
-			speed = car.getSpeed() + this.speedDelta;
+			if(car.getSpeed() + this.speedDelta > lane.getMaxVelocity()){
+				speed = lane.getMaxVelocity();
+			}
+			else{
+				speed = car.getSpeed() + this.speedDelta;				
+			}
+
 		}
 		// nächstes Auto
 		if (!(lane.getNextCar(car) == null)) {
