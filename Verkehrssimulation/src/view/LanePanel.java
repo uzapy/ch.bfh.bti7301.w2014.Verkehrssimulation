@@ -48,11 +48,14 @@ public class LanePanel extends JPanel  {
 		int width = MetricToPixel.scale(Lane.WIDTH);
 		
 //		g.fillRect(xPosition, yPosition, length, width);
+		// TODO: add gschtrichleti linie
+		
+		g.setColor(Color.MAGENTA);
+		g.drawString(Integer.toString(lane.getFastLaneIndex()), xPosition+10, yPosition+20);
 		
 		for (CarPanel carPanel : carPanels) {
 			carPanel.paintComponent(g, trackOffset);
 		}
-		// TODO: add gschtrichleti linie
 	}
 
 	/**
