@@ -25,10 +25,10 @@ public class Nagel_Schreckenberg_Simulation {
 		Lane lane2 = new Lane(28, 100, 1);
 		Lane lane3 = new Lane(22, 100, 0);
 		
-		lane0.setAdjacentLanes(lane1, null);
+		lane0.setAdjacentLanes(null, lane1);
 		lane1.setAdjacentLanes(lane0, lane2);
-		lane2.setAdjacentLanes(lane3, lane1);
-		lane3.setAdjacentLanes(null,  lane2);
+		lane2.setAdjacentLanes(lane1, lane3);
+		lane3.setAdjacentLanes(lane2,  null);
 
 		this.track = new Track();
 		this.track.addLane(lane0);
@@ -38,15 +38,15 @@ public class Nagel_Schreckenberg_Simulation {
 		
 		lane0.addCar(new Car(1, 0, trödelFactor, 0,  RandomPool.getNewCarLength(), lane0));
 		lane0.addCar(new Car(2, 0, trödelFactor, 30, RandomPool.getNewCarLength(), lane0));
-//		lane0.addCar(new Car(3, 0, trödelFactor, 40, RandomPool.getNewCarLength(), lane0));
-//		lane0.addCar(new Car(4, 0, trödelFactor, 60, RandomPool.getNewCarLength(), lane0));
-//		lane0.addCar(new Car(5, 0, trödelFactor, 90, RandomPool.getNewCarLength(), lane0));
+		lane0.addCar(new Car(3, 0, trödelFactor, 40, RandomPool.getNewCarLength(), lane0));
+		lane0.addCar(new Car(4, 0, trödelFactor, 60, RandomPool.getNewCarLength(), lane0));
+		lane0.addCar(new Car(5, 0, trödelFactor, 90, RandomPool.getNewCarLength(), lane0));
 		
-//		lane1.addCar(new Car(6, 0, trödelFactor, 10, RandomPool.getNewCarLength(), lane1));
-//		lane1.addCar(new Car(7, 0, trödelFactor, 40, RandomPool.getNewCarLength(), lane1));
-//		lane1.addCar(new Car(8, 0, trödelFactor, 50, RandomPool.getNewCarLength(), lane1));
-//		lane1.addCar(new Car(9, 0, trödelFactor, 60, RandomPool.getNewCarLength(), lane1));
-//		lane1.addCar(new Car(10,0, trödelFactor, 80, RandomPool.getNewCarLength(), lane1));
+		lane1.addCar(new Car(6, 0, trödelFactor, 10, RandomPool.getNewCarLength(), lane1));
+		lane1.addCar(new Car(7, 0, trödelFactor, 40, RandomPool.getNewCarLength(), lane1));
+		lane1.addCar(new Car(8, 0, trödelFactor, 50, RandomPool.getNewCarLength(), lane1));
+		lane1.addCar(new Car(9, 0, trödelFactor, 60, RandomPool.getNewCarLength(), lane1));
+		lane1.addCar(new Car(10,0, trödelFactor, 80, RandomPool.getNewCarLength(), lane1));
 
 //		lane2.addCar(new Car(11, 0, trödelFactor, 10, RandomPool.getNewCarLength(), lane2));
 //		lane2.addCar(new Car(12, 0, trödelFactor, 40, RandomPool.getNewCarLength(), lane2));
