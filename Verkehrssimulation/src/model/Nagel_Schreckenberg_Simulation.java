@@ -4,7 +4,6 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 import util.RandomPool;
 
@@ -18,7 +17,7 @@ public class Nagel_Schreckenberg_Simulation {
 	private int speedDelta = 5; 				// Standardbeschleunigung in Meter pro Sekunde
 	private double trödelFactor = 0.3;
 	private int securityDistance = 1;
-	ArrayList<Car> carList = new ArrayList();
+	ArrayList<Car> carList = new ArrayList<Car>();
 
 	/**
 	 * @author bublm1
@@ -66,19 +65,21 @@ public class Nagel_Schreckenberg_Simulation {
 			for (Car car : lane.getCars()) {
 				moveCar(lane, car);
 			}
-		for(Car car : carList){
-			track.getLane(car.getCurrentLane().getFastLaneIndex()).addCar(car);
+			for(Car car : carList){
+				track.getLane(car.getCurrentLane().getFastLaneIndex()).addCar(car);
+			}
 		}
-		}
-		int total = 0;
+		
+//		int total = 0;
 		for (Lane lane : this.track.getLanes()) {
 //			System.out.println("Number of Cars on Lane" + lane.getFastLaneIndex() + ": " + lane.getLane().size());
-			total += lane.getLane().size();
+//			total += lane.getLane().size();
 			for (Car car : lane.getCars()) {
 				car.setMoved(false);
 				int speedFastLane = getNewSpeed(lane.getLeftLane(), car);
 				int speedSlowLane = getNewSpeed(lane.getRightLane(), car);
 				int speedCurrentLane = getNewSpeed(lane, car);
+				
 				Car previousCar = null;
 				if (speedSlowLane == speedCurrentLane && lane.isPassableRight()) {
 					if (lane.getRightLane().getPreviousCarOrSelf(car) != null) {
@@ -86,6 +87,7 @@ public class Nagel_Schreckenberg_Simulation {
 					} else if (lane.getRightLane().getLane().lastEntry() != null) {
 						previousCar = lane.getRightLane().getLane().lastEntry().getValue();
 					}
+					
 					if (previousCar != null) {
 						int previousCarNextPosition = (previousCar.getPosition() + previousCar.getSpeed() + speedDelta + securityDistance)
 								% lane.getRightLane().getLength();
@@ -218,7 +220,7 @@ public class Nagel_Schreckenberg_Simulation {
 			} else if (availableSpace < speed) {
 				speed = availableSpace;
 			}
-			// Spur zu Ende
+		// Spur zu Ende
 		} else {
 			int rest = lane.getLength() - car.getPosition();
 			Car nextCar = lane.getFirstCar();

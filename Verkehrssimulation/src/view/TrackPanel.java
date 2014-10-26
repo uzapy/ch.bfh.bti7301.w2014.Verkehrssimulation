@@ -22,6 +22,7 @@ public class TrackPanel extends JPanel {
 	private Track track;
 	private LinkedList<LanePanel> lanePanels = new LinkedList<LanePanel>();
 	private LinkedList<CarPanel> carPanels = new LinkedList<CarPanel>();
+	
 	private int trackOffset = 2;
 
 	/**
