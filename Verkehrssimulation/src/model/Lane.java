@@ -89,10 +89,10 @@ public class Lane {
 	}
 	
 	public Car getPreviousCarOrSelf(Car car) {
-		if(this.getLane().containsKey(car.getPosition())){
+		if(lane.containsKey(car.getPosition())){
 			return this.getCarByPostition(car.getPosition());
 		}
-		Entry<Integer, Car> next = this.lane.lowerEntry(car.getPosition());
+		Entry<Integer, Car> next = lane.lowerEntry(car.getPosition());
 		if (!(next == null)){
 			return next.getValue();
 		}

@@ -13,7 +13,7 @@ public class Car {
 	private Lane previousLane;
 	private boolean blinkLeft;
 	private boolean blinkRight;
-	private boolean moved;
+	private boolean moved = false;
 
 	public Car(int id,int speed, double trödelFactor, int position, int length, Lane lane) {
 		this.id = id;
@@ -23,7 +23,6 @@ public class Car {
 		this.currentLane = lane;
 		this.previousLane = lane;
 		this.length = length;
-		this.setMoved(false);
 	}
 
 	public int getId() {
