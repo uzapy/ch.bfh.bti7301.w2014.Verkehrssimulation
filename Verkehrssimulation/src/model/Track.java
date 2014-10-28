@@ -9,21 +9,25 @@ import java.util.ArrayList;
  *
  */
 public class Track {
-	private ArrayList<Lane> Lanes;
+	private ArrayList<Lane> lanes;
 		
 	public Track(){
-		this.Lanes = new ArrayList<Lane>();		
+		this.lanes = new ArrayList<Lane>();		
 	}
 	
 	public void addLane(Lane lane){
-		this.Lanes.add(lane);
+		this.lanes.add(lane);
 	}
 	
-	public Lane getLane(int Lane){
-		return this.Lanes.get(Lane);
+	public Lane getLane(int laneIndex){
+		if (laneIndex >= 0 && laneIndex <= (this.lanes.size() - 1)) {
+			return this.lanes.get(laneIndex);			
+		} else {
+			return null;
+		}
 	}
 	
 	public ArrayList<Lane> getLanes() {
-		return this.Lanes;
+		return this.lanes;
 	}
 }

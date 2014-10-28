@@ -28,10 +28,10 @@ public class Nagel_Schreckenberg_Simulation {
 		Lane lane2 = new Lane(28, 150, 2);
 		Lane lane3 = new Lane(22, 150, 3);
 		
-		lane0.setAdjacentLanes(lane1, null);
-		lane1.setAdjacentLanes(lane2, lane0);
-		lane2.setAdjacentLanes(lane3, lane1);
-		lane3.setAdjacentLanes(null,  lane2);
+//		lane0.setAdjacentLanes(lane1, null);
+//		lane1.setAdjacentLanes(lane2, lane0);
+//		lane2.setAdjacentLanes(lane3, lane1);
+//		lane3.setAdjacentLanes(null,  lane2);
 
 		this.track = new Track();
 		this.track.addLane(lane0);
@@ -76,22 +76,29 @@ public class Nagel_Schreckenberg_Simulation {
 		for (Lane lane : this.track.getLanes()) {
 			for (Car car : lane.getCars()) {
 				car.setMoved(false);
-				int speedOnFastLane = getPossibleMaximumSpeed(lane.getLeftLane(), car);
-				int speedOnSlowLane = getPossibleMaximumSpeed(lane.getRightLane(), car);
+				
+				int currentFastLaneIndex = car.getCurrentLane().getFastLaneIndex();
+				boolean hasFastLane = (track.getLanes().size() - 1) > currentFastLaneIndex;
+				boolean hasSlowLane = 0 < currentFastLaneIndex;
+				Lane fastLane = track.getLane(currentFastLaneIndex + 1);
+				Lane slowLane = track.getLane(currentFastLaneIndex - 1);
+				
+				int speedOnFastLane = getPossibleMaximumSpeed(fastLane, car);
+				int speedOnSlowLane = getPossibleMaximumSpeed(slowLane, car);
 				int speedOnCurrentLane = getPossibleMaximumSpeed(lane, car);
 				
 				Car previousCar = null;
 				// Soll das Auto auto auf die rechtere Spur wechseln?
-				if (speedOnSlowLane == speedOnCurrentLane && lane.isPassableRight()) {
-					if (lane.getRightLane().getPreviousCarOrSelf(car) != null) {
-						previousCar = lane.getRightLane().getPreviousCarOrSelf(car);
-					} else if (lane.getRightLane().getLane().lastEntry() != null) {
-						previousCar = lane.getRightLane().getLane().lastEntry().getValue();
+				if (speedOnSlowLane == speedOnCurrentLane && hasSlowLane) {
+					if (slowLane.getPreviousCarOrSelf(car) != null) {
+						previousCar = slowLane.getPreviousCarOrSelf(car);
+					} else if (slowLane.getLane().lastEntry() != null) {
+						previousCar = slowLane.getLane().lastEntry().getValue();
 					}
 					
 					if (previousCar != null) {
-						int previousCarNextPosition = (previousCar.getPosition() + previousCar.getSpeed() + speedDelta + securityDistance) % lane.getRightLane().getLength();
-						int currentCarNextBackPosition = (car.getBackPosition() + speedOnSlowLane) % lane.getRightLane().getLength();
+						int previousCarNextPosition = (previousCar.getPosition() + previousCar.getSpeed() + speedDelta + securityDistance) % slowLane.getLength();
+						int currentCarNextBackPosition = (car.getBackPosition() + speedOnSlowLane) % slowLane.getLength();
 						if (previousCarNextPosition <= currentCarNextBackPosition) {
 							car.setNextSpeed(speedOnSlowLane);
 							car.setBlinkRight(true);
@@ -104,16 +111,16 @@ public class Nagel_Schreckenberg_Simulation {
 						car.setBlinkRight(true);
 					}
 				// Soll das auto auf die Überholspur wechseln?
-				} else if (speedOnFastLane > speedOnCurrentLane && lane.isPassableLeft()) {
-					if (lane.getLeftLane().getPreviousCarOrSelf(car) != null) {
-						previousCar = lane.getLeftLane().getPreviousCarOrSelf(car);
-					} else if (lane.getLeftLane().getLane().lastEntry() != null) {
-						previousCar = lane.getLeftLane().getLane().lastEntry().getValue();
+				} else if (speedOnFastLane > speedOnCurrentLane && hasFastLane) {
+					if (fastLane.getPreviousCarOrSelf(car) != null) {
+						previousCar = fastLane.getPreviousCarOrSelf(car);
+					} else if (fastLane.getLane().lastEntry() != null) {
+						previousCar = fastLane.getLane().lastEntry().getValue();
 					}
 					
 					if (previousCar != null) {
-						int previousCarNextPosition = (previousCar.getPosition() + previousCar.getSpeed() + speedDelta + securityDistance) % lane.getLeftLane().getLength();
-						int currentCarNextBackPosition = (car.getBackPosition() + speedOnSlowLane) % lane.getLeftLane().getLength();
+						int previousCarNextPosition = (previousCar.getPosition() + previousCar.getSpeed() + speedDelta + securityDistance) % fastLane.getLength();
+						int currentCarNextBackPosition = (car.getBackPosition() + speedOnSlowLane) % fastLane.getLength();
 						if (previousCarNextPosition <= currentCarNextBackPosition) {
 							car.setNextSpeed(speedOnFastLane);
 							car.setBlinkLeft(true);
@@ -144,21 +151,35 @@ public class Nagel_Schreckenberg_Simulation {
 	private void moveCar(Lane lane, Car car) {
 		if (!car.isMoved()) {
 			Lane nextLane;
+			int previousPosition = car.getPosition();
+			int futurePosition = (car.getPosition() + car.getSpeed()) % lane.getLength();
+			car.setPosition(futurePosition);
+			
 			if (car.isBlinkLeft()) {
-				nextLane = lane.getLeftLane();
+				Lane fastLane = track.getLane(lane.getFastLaneIndex() + 1);
+				if (fastLane.getCarByPostition(futurePosition) == null) {
+					nextLane = fastLane;
+				} else {
+					nextLane = lane;
+				}
 			} else if (car.isBlinkRight()) {
-				nextLane = lane.getRightLane();
+				Lane slowLane = track.getLane(lane.getFastLaneIndex() - 1);
+				if (slowLane.getCarByPostition(futurePosition) == null) {
+					nextLane = slowLane;
+				} else {
+					nextLane = lane;
+				}
+			} else if (car.getSpeed() == 0) {
+				nextLane = lane;
 			} else {
 				nextLane = lane;
 			}
-
-			int oldPosition = car.getPosition();
-			car.setPosition((oldPosition + car.getSpeed()) % nextLane.getLength());
+			
 			if (lane.equals(nextLane)) {
-				lane.getLane().updatePosition(oldPosition, car.getPosition());
+				lane.getLane().updatePosition(previousPosition, car.getPosition());
 			} else {
-				lane.removeCar(oldPosition, car);
-				//nextLane.addCar(car);
+				lane.removeCar(previousPosition, car);
+//				nextLane.addCar(car);
 			}
 
 			car.setLane(nextLane);

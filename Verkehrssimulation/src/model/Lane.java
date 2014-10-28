@@ -16,44 +16,12 @@ public class Lane {
 	private int maxVelocity;			// erlaubte Höchstgeschwindigkeit in Meter pro Sekunde
 	private int fastLaneIndex;
 	private int length;
-	private Lane leftLane;
-	private Lane rightLane;
-	private boolean isPassableLeft;
-	private boolean isPassableRight;
 	
 	public Lane(int maxVelocity, int length, int fastLaneIndex){
 		this.length = length;
 		this.maxVelocity = maxVelocity;
 		this.lane = new SimulationSkipList();
 		this.fastLaneIndex = fastLaneIndex;
-	}
-	
-	public void setAdjacentLanes(Lane leftLane, Lane rightLane) {
-		this.isPassableLeft = (leftLane != null);
-		if (isPassableLeft) {
-			this.leftLane = leftLane;
-		}
-
-		this.isPassableRight = (rightLane != null);
-		if (isPassableRight) {
-			this.rightLane = rightLane;
-		}
-	}
-	
-	public boolean isPassableLeft() {
-		return isPassableLeft;
-	}
-
-	public boolean isPassableRight() {
-		return isPassableRight;
-	}
-	
-	public Lane getLeftLane() {
-		return leftLane;
-	}
-
-	public Lane getRightLane() {
-		return rightLane;
 	}
 
 	public int getFastLaneIndex() {
