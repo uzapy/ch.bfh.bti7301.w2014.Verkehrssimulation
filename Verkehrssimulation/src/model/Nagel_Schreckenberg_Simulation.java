@@ -69,6 +69,8 @@ public class Nagel_Schreckenberg_Simulation {
 			for(Car car : carList){
 				track.getLane(car.getCurrentLane().getFastLaneIndex()).addCar(car);
 			}
+			
+			carList.clear();
 		}
 
 		for (Lane lane : this.track.getLanes()) {
