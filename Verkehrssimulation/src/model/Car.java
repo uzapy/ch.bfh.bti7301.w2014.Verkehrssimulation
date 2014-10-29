@@ -11,8 +11,8 @@ public class Car {
 	private int length;					// Länge des Autos in Meter
 	private Lane currentLane;
 	private Lane previousLane;
-	private boolean blinkLeft;
-	private boolean blinkRight;
+	private boolean isBlinkingLeft;
+	private boolean isBlinkingRight;
 	private boolean moved = false;
 
 	public Car(int id,int speed, double trödelFactor, int position, int length, Lane lane) {
@@ -78,20 +78,20 @@ public class Car {
 		return this.length;
 	}
 	
-	public boolean isBlinkLeft() {
-		return blinkLeft;
+	public boolean isBlinkingLeft() {
+		return isBlinkingLeft;
 	}
 
-	public void setBlinkLeft(boolean blinkLeft) {
-		this.blinkLeft = blinkLeft;
+	public void setIsBlinkingLeft(boolean isBlinkingLeft) {
+		this.isBlinkingLeft = isBlinkingLeft;
 	}
 
-	public boolean isBlinkRight() {
-		return blinkRight;
+	public boolean isBlinkingRight() {
+		return isBlinkingRight;
 	}
 
-	public void setBlinkRight(boolean blinkRight) {
-		this.blinkRight = blinkRight;
+	public void setIsBlinkingRight(boolean isBlinkingRight) {
+		this.isBlinkingRight = isBlinkingRight;
 	}
 
 	public boolean isMoved() {

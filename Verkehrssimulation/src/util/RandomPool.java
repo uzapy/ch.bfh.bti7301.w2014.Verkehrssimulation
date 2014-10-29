@@ -49,7 +49,7 @@ public class RandomPool {
 		
 		int speed = r.nextInt(120 - 80) + 80;
 		double trödelFactor = r.nextDouble() * (0.8 - 0.2) + 0.2;
-		Lane lane = track.getLanes().get(r.nextInt(1 - 3) + 3);
+		Lane lane = track.getAllLanes().get(r.nextInt(1 - 3) + 3);
 		int length = getNewCarLength();
 		
 		return new Car(id, speed, trödelFactor, 0, length, lane);

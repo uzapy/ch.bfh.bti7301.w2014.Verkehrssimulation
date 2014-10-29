@@ -33,14 +33,13 @@ public class TrackPanel extends JPanel {
 		super();
 		this.track = track;
 
-		for (Lane lane : this.track.getLanes()) {
-			int fastLaneOffset = (this.track.getLanes().size() - 1) - lane.getFastLaneIndex();
-			
+		for (Lane lane : this.track.getAllLanes()) {
+			int fastLaneOffset = (this.track.getAllLanes().size() - 1) - lane.getFastLaneIndex();
 			this.lanePanels.add(new LanePanel(lane, fastLaneOffset, trackOffset));
-			
-			for (Car car : lane.getCars()) {
-				this.carPanels.add(new CarPanel(car, this.track.getLanes().size(), trackOffset));
-			}
+		}
+		
+		for (Car car : this.track.getAllCars()) {
+			this.carPanels.add(new CarPanel(car, this.track.getAllLanes().size(), trackOffset));
 		}
 	}
 
