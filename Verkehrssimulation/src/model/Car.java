@@ -10,10 +10,9 @@ public class Car {
 	private int nextSpeed;				// Zukünftige Geschwindigkeit in Meter pro Sekunde
 	private int length;					// Länge des Autos in Meter
 	private Lane currentLane;
-	private Lane previousLane;
+	private Lane nextLane;
 	private boolean blinkLeft;
 	private boolean blinkRight;
-	private boolean moved = false;
 
 	public Car(int id,int speed, double trödelFactor, int position, int length, Lane lane) {
 		this.id = id;
@@ -21,7 +20,7 @@ public class Car {
 		this.position = position;
 		this.speed = speed;
 		this.currentLane = lane;
-		this.previousLane = lane;
+		this.nextLane = lane;
 		this.length = length;
 	}
 
@@ -65,13 +64,13 @@ public class Car {
 		return this.currentLane;
 	}
 	
-	public Lane getPreviousLane() {
-		return this.previousLane;
+	public Lane getNextLane() {
+		return this.nextLane;
 	}
 	
-	public void setLane(Lane lane) {
-		this.previousLane = this.currentLane;
-		this.currentLane = lane;
+	public void setNextLane(Lane lane) {
+		this.currentLane = this.nextLane;
+		this.nextLane = lane;
 	}
 
 	public int getLength() {
@@ -92,13 +91,5 @@ public class Car {
 
 	public void setBlinkRight(boolean blinkRight) {
 		this.blinkRight = blinkRight;
-	}
-
-	public boolean isMoved() {
-		return moved;
-	}
-
-	public void setMoved(boolean moved) {
-		this.moved = moved;
 	}
 }

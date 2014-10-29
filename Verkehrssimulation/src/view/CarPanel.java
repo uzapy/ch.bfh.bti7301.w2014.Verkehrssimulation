@@ -71,19 +71,19 @@ public class CarPanel extends JPanel {
 		float xSimProgress = (float)this.car.getSpeed() / Nagel_Schreckenberg_Simulation.FRAMES_PER_SECOND * (float)simStep;
 		this.xSimPosition = ((float)this.car.getBackPosition() + xSimProgress);
 	
-		if (this.xSimPosition > this.car.getCurrentLane().getLength()) {
-			this.xSimPosition = this.xSimPosition - this.car.getCurrentLane().getLength();
+		if (this.xSimPosition > this.car.getNextLane().getLength()) {
+			this.xSimPosition = this.xSimPosition - this.car.getNextLane().getLength();
 		}
 
-		this.ySimPosition = getLaneOffset(car.getPreviousLane().getFastLaneIndex()) * Lane.WIDTH  + (Lane.WIDTH - Car.WIDTH) / 2;
+		this.ySimPosition = getLaneOffset(car.getCurrentLane().getFastLaneIndex()) * Lane.WIDTH  + (Lane.WIDTH - Car.WIDTH) / 2;
 		
-		if (getLaneOffset(this.car.getCurrentLane().getFastLaneIndex()) !=
-			getLaneOffset(this.car.getPreviousLane().getFastLaneIndex())) {
+		if (getLaneOffset(this.car.getNextLane().getFastLaneIndex()) !=
+			getLaneOffset(this.car.getCurrentLane().getFastLaneIndex())) {
 			
 			float ySimProgress = (float)Lane.WIDTH / Nagel_Schreckenberg_Simulation.FRAMES_PER_SECOND * (float)simStep;
 			
-			if (getLaneOffset(this.car.getCurrentLane().getFastLaneIndex()) <
-				getLaneOffset(this.car.getPreviousLane().getFastLaneIndex())) {
+			if (getLaneOffset(this.car.getNextLane().getFastLaneIndex()) <
+				getLaneOffset(this.car.getCurrentLane().getFastLaneIndex())) {
 				this.ySimPosition = this.ySimPosition - ySimProgress; // Überholt
 			} 
 			else {
