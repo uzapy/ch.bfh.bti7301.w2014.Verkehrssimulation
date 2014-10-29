@@ -13,6 +13,21 @@ public class Car {
 	private Lane nextLane;
 	private boolean blinkLeft;
 	private boolean blinkRight;
+	private boolean moved;
+
+	/**
+	 * @return the moved
+	 */
+	public boolean isMoved() {
+		return moved;
+	}
+
+	/**
+	 * @param moved the moved to set
+	 */
+	public void setMoved(boolean moved) {
+		this.moved = moved;
+	}
 
 	public Car(int id,int speed, double trödelFactor, int position, int length, Lane lane) {
 		this.id = id;
@@ -22,6 +37,7 @@ public class Car {
 		this.currentLane = lane;
 		this.nextLane = lane;
 		this.length = length;
+		this.moved = false;
 	}
 
 	public int getId() {
@@ -69,7 +85,6 @@ public class Car {
 	}
 	
 	public void setNextLane(Lane lane) {
-		this.currentLane = this.nextLane;
 		this.nextLane = lane;
 	}
 
@@ -91,5 +106,10 @@ public class Car {
 
 	public void setBlinkRight(boolean blinkRight) {
 		this.blinkRight = blinkRight;
+	}
+
+	public void setCurrentLane(Lane lane) {
+		this.currentLane = lane;
+		
 	}
 }
