@@ -14,10 +14,10 @@ public class SimulationSkipList extends ConcurrentSkipListMap<Integer, Car> {
 
 	//Hier eigene Methoden implementieren. z.B update Methode
 	public void updatePosition(Integer oldPosition, Integer newPosition){
-		if(oldPosition != newPosition){
+		//if(oldPosition != newPosition){
 			//Car car = this.get(oldPosition);
 			this.remove(oldPosition);
 			//this.put(newPosition, car);
-		}
+		//}
 	}
 }

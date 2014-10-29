@@ -23,10 +23,10 @@ public class Nagel_Schreckenberg_Simulation {
 	 * @author bublm1
 	 */
 	public Nagel_Schreckenberg_Simulation() {
-		Lane lane0 = new Lane(39, 150, 0);
-		Lane lane1 = new Lane(33, 150, 1);
-		Lane lane2 = new Lane(28, 150, 2);
-		Lane lane3 = new Lane(22, 150, 3);
+		Lane lane0 = new Lane(15, 150, 0);
+		Lane lane1 = new Lane(15, 150, 1);
+		Lane lane2 = new Lane(15, 150, 2);
+		Lane lane3 = new Lane(15, 150, 3);
 		
 		lane0.setAdjacentLanes(lane1, null);
 		lane1.setAdjacentLanes(lane2, lane0);
@@ -82,7 +82,7 @@ public class Nagel_Schreckenberg_Simulation {
 				
 				Car previousCar = null;
 				// Soll das Auto auto auf die rechtere Spur wechseln?
-				if (speedOnSlowLane == speedOnCurrentLane && lane.isPassableRight()) {
+				if (speedOnSlowLane == speedOnCurrentLane && lane.isPassableRight() && speedOnSlowLane > 0) {
 					if (lane.getRightLane().getPreviousCarOrSelf(car) != null) {
 						previousCar = lane.getRightLane().getPreviousCarOrSelf(car);
 					} else if (lane.getRightLane().getLane().lastEntry() != null) {
@@ -104,7 +104,7 @@ public class Nagel_Schreckenberg_Simulation {
 						car.setBlinkRight(true);
 					}
 				// Soll das auto auf die Überholspur wechseln?
-				} else if (speedOnFastLane > speedOnCurrentLane && lane.isPassableLeft()) {
+				} else if (speedOnFastLane > speedOnCurrentLane && lane.isPassableLeft() && speedOnFastLane > 0) {
 					if (lane.getLeftLane().getPreviousCarOrSelf(car) != null) {
 						previousCar = lane.getLeftLane().getPreviousCarOrSelf(car);
 					} else if (lane.getLeftLane().getLane().lastEntry() != null) {
@@ -135,6 +135,9 @@ public class Nagel_Schreckenberg_Simulation {
 		
 		for (Lane lane : this.track.getLanes()) {
 			for (Car car : lane.getCars()) {
+				if (car.getId() == 11){
+					System.out.println(car.getNextSpeed());
+				}
 				car.setSpeed(car.getNextSpeed());
 			}
 		}
@@ -197,6 +200,9 @@ public class Nagel_Schreckenberg_Simulation {
 				speed = car.getSpeed() + this.speedDelta;				
 			}
 
+		}
+		else {
+			speed = lane.getMaxVelocity();
 		}
 		
 		// nächstes Auto
