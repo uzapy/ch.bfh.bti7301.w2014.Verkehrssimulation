@@ -50,6 +50,11 @@ public class CarPanel extends JPanel {
 		int width = MetricToPixel.scale(Car.WIDTH);
 		
 		g.fillRect(xPosition, yPosition, length, width);
+		
+		g.setColor(Color.MAGENTA);
+		g.drawString(Integer.toString(this.car.getCurrentLane().getFastLaneIndex()),
+				MetricToPixel.scale(this.xSimPosition + this.car.getLength() - 1),
+				MetricToPixel.scale(trackOffset) + MetricToPixel.scale(this.ySimPosition + Car.WIDTH));
 	}
 
 	/**
