@@ -61,6 +61,18 @@ public class Car {
 		return this.position - this.length;
 	}
 	
+	public int getNextPosition() {
+		return nextPosition;
+	}
+	
+	public void setNextPosition(int nextPosition) {
+		this.nextPosition = nextPosition;
+	}
+	
+	public int getNextBackPosition() {
+		return this.nextPosition - this.length;
+	}
+	
 	public int getSpeed() {
 		return speed;
 	}
@@ -91,14 +103,6 @@ public class Car {
 	
 	public void setNextLane(Lane lane) {
 		this.nextLane = lane;
-	}
-	
-	public int getNextPosition() {
-		return nextPosition;
-	}
-
-	public void setNextPosition(int nextPosition) {
-		this.nextPosition = nextPosition;
 	}
 
 	public int getLength() {

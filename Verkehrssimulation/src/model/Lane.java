@@ -1,7 +1,10 @@
 package model;
 
 import java.util.Collection;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
 /**
  * @author stahr2
@@ -20,6 +23,7 @@ public class Lane {
 	private Lane rightLane;
 	private boolean isPassableLeft;
 	private boolean isPassableRight;
+	private Comparator<Car> byPosition = (car1, car2) -> -Integer.compare(car1.getPosition(), car2.getPosition());
 	
 	public Lane(int maxVelocity, int length, int fastLaneIndex){
 		this.length = length;
@@ -113,5 +117,9 @@ public class Lane {
 	
 	public Collection<Car> getCars(){
 		return this.lane.values();
+	}
+	
+	public List<Car> getSortedCars(){
+		return this.lane.values().stream().sorted(byPosition).collect(Collectors.toList());
 	}
 }

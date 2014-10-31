@@ -4,6 +4,8 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import util.RandomPool;
 
@@ -148,12 +150,38 @@ public class Nagel_Schreckenberg_Simulation {
 				car.setNextPosition((car.getPosition() + car.getNextSpeed()) % car.getNextLane().getLength());
 			}
 		}
-//		
-//		for (Lane lane : this.track.getLanes()) {
-//			for (Car car : lane.getCars()) {
-//					
-//			}
-//		}
+		
+		for (Lane lane : this.track.getLanes()) {
+			for (Car car : lane.getSortedCars()) {
+				if (car.isBlinkLeft() || car.isBlinkRight()) {					
+					// Alle die Blinken => nextPosition und nextBackPosition
+					
+					if (car.getNextLane().isPassableLeft()) {
+						List<Car> blinkingRightCars = car.getNextLane().getLeftLane().getCars().stream()
+								.filter(c -> (c.isBlinkRight() && c.getId() != car.getId()))
+								.collect(Collectors.toList());
+						
+						for (Car blinkingRightCar : blinkingRightCars) {
+							if (blinkingRightCar.getNextBackPosition() <= car.getNextPosition() && blinkingRightCar.getNextPosition() >= car.getNextBackPosition()) {
+								car.setNext(getPossibleMaximumSpeed(car.getCurrentLane(), car), false, false);
+							}
+						}						
+					}
+
+					if (car.getNextLane().isPassableRight()) {
+						List<Car> blinkingLeftCars = car.getNextLane().getRightLane().getCars().stream()
+								.filter(c -> (c.isBlinkLeft() && c.getId() != car.getId()))
+								.collect(Collectors.toList());
+						
+						for (Car blinkingLeftCar : blinkingLeftCars) {
+							if (blinkingLeftCar.getNextBackPosition() <= car.getNextPosition() && blinkingLeftCar.getNextPosition() >= car.getNextBackPosition()) {
+								blinkingLeftCar.setNext(getPossibleMaximumSpeed(blinkingLeftCar.getCurrentLane(), blinkingLeftCar), false, false);
+							}
+						}
+					}
+				}
+			}
+		}
 		return track;
 	}
 
