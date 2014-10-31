@@ -14,6 +14,7 @@ public class Car {
 	private boolean blinkLeft;
 	private boolean blinkRight;
 	private boolean moved;
+	private int nextPosition;
 
 	/**
 	 * @return the moved
@@ -86,6 +87,14 @@ public class Car {
 	
 	public void setNextLane(Lane lane) {
 		this.nextLane = lane;
+	}
+	
+	public int getNextPosition() {
+		return nextPosition;
+	}
+
+	public void setNextPosition(int nextPosition) {
+		this.nextPosition = nextPosition;
 	}
 
 	public int getLength() {
