@@ -38,7 +38,7 @@ public class Car {
 		this.currentLane = lane;
 		this.nextLane = lane;
 		this.length = length;
-		this.moved = false;
+		this.moved = true;
 	}
 
 	public int getId() {
@@ -119,5 +119,28 @@ public class Car {
 
 	public void setBlinkRight(boolean blinkRight) {
 		this.blinkRight = blinkRight;
+	}
+
+	/**
+	 * @author bublm1
+	 * @param speedOnSlowLane
+	 * @param b
+	 * @param c
+	 * @param d
+	 */
+	public void setNext(int nextSpeed, boolean blinkRight, boolean blinkLeft) {
+		this.nextSpeed = nextSpeed;
+		this.blinkRight = blinkRight;
+		this.blinkLeft = blinkLeft;
+		
+//		if (blinkRight) {
+//			nextLane = currentLane.getRightLane();
+//		} else if (blinkLeft) {
+//			nextLane = currentLane.getLeftLane();
+//		} else {
+//			nextLane = currentLane;
+//		}
+//		
+//		nextPosition = (position + nextSpeed) % nextLane.getLength();
 	}
 }

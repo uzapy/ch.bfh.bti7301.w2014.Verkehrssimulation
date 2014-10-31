@@ -67,11 +67,11 @@ public class Nagel_Schreckenberg_Simulation {
 			}
 			
 			for(Car car : carList){
-				while(track.getLane(car.getCurrentLane().getFastLaneIndex()).getLane().containsKey(car.getPosition()))
+				while(car.getCurrentLane().getLane().containsKey(car.getPosition()))
 				{
 					car.setPosition(car.getPosition()+5);
 				}
-				track.getLane(car.getCurrentLane().getFastLaneIndex()).addCar(car);
+				car.getCurrentLane().addCar(car);
 			}
 			
 			carList.clear();
@@ -80,10 +80,10 @@ public class Nagel_Schreckenberg_Simulation {
 		for (Lane lane : this.track.getLanes()) {
 			for (Car car : lane.getCars()) {
 				car.setMoved(false);
+				
 				int speedOnFastLane = getPossibleMaximumSpeed(lane.getLeftLane(), car);
 				int speedOnSlowLane = getPossibleMaximumSpeed(lane.getRightLane(), car);
 				int speedOnCurrentLane = getPossibleMaximumSpeed(lane, car);
-				
 				
 				Car previousCar = null;
 				// Soll das Auto auto auf die rechtere Spur wechseln?
@@ -98,15 +98,13 @@ public class Nagel_Schreckenberg_Simulation {
 						int previousCarNextPosition = (previousCar.getPosition() + previousCar.getSpeed() + speedDelta + securityDistance) % lane.getRightLane().getLength();
 						int currentCarNextBackPosition = (car.getBackPosition() + speedOnSlowLane) % lane.getRightLane().getLength();
 						if (previousCarNextPosition <= currentCarNextBackPosition) {
-							car.setNextSpeed(speedOnSlowLane);
-							car.setBlinkRight(true);
+							car.setNext(speedOnSlowLane, true, false);
 						} else {
-							car.setNextSpeed(speedOnCurrentLane);
+							car.setNext(speedOnCurrentLane, false, false);
 							calculateTrödel(car);
 						}
 					} else {
-						car.setNextSpeed(speedOnSlowLane);
-						car.setBlinkRight(true);
+						car.setNext(speedOnSlowLane, true, false);
 					}
 				// Soll das auto auf die Überholspur wechseln?
 				} else if (speedOnFastLane > speedOnCurrentLane && lane.isPassableLeft() && speedOnFastLane > 0) {
@@ -120,19 +118,17 @@ public class Nagel_Schreckenberg_Simulation {
 						int previousCarNextPosition = (previousCar.getPosition() + previousCar.getSpeed() + speedDelta + securityDistance) % lane.getLeftLane().getLength();
 						int currentCarNextBackPosition = (car.getBackPosition() + speedOnSlowLane) % lane.getLeftLane().getLength();
 						if (previousCarNextPosition <= currentCarNextBackPosition) {
-							car.setNextSpeed(speedOnFastLane);
-							car.setBlinkLeft(true);
+							car.setNext(speedOnFastLane, false, true);
 						} else {
-							car.setNextSpeed(speedOnCurrentLane);
+							car.setNext(speedOnCurrentLane, false, false);
 							calculateTrödel(car);
 						}
 					} else {
-						car.setNextSpeed(speedOnFastLane);
-						car.setBlinkLeft(true);
+						car.setNext(speedOnFastLane, false, true);
 					}
 					
 				} else {
-					car.setNextSpeed(speedOnCurrentLane);
+					car.setNext(speedOnCurrentLane, false, false);
 					calculateTrödel(car);
 				}
 			}
@@ -149,10 +145,15 @@ public class Nagel_Schreckenberg_Simulation {
 					nextLane = lane;
 				}
 				car.setNextLane(nextLane);
-//				car.setSpeed(car.getNextSpeed());
 				car.setNextPosition((car.getPosition() + car.getNextSpeed()) % car.getNextLane().getLength());
 			}
 		}
+//		
+//		for (Lane lane : this.track.getLanes()) {
+//			for (Car car : lane.getCars()) {
+//					
+//			}
+//		}
 		return track;
 	}
 
@@ -224,18 +225,18 @@ public class Nagel_Schreckenberg_Simulation {
 		// rechts ÜBERHOLEN CHECK
 		if (lane.isPassableLeft()){
 			Lane leftLane = lane.getLeftLane();
+			
 			if (!(leftLane.getNextCar(car) == null)) {
-					int speedNextLeftCar = leftLane.getNextCar(car).getSpeed();
-					if ((car.getPosition() + speed) % lane.getLength() > (leftLane.getNextCar(car).getPosition() + speedNextLeftCar) % leftLane.getLength()){
-						speed = speedNextLeftCar;
-					}
+				Car nextLeftCar = leftLane.getNextCar(car);
+				if ((car.getPosition() + speed) % lane.getLength() > (nextLeftCar.getPosition() + nextLeftCar.getSpeed()) % leftLane.getLength()){
+					speed = nextLeftCar.getSpeed();
+				}
 			// Spur zu Ende
 			} else {
-				Car firstCar = leftLane.getFirstCar();
-				if (firstCar != null) {
-					int speedNextLeftCar = firstCar.getSpeed();
-					if ((car.getPosition() + speed) % lane.getLength() >  (firstCar.getPosition() + speedNextLeftCar) % leftLane.getLength()){
-						speed = speedNextLeftCar;
+				Car firstLeftCar = leftLane.getFirstCar();
+				if (firstLeftCar != null) {
+					if ((car.getPosition() + speed) % lane.getLength() > (firstLeftCar.getPosition() + firstLeftCar.getSpeed()) % leftLane.getLength()){
+						speed = firstLeftCar.getSpeed();
 					}
 				}
 			}
