@@ -57,7 +57,7 @@ public class CarPanel extends JPanel {
 				MetricToPixel.scale(trackOffset) + MetricToPixel.scale(this.ySimPosition + Car.WIDTH));
 		
 		g.setColor(Color.CYAN);
-		g.drawString(Integer.toString(this.car.getSpeed()),
+		g.drawString(Integer.toString(this.car.getNextSpeed()),
 				MetricToPixel.scale(this.xSimPosition),
 				MetricToPixel.scale(trackOffset) + MetricToPixel.scale(this.ySimPosition + Car.WIDTH));
 	}
@@ -68,7 +68,7 @@ public class CarPanel extends JPanel {
 	 */
 	public void performSimStep(int simStep) {
 		
-		float xSimProgress = (float)this.car.getSpeed() / Nagel_Schreckenberg_Simulation.FRAMES_PER_SECOND * (float)simStep;
+		float xSimProgress = (float)this.car.getNextSpeed() / Nagel_Schreckenberg_Simulation.FRAMES_PER_SECOND * (float)simStep;
 		this.xSimPosition = ((float)this.car.getBackPosition() + xSimProgress);
 	
 		if (this.xSimPosition > this.car.getNextLane().getLength()) {
@@ -92,7 +92,7 @@ public class CarPanel extends JPanel {
 		}
 		
 //		if (this.car.getId() == 1) {
-//			System.out.println(this.car.getBackPosition() + "|" + this.car.getSpeed() + "|" + simStep + "|" + this.xSimPosition + "|" +
+//			System.out.println(this.car.getBackPosition() + "|" + this.car.getNextSpeed() + "|" + simStep + "|" + this.xSimPosition + "|" +
 //					this.car.getCurrentLane().getFastLaneIndex() + "|" + this.ySimPosition);
 //		}
 	}

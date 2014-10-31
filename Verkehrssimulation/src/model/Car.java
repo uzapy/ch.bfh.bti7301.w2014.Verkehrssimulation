@@ -81,6 +81,10 @@ public class Car {
 		return this.currentLane;
 	}
 	
+	public void setLane(Lane lane) {
+		this.currentLane = lane;
+	}
+	
 	public Lane getNextLane() {
 		return this.nextLane;
 	}
@@ -115,10 +119,5 @@ public class Car {
 
 	public void setBlinkRight(boolean blinkRight) {
 		this.blinkRight = blinkRight;
-	}
-
-	public void setCurrentLane(Lane lane) {
-		this.currentLane = lane;
-		
 	}
 }

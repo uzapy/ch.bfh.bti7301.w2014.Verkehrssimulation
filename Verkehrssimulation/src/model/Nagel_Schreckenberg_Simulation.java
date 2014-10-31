@@ -99,16 +99,13 @@ public class Nagel_Schreckenberg_Simulation {
 						int currentCarNextBackPosition = (car.getBackPosition() + speedOnSlowLane) % lane.getRightLane().getLength();
 						if (previousCarNextPosition <= currentCarNextBackPosition) {
 							car.setNextSpeed(speedOnSlowLane);
-							car.setNextPosition(car.getPosition() + car.getNextSpeed());
 							car.setBlinkRight(true);
 						} else {
 							car.setNextSpeed(speedOnCurrentLane);
-							car.setNextPosition(car.getPosition() + car.getNextSpeed());
 							calculateTrödel(car);
 						}
 					} else {
 						car.setNextSpeed(speedOnSlowLane);
-						car.setNextPosition(car.getPosition() + car.getNextSpeed());
 						car.setBlinkRight(true);
 					}
 				// Soll das auto auf die Überholspur wechseln?
@@ -124,22 +121,18 @@ public class Nagel_Schreckenberg_Simulation {
 						int currentCarNextBackPosition = (car.getBackPosition() + speedOnSlowLane) % lane.getLeftLane().getLength();
 						if (previousCarNextPosition <= currentCarNextBackPosition) {
 							car.setNextSpeed(speedOnFastLane);
-							car.setNextPosition(car.getPosition() + car.getNextSpeed());
 							car.setBlinkLeft(true);
 						} else {
 							car.setNextSpeed(speedOnCurrentLane);
-							car.setNextPosition(car.getPosition() + car.getNextSpeed());
 							calculateTrödel(car);
 						}
 					} else {
 						car.setNextSpeed(speedOnFastLane);
-						car.setNextPosition(car.getPosition() + car.getNextSpeed());
 						car.setBlinkLeft(true);
 					}
 					
 				} else {
 					car.setNextSpeed(speedOnCurrentLane);
-					car.setNextPosition(car.getPosition() + car.getNextSpeed());
 					calculateTrödel(car);
 				}
 			}
@@ -156,8 +149,8 @@ public class Nagel_Schreckenberg_Simulation {
 					nextLane = lane;
 				}
 				car.setNextLane(nextLane);
-				car.setSpeed(car.getNextSpeed());
-				car.setNextPosition(car.getPosition() + car.getNextSpeed());
+//				car.setSpeed(car.getNextSpeed());
+				car.setNextPosition((car.getPosition() + car.getNextSpeed()) % car.getNextLane().getLength());
 			}
 		}
 		return track;
@@ -166,16 +159,14 @@ public class Nagel_Schreckenberg_Simulation {
 	private void moveCar(Lane lane, Car car) {
 
 		if(!car.isMoved()){
-			int oldPosition = car.getPosition();
-			car.setPosition((car.getNextPosition() % car.getNextLane().getLength()));
-			//if (lane.equals(car.getNextLane())) {
-			//	lane.getLane().updatePosition(oldPosition, car.getPosition());
-			//} else {
-				lane.removeCar(oldPosition, car);
-				//nextLane.addCar(car);
-			//}
+			lane.removeCar(car.getPosition(), car);
 			
-			car.setCurrentLane(car.getNextLane());
+			car.setSpeed(car.getNextSpeed());
+			
+			car.setPosition(car.getNextPosition());
+			
+			car.setLane(car.getNextLane());
+			
 			car.setBlinkLeft(false);
 			car.setBlinkRight(false);
 			car.setMoved(true);
