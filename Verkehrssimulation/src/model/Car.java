@@ -1,17 +1,21 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Car {
 	public static final int WIDTH = 2;	// Breite eines Autos in Meter
 	private int id;
 	private double trödelFactor;
-	private int position;				// Position in Meter
-	private int currentSpeed;					// Gesschwindigkeit in Meter pro Sekunde
-	private int nextSpeed;				// Zukünftige Geschwindigkeit in Meter pro Sekunde
 	private int length;					// Länge des Autos in Meter
+	private int position;				// Position in Meter
+	private int currentSpeed;			// Gesschwindigkeit in Meter pro Sekunde
+	private int nextSpeed;				// Zukünftige Geschwindigkeit in Meter pro Sekunde
 	private Lane currentLane;
 	private Lane nextLane;
 	private boolean isBlinkingLeft;
 	private boolean isBlinkingRight;
+	private List<Car> neighborhood = new ArrayList<Car>();
 
 	public Car(int id, int speed, double trödelFactor, int position, int length, Lane lane) {
 		this.id = id;
@@ -93,5 +97,17 @@ public class Car {
 
 	public void setBlinkingRight(boolean blinkingRight) {
 		this.isBlinkingRight = blinkingRight;
+	}
+
+	/**
+	 * @author bublm1
+	 * @param collect
+	 */
+	public void setNeigborhood(List<Car> neighboringCars) {
+		this.neighborhood = neighboringCars;
+	}
+	
+	public List<Car> getNeigborhood() {
+		return this.neighborhood;
 	}
 }
