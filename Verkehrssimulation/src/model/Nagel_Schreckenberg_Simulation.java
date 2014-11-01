@@ -3,12 +3,6 @@
  */
 package model;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
 import util.RandomPool;
 
 /**
@@ -61,7 +55,7 @@ public class Nagel_Schreckenberg_Simulation {
 		// Pro Auto
 		for (Car car : this.track.getAllCars()) {
 			
-			createNeighborhood(car);
+			this.track.createNeighborhood(car);
 
 			car.setPosition((car.getPosition() + car.getSpeed()) % car.getNextLane().getLength());
 			
@@ -83,54 +77,6 @@ public class Nagel_Schreckenberg_Simulation {
 			}
 		}
 		return this.track;
-	}
-	
-	private Comparator<Car> byPosition = (car1, car2) -> Integer.compare(car1.getPosition(), car2.getPosition());
-
-	/**
-	 * @author bublm1
-	 * @param car
-	 */
-	private void createNeighborhood(Car car) {
-		List<Car> neighbors = new ArrayList<Car>();
-		
-		// Auto weiter vorne finden
-		List<Car> carsOnCurrentLane = this.track.getAllCars().stream()
-				.filter(c -> c.getCurrentLane().getFastLaneIndex() == car.getCurrentLane().getFastLaneIndex())
-				.sorted(byPosition)
-				.collect(Collectors.toList());
-		
-		Optional<Car> carInFront = carsOnCurrentLane.stream()
-				.filter(c -> c.getPosition() > car.getPosition())
-				.sorted(byPosition)
-				.findFirst();
-		
-		if (carInFront.isPresent()) {
-			neighbors.add(carInFront.get());
-		} else if (carsOnCurrentLane.size() > 1) {
-			neighbors.add(carsOnCurrentLane.stream().findFirst().get());
-		}
-		
-		// Autos auf der Überholspur finden
-		List<Car> carsOnFastLane = this.track.getAllCars().stream()
-				.filter(c -> c.getCurrentLane().getFastLaneIndex() > car.getCurrentLane().getFastLaneIndex())
-				.collect(Collectors.toList());
-		
-		carsOnFastLane.stream()
-				.filter(c -> (Math.abs(c.getPosition() - car.getPosition()) < 30) )
-//					|| (Math.abs(c.getPosition() - car.getPosition() - 100) < 30))
-				.forEach(c -> neighbors.add(c));
-		
-		// Autos auf der Normalsur finden
-		List<Car> carsOnSlowLane = this.track.getAllCars().stream()
-				.filter(c -> c.getCurrentLane().getFastLaneIndex() < car.getCurrentLane().getFastLaneIndex())
-				.collect(Collectors.toList());
-		
-		carsOnSlowLane.stream()
-				.filter(c -> Math.abs(c.getPosition() - car.getPosition()) < 30)
-				.forEach(c -> neighbors.add(c));
-		
-		car.setNeigborhood(neighbors);
 	}
 
 	/**
