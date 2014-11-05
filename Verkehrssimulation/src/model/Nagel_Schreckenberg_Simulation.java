@@ -159,8 +159,7 @@ public class Nagel_Schreckenberg_Simulation {
 		}
 		
 //		for (Lane lane : this.track.getLanes()) {
-//			Car car = lane.getLastCar();
-//			while(car != null) {
+//			for (Car car : lane.getSortedCars()) {
 //				if (car.isBlinkLeft() || car.isBlinkRight()) {					
 //					// Alle die Blinken => nextPosition und nextBackPosition
 //					
@@ -190,7 +189,6 @@ public class Nagel_Schreckenberg_Simulation {
 //						}
 //					}
 //				}
-//				car = lane.getPreviousCar(car);
 //			}
 //		}
 		return track;
