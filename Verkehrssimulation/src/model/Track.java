@@ -57,6 +57,7 @@ public class Track {
 		// Autos auf anderen Spuren finden
 		this.cars.stream()
 			.sorted(Sort.ByPosition)
+			.filter(c -> c.getId() != car.getId())
 			.filter(c -> (Math.abs(c.getPosition() - car.getBackPosition()) < radius)
 					  || (Math.abs(Math.abs(c.getBackPosition() - car.getPosition()) - 150) < radius)
 					  || (Math.abs(c.getBackPosition() - car.getPosition()) < radius)
