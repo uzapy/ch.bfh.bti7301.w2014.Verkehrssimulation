@@ -1,8 +1,4 @@
 package skiplist;
-
-/**
- * 
- */
 /**
  * @author ps
  * Position ojects give the user immediate access to an object stored in a

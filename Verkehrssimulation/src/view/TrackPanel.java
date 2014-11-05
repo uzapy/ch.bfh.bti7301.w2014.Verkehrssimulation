@@ -38,8 +38,10 @@ public class TrackPanel extends JPanel {
 			
 			this.lanePanels.add(new LanePanel(lane, fastLaneOffset, trackOffset));
 			
-			for (Car car : lane.getCars()) {
+			Car car = lane.getFirstCar();
+			while(car != null) {
 				this.carPanels.add(new CarPanel(car, this.track.getLanes().size(), trackOffset));
+				car = lane.getNextCar(car);
 			}
 		}
 	}

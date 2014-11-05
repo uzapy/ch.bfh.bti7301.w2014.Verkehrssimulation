@@ -1,5 +1,7 @@
 package model;
 
+import skiplist.Locator;
+
 public class Car {
 
 	public static final int WIDTH = 2;	// Breite eines Autos in Meter
@@ -15,19 +17,13 @@ public class Car {
 	private boolean blinkRight;
 	private boolean moved;
 	private int nextPosition;
+	private Locator<Integer, Car> locator;
 
 	/**
 	 * @return the moved
 	 */
 	public boolean isMoved() {
 		return moved;
-	}
-
-	/**
-	 * @param moved the moved to set
-	 */
-	public void setMoved(boolean moved) {
-		this.moved = moved;
 	}
 
 	public Car(int id,int speed, double trödelFactor, int position, int length, Lane lane) {
@@ -39,6 +35,13 @@ public class Car {
 		this.nextLane = lane;
 		this.length = length;
 		this.moved = true;
+	}
+	
+	/**
+	 * @param moved the moved to set
+	 */
+	public void setMoved(boolean moved) {
+		this.moved = moved;
 	}
 
 	public int getId() {
@@ -123,6 +126,18 @@ public class Car {
 
 	public void setBlinkRight(boolean blinkRight) {
 		this.blinkRight = blinkRight;
+	}
+	
+	public void setLocator(Locator<Integer, Car> locator) {
+		this.locator = locator;
+	}
+	
+	/**
+	 * @author bublm1
+	 * @return
+	 */
+	public Locator<Integer, Car> getLocator() {
+		return this.locator;
 	}
 
 	/**

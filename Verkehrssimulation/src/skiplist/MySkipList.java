@@ -1,22 +1,14 @@
 package skiplist;
 
-/**
- * 
- */
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
-
-//import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
 
 /**
  * @author ps
  *
  */
-public class MySkipList<K extends Comparable<? super K>, E> implements
-		OrderedDictionary<K, E> {
+public class MySkipList<K extends Comparable<? super K>, E> implements OrderedDictionary<K, E> {
 	
 	// the class for the nodes:
 	class SLNode implements Locator<K,E> {
@@ -45,13 +37,13 @@ public class MySkipList<K extends Comparable<? super K>, E> implements
 	
 	// instance variables
 	// 4 inital nodes which remain alway the same
-	private SLNode topLeft,bottomLeft,topRight,bottomRight;
+	private SLNode topLeft, bottomLeft, topRight, bottomRight;
 	// min, max
-	private K minKey,maxKey;
-	// 
+	private K minKey, maxKey;
+	//
 	private int size;
 	private Random rand = new Random(65435);
-	private double p =0.5; // index probability
+	private double p = 0.5; // index probability
 	private int height = 2;
 	
 	public MySkipList(K min, K max){
@@ -77,9 +69,6 @@ public class MySkipList<K extends Comparable<? super K>, E> implements
 		minKey = min;
 		maxKey = max;
 	}
-	
-	
-	
 
 	/* (non-Javadoc)
 	 * @see examples.OrderedDictionary#size()
@@ -106,15 +95,15 @@ public class MySkipList<K extends Comparable<? super K>, E> implements
 		}
 	}
 
-	private SLNode search(K key){
+	private SLNode search(K key) {
 		SLNode pos = topLeft;
-		while (pos.below!= null){
+		while (pos.below != null) {
 			pos = pos.below;
 			// go to the right until ...
 			while (key.compareTo(pos.next.key) >= 0)
-					pos = pos.next;
+				pos = pos.next;
 		}
-		return pos; 
+		return pos;
 	}
 	
 	
@@ -239,26 +228,36 @@ public class MySkipList<K extends Comparable<? super K>, E> implements
 	 */
 	@Override
 	public Locator<K, E> closestBefore(K key) {
-		if (key.compareTo(minKey)<=0) throw new RuntimeException("key not bigger than minKey!");
-		if (key.compareTo(maxKey)>=0) throw new RuntimeException("key not smaller than maxKey!");
+		if (key.compareTo(minKey) <= 0) {
+			throw new RuntimeException("key not bigger than minKey!");			
+		}
+		if (key.compareTo(maxKey) >= 0) {
+			throw new RuntimeException("key not smaller than maxKey!");			
+		}
 		SLNode pos = search(key);
 		int comp = key.compareTo(pos.key);
-		if (comp==0){
+		if (comp == 0) {
 			pos = pos.prev;
 			// still equal?
-			if (pos == bottomLeft) pos = null;
-			while (key.compareTo(pos.key)==0) pos=pos.prev;
-		}
-		else if (comp>0){
+			while (key.compareTo(pos.key) == 0) {
+				pos = pos.prev;				
+			}								
+			if (pos == bottomLeft) {
+				pos = null;				
+			}
+		} else if (comp > 0) {
 			// in case we have sevearal equal keys take the rightmost locator
-			while (pos.key.compareTo(pos.next.key)==0) pos=pos.next;
-			if (pos == bottomLeft) pos = null;
-			
-		}
-		else 
-			throw new RuntimeException("should never happen!");
-		return pos;
+			while (pos.key.compareTo(pos.next.key) == 0) {
+				pos = pos.next;				
+			}
+			if (pos == bottomLeft) {
+				pos = null;				
+			}
 
+		} else {			
+			throw new RuntimeException("should never happen!");
+		}
+		return pos;
 	}
 
 	/* (non-Javadoc)

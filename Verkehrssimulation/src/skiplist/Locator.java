@@ -1,9 +1,4 @@
 package skiplist;
-
-/**
- * 
- */
-
 /**
  * Locator allow to store (key,Object) pairs, where the keys have 
  * to implement the Comparable inteface. 
@@ -11,8 +6,7 @@ package skiplist;
  * @param <K> The type of the key (which has to implement Comparable)
  * @param <E> The type of the element stored at this position
  */
-public interface Locator<K extends Comparable<? super K>,E> 
-				extends Position<E> {
+public interface Locator<K extends Comparable<? super K>,E> extends Position<E> {
 	/**
 	 * @return the key object stored at this locator
 	 */

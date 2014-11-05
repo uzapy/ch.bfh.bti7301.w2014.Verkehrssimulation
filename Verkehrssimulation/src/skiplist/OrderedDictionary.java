@@ -1,7 +1,5 @@
 package skiplist;
 
-
-
 import java.util.Iterator;
 
 /**
@@ -12,8 +10,7 @@ import java.util.Iterator;
  * @param <E> The type of the elements stored at this dictionary
  */
 public interface OrderedDictionary<K extends Comparable<? super K>,E> {
-	
-	
+
 	/**
 	 * @return the size (number of stored locators) of this dictionary object
 	 */
@@ -83,6 +80,4 @@ public interface OrderedDictionary<K extends Comparable<? super K>,E> {
 	 * dictionary in sorted order;
 	 */
 	public Iterator<Locator<K,E>> sortedLocators();	
-	
-	
 }
