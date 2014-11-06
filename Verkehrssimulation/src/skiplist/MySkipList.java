@@ -2,6 +2,7 @@ package skiplist;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -111,15 +112,16 @@ public class MySkipList<K extends Comparable<? super K>, E> implements OrderedDi
 	 * @see examples.OrderedDictionary#findAll(java.lang.Comparable)
 	 */
 	@Override
-	public Locator<K, E>[] findAll(K key) {
+	public List<Locator<K, E>> findAll(K key) {
 		SLNode n = ((SLNode) closestBefore(key)).next;
-		if (n==null) return new Locator[0];
+		if (n==null) return new ArrayList<Locator<K, E>>();
+		
 		ArrayList<Locator<K,E>> al = new ArrayList<>();
 		while(n.key.compareTo(key)==0){
 			al.add(n);
 			n=n.next;
 		}
-		return al.toArray(new Locator[0]);
+		return al;
 	}
 
 
@@ -387,36 +389,36 @@ public class MySkipList<K extends Comparable<? super K>, E> implements OrderedDi
 	}
 
 
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		MySkipList<Integer, String> sl = new MySkipList<>(Integer.MIN_VALUE,Integer.MAX_VALUE);
-		Random rand = new Random(266743);
-		int n  = 1000;
-		Locator<Integer,String>[] locs = new Locator[n];
-		long time1 = System.currentTimeMillis();
-		for (int i=0;i<n;i++) {
-			locs[i]=sl.insert(rand.nextInt(n),""+i); 
-		}
+//	/**
+//	 * @param args
+//	 */
+//	public static void main(String[] args) {
+//		MySkipList<Integer, String> sl = new MySkipList<>(Integer.MIN_VALUE,Integer.MAX_VALUE);
+//		Random rand = new Random(266743);
+//		int n  = 1000;
+//		Locator<Integer,String>[] locs = new Locator[n];
+//		long time1 = System.currentTimeMillis();
 //		for (int i=0;i<n;i++) {
-//			sl.remove(locs[i]); 
+//			locs[i]=sl.insert(rand.nextInt(n),""+i); 
 //		}
-		Locator<Integer,String>[] ll = sl.findAll(33);
-		for (int i=0;i<ll.length;i++)System.out.println(ll[i].key());
-		long time2 = System.currentTimeMillis();
-		System.out.println("elapsed time: "+(time2-time1)/1000.0+" s");
-		System.out.println("height of index: "+sl.height);
-//		Iterator<Locator<Integer,String>> it = sl.sortedLocators();
-//		while (it.hasNext()){
-//			Locator<Integer, String> loc = it.next();
-//			System.out.println(loc.key()+" element: "+loc.element());
-//		}
-		sl.print();
-//		sl.remove(locs[15]);
+////		for (int i=0;i<n;i++) {
+////			sl.remove(locs[i]); 
+////		}
+//		Locator<Integer,String>[] ll = sl.findAll(33);
+//		for (int i=0;i<ll.length;i++)System.out.println(ll[i].key());
+//		long time2 = System.currentTimeMillis();
+//		System.out.println("elapsed time: "+(time2-time1)/1000.0+" s");
+//		System.out.println("height of index: "+sl.height);
+////		Iterator<Locator<Integer,String>> it = sl.sortedLocators();
+////		while (it.hasNext()){
+////			Locator<Integer, String> loc = it.next();
+////			System.out.println(loc.key()+" element: "+loc.element());
+////		}
 //		sl.print();
-//		Locator<Integer,String> loc = sl.closestBefore(83);
-//		if (loc!= null)System.out.println(loc.key()+":"+loc.element());
-	}
+////		sl.remove(locs[15]);
+////		sl.print();
+////		Locator<Integer,String> loc = sl.closestBefore(83);
+////		if (loc!= null)System.out.println(loc.key()+":"+loc.element());
+//	}
 
 }
