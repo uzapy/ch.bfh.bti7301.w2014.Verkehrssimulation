@@ -77,54 +77,37 @@ public class Lane {
 	}
 	
 	public Car getNextCar(Car car) {
-		Locator<Integer, Car> found = this.lane.next(car.getLocator());
-		if (found != null) {
-			return found.element();
-		} else {
-			return null;
-		}
+		return getElement(this.lane.next(car.getLocator()));
 	}
 	
 	public Car getPreviousCar(Car car) {
-		Locator<Integer, Car> found = this.lane.previous(car.getLocator());
-		if (found != null) {
-			return found.element();
-		} else {
-			return null;
-		}
+		return getElement(this.lane.previous(car.getLocator()));
 	}
 	
 	public Car getClosestAfter(Car car) {
-		Locator<Integer, Car> found = this.lane.closestAfter(car.getLocator().key());
-		if (found != null) {
-			return found.element();
-		} else {
-			return null;
-		}
+		return getElement(this.lane.closestAfter(car.getLocator().key()));
 	}
 	
 	public Car getClosestBefore(Car car) {
-		Locator<Integer, Car> found = this.lane.closestBefore(car.getLocator().key());
-		if (found != null) {
-			return found.element();
-		} else {
-			return null;
-		}
+		return getElement(this.lane.closestBefore(car.getLocator().key()));
 	}
 
 	public Car getFirstCar(){
-		Locator<Integer, Car> found = this.lane.min();
-		if (found != null) {
-			return found.element();
-		} else {
-			return null;
-		}
+		return getElement(this.lane.min());
 	}
 	
 	public Car getLastCar() {
-		Locator<Integer, Car> found = this.lane.max();
-		if (found != null) {
-			return found.element();
+		return getElement(this.lane.max());
+	}
+	
+	/**
+	 * @author bublm1
+	 * @param locator
+	 * @return
+	 */
+	private Car getElement(Locator<Integer, Car> locator) {
+		if (locator != null) {
+			return locator.element();
 		} else {
 			return null;
 		}
