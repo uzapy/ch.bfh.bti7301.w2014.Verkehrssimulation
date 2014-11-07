@@ -146,14 +146,14 @@ public class Car {
 		this.blinkRight = blinkRight;
 		this.blinkLeft = blinkLeft;
 		
-//		if (blinkRight) {
-//			nextLane = currentLane.getRightLane();
-//		} else if (blinkLeft) {
-//			nextLane = currentLane.getLeftLane();
-//		} else {
-//			nextLane = currentLane;
-//		}
-//		
-//		nextPosition = (position + nextSpeed) % nextLane.getLength();
+		if (blinkRight) {
+			nextLane = currentLane.getRightLane();
+		} else if (blinkLeft) {
+			nextLane = currentLane.getLeftLane();
+		} else {
+			nextLane = currentLane;
+		}
+		
+		nextPosition = (position + nextSpeed) % nextLane.getLength();
 	}
 }
