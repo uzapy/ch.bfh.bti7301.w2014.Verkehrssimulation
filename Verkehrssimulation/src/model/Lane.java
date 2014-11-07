@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Iterator;
+
 import skiplist.Locator;
 import skiplist.MySkipList;
 
@@ -9,7 +11,7 @@ import skiplist.MySkipList;
  * Repräsentiert die Fahrspur
  *
  */
-public class Lane {
+public class Lane implements Iterable<Locator<Integer, Car>> {
 	public static final int WIDTH = 4;	// Breite der Fahrspur in Metern
 	
 	private MySkipList<Integer, Car> lane;
@@ -115,5 +117,13 @@ public class Lane {
 	
 	public boolean containsKey(Car car) {
 		return (this.lane.find(car.getLocator().key()) != null);
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Iterable#iterator()
+	 */
+	@Override
+	public Iterator<Locator<Integer, Car>> iterator() {
+		return this.lane.sortedLocators();
 	}
 }

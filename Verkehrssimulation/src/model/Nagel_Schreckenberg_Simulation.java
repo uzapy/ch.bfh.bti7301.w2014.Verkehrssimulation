@@ -5,6 +5,7 @@ package model;
 
 import java.util.ArrayList;
 
+import skiplist.Locator;
 import util.RandomPool;
 
 /**
@@ -62,28 +63,15 @@ public class Nagel_Schreckenberg_Simulation {
 
 	public Track performStep() {
 		for (Lane lane : this.track.getLanes()) {
-			Car car = lane.getFirstCar();
-			Car nextCar;
-			while (car != null) {
-				nextCar = lane.getNextCar(car);
+			for(Locator<Integer, Car> carLocator : lane) {
+				Car car = carLocator.element();
 				moveCar(lane, car);
-				car = nextCar;
 			}
-			
-//			for(Car car : carList){
-//				while(car.getCurrentLane().getLane(car))
-//				{
-//					car.setPosition(car.getPosition()+5);
-//				}
-//				car.getCurrentLane().addCar(car);
-//			}
-//			
-//			carList.clear();
 		}
 
 		for (Lane lane : this.track.getLanes()) {
-			Car car = lane.getFirstCar();
-			while (car != null) {
+			for(Locator<Integer, Car> carLocator : lane) {
+				Car car = carLocator.element();
 				car.setMoved(false);
 				
 				int speedOnFastLane = getPossibleMaximumSpeed(lane.getLeftLane(), car);
@@ -136,14 +124,12 @@ public class Nagel_Schreckenberg_Simulation {
 					car.setNext(speedOnCurrentLane, false, false);
 					calculateTrödel(car);
 				}
-
-				car = lane.getNextCar(car);
 			}
 		}
 		
 		for (Lane lane : this.track.getLanes()) {
-			Car car = lane.getFirstCar();
-			while (car != null) {
+			for(Locator<Integer, Car> carLocator : lane) {
+				Car car = carLocator.element();
 				Lane nextLane;
 				if (car.isBlinkLeft()) {
 					nextLane = lane.getLeftLane();
@@ -154,7 +140,6 @@ public class Nagel_Schreckenberg_Simulation {
 				}
 				car.setNextLane(nextLane);
 				car.setNextPosition((car.getPosition() + car.getNextSpeed()) % car.getNextLane().getLength());
-				car = lane.getNextCar(car);
 			}
 		}
 		
@@ -209,7 +194,6 @@ public class Nagel_Schreckenberg_Simulation {
 			car.setBlinkRight(false);
 			car.setMoved(true);
 			car.getCurrentLane().addCar(car);
-//			carList.add(car);
 		}
 
 	}
