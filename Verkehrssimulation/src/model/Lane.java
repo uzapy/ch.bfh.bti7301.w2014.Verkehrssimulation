@@ -77,27 +77,27 @@ public class Lane {
 	}
 	
 	public Car getNextCar(Car car) {
-		return getElement(this.lane.next(car.getLocator()));
+		return getElementIfPresent(this.lane.next(car.getLocator()));
 	}
 	
 	public Car getPreviousCar(Car car) {
-		return getElement(this.lane.previous(car.getLocator()));
+		return getElementIfPresent(this.lane.previous(car.getLocator()));
 	}
 	
 	public Car getClosestAfter(Car car) {
-		return getElement(this.lane.closestAfter(car.getLocator().key()));
+		return getElementIfPresent(this.lane.closestAfter(car.getLocator().key()));
 	}
 	
 	public Car getClosestBefore(Car car) {
-		return getElement(this.lane.closestBefore(car.getLocator().key()));
+		return getElementIfPresent(this.lane.closestBefore(car.getLocator().key()));
 	}
 
 	public Car getFirstCar(){
-		return getElement(this.lane.min());
+		return getElementIfPresent(this.lane.min());
 	}
 	
 	public Car getLastCar() {
-		return getElement(this.lane.max());
+		return getElementIfPresent(this.lane.max());
 	}
 	
 	/**
@@ -105,7 +105,7 @@ public class Lane {
 	 * @param locator
 	 * @return
 	 */
-	private Car getElement(Locator<Integer, Car> locator) {
+	private Car getElementIfPresent(Locator<Integer, Car> locator) {
 		if (locator != null) {
 			return locator.element();
 		} else {
