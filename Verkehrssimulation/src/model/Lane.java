@@ -102,6 +102,18 @@ public class Lane implements Iterable<Locator<Integer, Car>> {
 		return getElementIfPresent(this.lane.max());
 	}
 	
+	public boolean containsKey(Car car) {
+		return (this.lane.find(car.getLocator().key()) != null);
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Iterable#iterator()
+	 */
+	@Override
+	public Iterator<Locator<Integer, Car>> iterator() {
+		return this.lane.sortedLocators();
+	}
+	
 	/**
 	 * @author bublm1
 	 * @param locator
@@ -113,17 +125,5 @@ public class Lane implements Iterable<Locator<Integer, Car>> {
 		} else {
 			return null;
 		}
-	}
-	
-	public boolean containsKey(Car car) {
-		return (this.lane.find(car.getLocator().key()) != null);
-	}
-
-	/* (non-Javadoc)
-	 * @see java.lang.Iterable#iterator()
-	 */
-	@Override
-	public Iterator<Locator<Integer, Car>> iterator() {
-		return this.lane.sortedLocators();
 	}
 }

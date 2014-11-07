@@ -46,7 +46,6 @@ public class RandomPool {
 	}
 	
 	public static Car getNewCar(Track track){
-		
 		int speed = r.nextInt(120 - 80) + 80;
 		double trödelFactor = r.nextDouble() * (0.8 - 0.2) + 0.2;
 		Lane lane = track.getLanes().get(r.nextInt(1 - 3) + 3);

@@ -19,13 +19,6 @@ public class Car {
 	private int nextPosition;
 	private Locator<Integer, Car> locator;
 
-	/**
-	 * @return the moved
-	 */
-	public boolean isMoved() {
-		return moved;
-	}
-
 	public Car(int id,int speed, double trödelFactor, int position, int length, Lane lane) {
 		this.id = id;
 		this.trödelFactor = trödelFactor;
@@ -36,10 +29,11 @@ public class Car {
 		this.length = length;
 		this.moved = true;
 	}
-	
-	/**
-	 * @param moved the moved to set
-	 */
+
+	public boolean isMoved() {
+		return moved;
+	}
+
 	public void setMoved(boolean moved) {
 		this.moved = moved;
 	}
