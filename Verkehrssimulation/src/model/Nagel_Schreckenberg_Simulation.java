@@ -74,15 +74,30 @@ public class Nagel_Schreckenberg_Simulation {
 				Car car = carLocator.element();
 				car.setMoved(false);
 				car.setNext(getMaximumSpeedOnCurrentLane(car), false, false);
-				
+
 				Car nextCar = car.getCurrentLane().getNextCar(car);
 				if (nextCar == null) {
 					nextCar = car.getCurrentLane().getFirstCar();
 				}
+				int possibleSpeedOnRightLane = calculateNextSpeedOnDiffrentLane(lane.getRightLane(), car);		
 				
 				if (lane.isPassableLeft() && car.getSpeed() > nextCar.getSpeed() && car.getSpeed() > car.getNextSpeed()) {
 					// Kann ich überholen?
 					boolean canChangeToLeftLane = IsEnoughSpaceBetweenBeforeAndAfter(lane.getLeftLane(), car);
+					if(canChangeToLeftLane){
+						car.setNext(calculateNextSpeedOnDiffrentLane(lane.getLeftLane(), car), false, true);
+					}else {
+						// Nein, trödeln.
+						car.setNext(calculateTrödel(car), false, false);
+					}
+				} else if(lane.isPassableRight() && car.getSpeed()*2 <= possibleSpeedOnRightLane){
+					boolean canChangeToRightLane = IsEnoughSpaceBetweenBeforeAndAfter(lane.getRightLane(), car);
+					if(canChangeToRightLane){
+						car.setNext(calculateNextSpeedOnDiffrentLane(lane.getRightLane(), car), true, false);
+					}else {
+						// Nein, trödeln.
+						car.setNext(calculateTrödel(car), false, false);
+					}
 				} else {
 					// Nein, trödeln.
 					car.setNext(calculateTrödel(car), false, false);
@@ -153,6 +168,8 @@ public class Nagel_Schreckenberg_Simulation {
 		return track;
 	}
 
+
+
 	private void moveCar(Lane lane, Car car) {
 		if(!car.isMoved()){
 			lane.removeCar(car);
@@ -187,15 +204,74 @@ public class Nagel_Schreckenberg_Simulation {
 			Car closestBefore = lane.getPreviousCar(closestAfter);
 			if (closestBefore == null) {
 				closestBefore = lane.getClosestBefore(car);
+				if (closestBefore == null) {
+					closestBefore = lane.getLastCar();
+				}
 			}
 			
-			boolean isCloesestBeforeFaster = closestBefore.getSpeed() > car.getSpeed();
+			//boolean isCloesestAfterFaster = closestAfter.getSpeed() > car.getSpeed();
+			
+			int maxNextPosition = closestAfter.getBackPosition() - securityDistance;
+			int minNextPosition = closestBefore.getPosition() + closestBefore.getSpeed() * 2 + this.speedDelta + securityDistance;
+			int gapLength = maxNextPosition - minNextPosition;
+			
+			if (gapLength >= car.getLength()){
+				return true;
+			}
+			else{
+				return false;
+			}
 			
 		}
-		
-		return false;
+		else{
+			return true;
+		}
 	}
 
+	/**
+	 * @author burkt4
+	 * @param leftLane
+	 * @param car
+	 * @return
+	 */
+	private int calculateNextSpeedOnDiffrentLane(Lane lane, Car car) {
+		if (lane == null){
+			return 0;
+		}
+		int speed = car.getSpeed();
+		// Beschleunigen
+		if (car.getSpeed() < lane.getMaxVelocity()) {
+			if (car.getSpeed() + this.speedDelta > lane.getMaxVelocity()) {
+				speed = lane.getMaxVelocity();
+			} else {
+				speed = car.getSpeed() + this.speedDelta;
+			}
+		} else {
+			speed = lane.getMaxVelocity();
+		}
+			Car nextCar = lane.getClosestAfter(car);
+
+		// nächstes Auto
+		if (nextCar != null) {
+			int availableSpace = nextCar.getBackPosition() - securityDistance
+					- car.getPosition(); // Sicherheitsabstand
+			speed = setSpeedAccordingToAvaliableSpace(speed, availableSpace);
+			// Spur zu Ende
+		} else {
+			int rest = lane.getLength() - car.getPosition();
+			Car firstCar = lane.getFirstCar();
+			if (firstCar != null) {
+				int availableSpace = firstCar.getBackPosition()
+						- securityDistance + rest;
+				speed = setSpeedAccordingToAvaliableSpace(speed, availableSpace);
+			}
+		}
+
+		return speed;
+
+
+	}
+	
 	private int calculateTrödel(Car car) {
 		// Trödeln
 		if (RandomPool.nextDouble() <= car.getTrödelFactor()) {
