@@ -157,13 +157,22 @@ public class Nagel_Schreckenberg_Simulation {
 
 	private void moveCar(Lane lane, Car car) {
 		if(!car.isMoved()){
-			lane.removeCar(car);
+			
+			boolean passedEnd = car.getPosition()> car.getNextPosition();
 			
 			car.setSpeed(car.getNextSpeed());
 			car.setPosition(car.getNextPosition());
-			
 			car.setLane(car.getNextLane());
-			car.getCurrentLane().addCar(car);
+			
+			if((lane.getFastLaneIndex() != car.getNextLane().getFastLaneIndex()) || passedEnd){
+				lane.removeCar(car);
+				car.getCurrentLane().addCar(car);
+			}
+			else{
+				lane.updateCarPosition(car);
+			}
+
+
 			
 			car.setBlinkLeft(false);
 			car.setBlinkRight(false);

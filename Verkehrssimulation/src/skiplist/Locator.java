@@ -11,4 +11,6 @@ public interface Locator<K extends Comparable<? super K>,E> extends Position<E> 
 	 * @return the key object stored at this locator
 	 */
 	public K key();
+	
+	public void setKey(K key);
 }
