@@ -65,21 +65,17 @@ public class Nagel_Schreckenberg_Simulation {
 		for (Lane lane : this.track.getLanes()) {
 			for(Locator<Integer, Car> carLocator : lane) {
 				Car car = carLocator.element();
-				moveCar(lane, car);
-				int randomCars = RandomPool.getNewNumberOfCars();
-				for(int i = 0; i < randomCars; i++){
-					Car randomCar = RandomPool.getNewCar(this.track);
-					if(randomCar.getCurrentLane().getFirstCar().getBackPosition() > 0){
-						randomCar.getCurrentLane().addCar(randomCar);
-						randomCar.setBlinkLeft(false);
-						randomCar.setBlinkRight(false);
-						randomCar.setMoved(true);
-						this.track.addToNewCars(randomCar);
-					}
-				}
+				moveCar(lane, car);				
+			}
+			if(lane.getFirstCar().getBackPosition() > 20){
+				Car randomCar = RandomPool.getNewCar(this.track, lane);
+				randomCar.getCurrentLane().addCar(randomCar);
+				randomCar.setBlinkLeft(false);
+				randomCar.setBlinkRight(false);
+				randomCar.setMoved(true);
+				this.track.addToNewCars(randomCar);					
 			}
 		}
-
 		for (Lane lane : this.track.getLanes()) {
 			for(Locator<Integer, Car> carLocator : lane) {
 				Car car = carLocator.element();
@@ -171,7 +167,7 @@ public class Nagel_Schreckenberg_Simulation {
 		}
 		else{
 			if(!car.isMoved()){
-boolean passedEnd = car.getPosition()> car.getNextPosition();
+			boolean passedEnd = car.getPosition()> car.getNextPosition();
 			
 			car.setSpeed(car.getNextSpeed());
 			car.setPosition(car.getNextPosition());
@@ -182,6 +178,7 @@ boolean passedEnd = car.getPosition()> car.getNextPosition();
 				car.getCurrentLane().addCar(car);
 			}
 			else{
+					System.out.println(car.getId() + " " + car.getPosition());
 				lane.updateCarPosition(car);
 			}
 

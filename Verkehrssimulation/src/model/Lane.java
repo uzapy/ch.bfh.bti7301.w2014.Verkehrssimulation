@@ -26,7 +26,7 @@ public class Lane implements Iterable<Locator<Integer, Car>> {
 	public Lane(int maxVelocity, int length, int fastLaneIndex){
 		this.length = length;
 		this.maxVelocity = maxVelocity;
-		this.lane = new MySkipList<Integer, Car>(-1, this.length);
+		this.lane = new MySkipList<Integer, Car>(-1, this.length+1);
 		this.fastLaneIndex = fastLaneIndex;
 	}
 	
@@ -133,6 +133,5 @@ public class Lane implements Iterable<Locator<Integer, Car>> {
 	 */
 	public void updateCarPosition(Car car) {
 		this.lane.updateKey(car.getLocator(), car.getPosition());
-		
 	}
 }
