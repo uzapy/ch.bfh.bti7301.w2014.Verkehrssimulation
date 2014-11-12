@@ -45,6 +45,11 @@ public class Nagel_Schreckenberg_Simulation {
 		lane0.addCar(new Car( 3, 5, trödelFactor, 68, RandomPool.getNewCarLength(), lane0));
 		lane0.addCar(new Car( 4, 7, trödelFactor, 95, RandomPool.getNewCarLength(), lane0));
 		lane0.addCar(new Car( 5, 9, trödelFactor, 40, RandomPool.getNewCarLength(), lane0));
+		lane0.addCar(new Car( 17, 1, trödelFactor,  25, RandomPool.getNewCarLength(), lane0));
+		lane0.addCar(new Car( 18, 1, trödelFactor, 54, RandomPool.getNewCarLength(), lane0));
+		lane0.addCar(new Car( 19, 2, trödelFactor, 72, RandomPool.getNewCarLength(), lane0));
+		lane0.addCar(new Car( 20, 2, trödelFactor, 90, RandomPool.getNewCarLength(), lane0));
+		lane0.addCar(new Car( 21, 3, trödelFactor, 80, RandomPool.getNewCarLength(), lane0));
 	
 		lane1.addCar(new Car( 6, 11, trödelFactor, 43, RandomPool.getNewCarLength(), lane1));
 		lane1.addCar(new Car( 7, 13, trödelFactor, 54, RandomPool.getNewCarLength(), lane1));
@@ -205,9 +210,10 @@ public class Nagel_Schreckenberg_Simulation {
 
 			int maxNextPosition = closestAfter.getBackPosition() - securityDistance;
 			int minNextPosition = closestBefore.getPosition() + closestBefore.getSpeed() * 2 + this.speedDelta + securityDistance;
+			int currentCartempNextBackPosition = car.getBackPosition() + calculateNextSpeed(lane, car) - securityDistance;
 			int gapLength = maxNextPosition - minNextPosition;
 
-			if (gapLength >= car.getLength()) {
+			if (gapLength >= car.getLength() && minNextPosition <= currentCartempNextBackPosition) {
 				return true;
 			} else {
 				return false;
