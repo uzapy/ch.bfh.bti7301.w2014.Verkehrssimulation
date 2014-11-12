@@ -6,6 +6,8 @@ package view;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.util.LinkedList;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 import javax.swing.JPanel;
 
@@ -51,14 +53,14 @@ public class TrackPanel extends JPanel {
 		
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, MetricToPixel.scale(track.getLane(0).getLength()), MetricToPixel.scale(trackOffset));
-
+		
 		for (LanePanel lanePanel : this.lanePanels) {
 			lanePanel.paintComponent(g);
 		}
 		
 		for (CarPanel carPanel : carPanels) {
 			carPanel.paintComponent(g);
-		}		
+		}
 
 		int xPosition = 0;
 		int yPosition = this.lanePanels.size() * MetricToPixel.scale(Lane.WIDTH) + MetricToPixel.scale(trackOffset);
@@ -69,8 +71,19 @@ public class TrackPanel extends JPanel {
 		g.fillRect(xPosition, yPosition, length, width);
 	}
 
-	public void setTrack(Track track) {
-		this.track = track;
+	public void setTrack() {
+		for(Car oldCar : this.track.getOldCars()){
+			Optional<CarPanel> foundCar = this.carPanels.stream().filter(cp -> cp.getId() == oldCar.getId()).findFirst();
+			if(foundCar.isPresent()){
+				this.carPanels.remove(foundCar.get());
+			}
+
+		}
+		for(Car newCar : this.track.getNewCars()){
+			this.carPanels.add(new CarPanel(newCar, this.track.getLanes().size(), trackOffset));
+		}
+		this.track.clearNewCars();
+		this.track.clearOldCars();
 		this.repaint();
 	}
 

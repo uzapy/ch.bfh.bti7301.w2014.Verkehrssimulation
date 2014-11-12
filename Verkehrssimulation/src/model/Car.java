@@ -18,6 +18,7 @@ public class Car {
 	private boolean moved;
 	private int nextPosition;
 	private Locator<Integer, Car> locator;
+	private boolean toBeDeleted;
 
 	public Car(int id,int speed, double trödelFactor, int position, int length, Lane lane) {
 		this.id = id;
@@ -28,6 +29,7 @@ public class Car {
 		this.nextLane = lane;
 		this.length = length;
 		this.moved = true;
+		this.toBeDeleted = false;
 	}
 
 	public boolean isMoved() {
@@ -36,6 +38,10 @@ public class Car {
 
 	public void setMoved(boolean moved) {
 		this.moved = moved;
+	}
+	
+	public boolean isToBeDeleted() {
+		return toBeDeleted;
 	}
 
 	public int getId() {
@@ -153,7 +159,11 @@ public class Car {
 		} else {
 			nextLane = currentLane;
 		}
-		
-		nextPosition = (position + nextSpeed) % nextLane.getLength();
+		if(position + nextSpeed > nextLane.getLength()){
+			this.toBeDeleted = true;
+		}
+		else{
+			nextPosition = (position + nextSpeed);			
+		}
 	}
 }

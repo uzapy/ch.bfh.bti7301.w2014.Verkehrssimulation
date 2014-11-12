@@ -16,7 +16,7 @@ import model.Track;
 public class RandomPool {
 
 	private static Random r = new Random();
-	private static int id = 1; //Car ID
+	private static int id = 100; //Car ID
 
 	/**
 	 * @author bublm1
@@ -45,12 +45,19 @@ public class RandomPool {
 		return r.nextInt(longest - shortest) + shortest;
 	}
 	
+	public static int getNewNumberOfCars(){
+		int shortest = 1;
+		int longest = 3;
+		return r.nextInt(longest - shortest) + shortest;
+	}
+	
 	public static Car getNewCar(Track track){
 		int speed = r.nextInt(120 - 80) + 80;
 		double trödelFactor = r.nextDouble() * (0.8 - 0.2) + 0.2;
-		Lane lane = track.getLanes().get(r.nextInt(1 - 3) + 3);
+		int laneIndex = r.nextInt(3);
+		Lane lane = track.getLanes().get(laneIndex);
 		int length = getNewCarLength();
-		
+		id++;
 		return new Car(id, speed, trödelFactor, 0, length, lane);
 	}
 }

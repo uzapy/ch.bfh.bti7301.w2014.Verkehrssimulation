@@ -100,4 +100,8 @@ public class CarPanel extends JPanel {
 	public int getLaneOffset(int fastLaneIndex) {
 		return (numberOfLanes - 1) - fastLaneIndex;
 	}
+
+	public int getId() {
+		return this.car.getId();
+	}
 }

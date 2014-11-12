@@ -40,32 +40,43 @@ public class Nagel_Schreckenberg_Simulation {
 		this.track.addLane(lane2);
 //		this.track.addLane(lane3);
 		
-		lane0.addCar(new Car( 1, 1, trödelFactor,  9, RandomPool.getNewCarLength(), lane0));
-		lane0.addCar(new Car( 2, 3, trödelFactor, 37, RandomPool.getNewCarLength(), lane0));
-		lane0.addCar(new Car( 3, 5, trödelFactor, 68, RandomPool.getNewCarLength(), lane0));
-		lane0.addCar(new Car( 4, 7, trödelFactor, 95, RandomPool.getNewCarLength(), lane0));
-		lane0.addCar(new Car( 5, 9, trödelFactor, 40, RandomPool.getNewCarLength(), lane0));
+		lane0.addCar(new Car( 1, 15, trödelFactor,  9, RandomPool.getNewCarLength(), lane0));
+		lane0.addCar(new Car( 2, 13, trödelFactor, 37, RandomPool.getNewCarLength(), lane0));
+		lane0.addCar(new Car( 3, 15, trödelFactor, 68, RandomPool.getNewCarLength(), lane0));
+		lane0.addCar(new Car( 4, 17, trödelFactor, 95, RandomPool.getNewCarLength(), lane0));
+		lane0.addCar(new Car( 5, 19, trödelFactor, 40, RandomPool.getNewCarLength(), lane0));
 	
 		lane1.addCar(new Car( 6, 11, trödelFactor, 43, RandomPool.getNewCarLength(), lane1));
 		lane1.addCar(new Car( 7, 13, trödelFactor, 54, RandomPool.getNewCarLength(), lane1));
 		lane1.addCar(new Car( 8, 15, trödelFactor, 62, RandomPool.getNewCarLength(), lane1));
-		lane1.addCar(new Car( 9,  0, trödelFactor, 14, RandomPool.getNewCarLength(), lane1));
-		lane1.addCar(new Car(10,  2, trödelFactor, 97, RandomPool.getNewCarLength(), lane1));
+		lane1.addCar(new Car( 9,  10, trödelFactor, 14, RandomPool.getNewCarLength(), lane1));
+		lane1.addCar(new Car(10,  12, trödelFactor, 97, RandomPool.getNewCarLength(), lane1));
 
-		lane2.addCar(new Car(11,  4, trödelFactor, 25, RandomPool.getNewCarLength(), lane2));
-		lane2.addCar(new Car(12,  6, trödelFactor, 85, RandomPool.getNewCarLength(), lane2));
-		lane2.addCar(new Car(13,  8, trödelFactor, 52, RandomPool.getNewCarLength(), lane2));
+		lane2.addCar(new Car(11,  14, trödelFactor, 25, RandomPool.getNewCarLength(), lane2));
+		lane2.addCar(new Car(12,  16, trödelFactor, 85, RandomPool.getNewCarLength(), lane2));
+		lane2.addCar(new Car(13,  18, trödelFactor, 52, RandomPool.getNewCarLength(), lane2));
 		lane2.addCar(new Car(14, 10, trödelFactor,  4, RandomPool.getNewCarLength(), lane2));
 		lane2.addCar(new Car(15, 12, trödelFactor, 26, RandomPool.getNewCarLength(), lane2));
 		lane2.addCar(new Car(16, 14, trödelFactor, 71, RandomPool.getNewCarLength(), lane2));
 
 	}
 
-	public Track performStep() {
+	public void performStep() {
 		for (Lane lane : this.track.getLanes()) {
 			for(Locator<Integer, Car> carLocator : lane) {
 				Car car = carLocator.element();
 				moveCar(lane, car);
+				int randomCars = RandomPool.getNewNumberOfCars();
+				for(int i = 0; i < randomCars; i++){
+					Car randomCar = RandomPool.getNewCar(this.track);
+					if(randomCar.getCurrentLane().getFirstCar().getBackPosition() > 0){
+						randomCar.getCurrentLane().addCar(randomCar);
+						randomCar.setBlinkLeft(false);
+						randomCar.setBlinkRight(false);
+						randomCar.setMoved(true);
+						this.track.addToNewCars(randomCar);
+					}
+				}
 			}
 		}
 
@@ -151,23 +162,27 @@ public class Nagel_Schreckenberg_Simulation {
 //				}
 //			}
 //		}
-		
-		return track;
 	}
 
 	private void moveCar(Lane lane, Car car) {
-		if(!car.isMoved()){
+		if(car.isToBeDeleted()){
 			lane.removeCar(car);
-			
-			car.setSpeed(car.getNextSpeed());
-			car.setPosition(car.getNextPosition());
-			
-			car.setLane(car.getNextLane());
-			car.getCurrentLane().addCar(car);
-			
-			car.setBlinkLeft(false);
-			car.setBlinkRight(false);
-			car.setMoved(true);
+			this.track.addToOldCars(car);
+		}
+		else{
+			if(!car.isMoved()){
+				lane.removeCar(car);
+				
+				car.setSpeed(car.getNextSpeed());
+				car.setPosition(car.getNextPosition());
+				
+				car.setLane(car.getNextLane());
+				car.getCurrentLane().addCar(car);
+				
+				car.setBlinkLeft(false);
+				car.setBlinkRight(false);
+				car.setMoved(true);
+			}	
 		}
 	}
 	
@@ -236,14 +251,6 @@ public class Nagel_Schreckenberg_Simulation {
 		if (nextCar != null) {
 			int availableSpace = nextCar.getBackPosition() - securityDistance - car.getPosition(); // Sicherheitsabstand
 			speed = setSpeedAccordingToAvaliableSpace(speed, availableSpace);
-		} else {
-			// Spur zu Ende
-			int rest = lane.getLength() - car.getPosition();
-			Car firstCar = lane.getFirstCar();
-			if (firstCar != null) {
-				int availableSpace = firstCar.getBackPosition() - securityDistance + rest;
-				speed = setSpeedAccordingToAvaliableSpace(speed, availableSpace);
-			}
 		}
 
 		return speed;
