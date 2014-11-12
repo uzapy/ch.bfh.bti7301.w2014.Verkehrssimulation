@@ -33,6 +33,16 @@ public class MySkipList<K extends Comparable<? super K>, E> implements OrderedDi
 		public K key() {
 			return key;
 		}
+
+		/* (non-Javadoc)
+		 * @see skiplist.Locator#setKey(java.lang.Comparable)
+		 */
+		@Override
+		public void setKey(K key) {
+			this.key = key;
+			
+		}
+		
 	}
 
 	
@@ -362,7 +372,24 @@ public class MySkipList<K extends Comparable<? super K>, E> implements OrderedDi
 			
 		};
 	}
-
+/*
+ * @author	burkt4
+ */
+	public void updateKey(Locator<K, E> locator, K newKey){
+		SLNode n = (SLNode) locator;
+		if (newKey.compareTo(minKey)<=0) throw new RuntimeException("key not bigger than minKey!");
+		if (newKey.compareTo(maxKey)>=0) throw new RuntimeException("key not smaller than maxKey!");
+		if (n.prev.key.compareTo(newKey)<=0 && n.next.key.compareTo(newKey) >= 0){
+			while (n != null){
+				n.setKey(newKey);
+				n = n.above;
+			}
+		}
+		else{
+			throw new RuntimeException("invalid key!");
+		}
+	}
+	
 	public void print(){
 		System.out.println("-------start------");
 		SLNode n = bottomLeft;

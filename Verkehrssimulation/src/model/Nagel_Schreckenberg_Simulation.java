@@ -171,17 +171,25 @@ public class Nagel_Schreckenberg_Simulation {
 		}
 		else{
 			if(!car.isMoved()){
+boolean passedEnd = car.getPosition()> car.getNextPosition();
+			
+			car.setSpeed(car.getNextSpeed());
+			car.setPosition(car.getNextPosition());
+			car.setLane(car.getNextLane());
+			
+			if((lane.getFastLaneIndex() != car.getNextLane().getFastLaneIndex()) || passedEnd){
 				lane.removeCar(car);
-				
-				car.setSpeed(car.getNextSpeed());
-				car.setPosition(car.getNextPosition());
-				
-				car.setLane(car.getNextLane());
 				car.getCurrentLane().addCar(car);
-				
-				car.setBlinkLeft(false);
-				car.setBlinkRight(false);
-				car.setMoved(true);
+			}
+			else{
+				lane.updateCarPosition(car);
+			}
+
+
+			
+			car.setBlinkLeft(false);
+			car.setBlinkRight(false);
+			car.setMoved(true);
 			}	
 		}
 	}

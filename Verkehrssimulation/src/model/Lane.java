@@ -126,4 +126,13 @@ public class Lane implements Iterable<Locator<Integer, Car>> {
 			return null;
 		}
 	}
+
+	/**
+	 * @author burkt4
+	 * @param car
+	 */
+	public void updateCarPosition(Car car) {
+		this.lane.updateKey(car.getLocator(), car.getPosition());
+		
+	}
 }

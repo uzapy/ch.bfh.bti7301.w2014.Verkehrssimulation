@@ -50,8 +50,8 @@ public class MainFrame extends JFrame implements IImpulsable {
 	@Override
 	public void pulse() {
 		if (this.simStep >= Nagel_Schreckenberg_Simulation.FRAMES_PER_SECOND) {
-			Track track = this.simulation.performStep();			
-			this.trackPanel.setTrack(track);
+			this.simulation.performStep();
+			this.trackPanel.setTrack();
 			this.simStep = 0;
 		} else {
 			this.trackPanel.performSimStep(this.simStep);
