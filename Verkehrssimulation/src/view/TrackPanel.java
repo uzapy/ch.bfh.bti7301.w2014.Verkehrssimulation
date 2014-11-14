@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 import model.Car;
 import model.Lane;
 import model.Track;
+import skiplist.Locator;
 import util.MetricToPixel;
 
 /**
@@ -39,10 +40,9 @@ public class TrackPanel extends JPanel {
 			
 			this.lanePanels.add(new LanePanel(lane, fastLaneOffset, trackOffset));
 			
-			Car car = lane.getFirstCar();
-			while(car != null) {
+			for(Locator<Integer, Car> carLocator : lane) {
+				Car car = carLocator.element();
 				this.carPanels.add(new CarPanel(car, this.track.getLanes().size(), trackOffset));
-				car = lane.getNextCar(car);
 			}
 		}
 	}
@@ -70,13 +70,12 @@ public class TrackPanel extends JPanel {
 		g.fillRect(xPosition, yPosition, length, width);
 	}
 
-	public void setTrack() {
+	public void updateTrack() {
 		for (Car oldCar : this.track.getOldCars()) {
 			Optional<CarPanel> foundCar = this.carPanels.stream().filter(cp -> cp.getId() == oldCar.getId()).findFirst();
 			if (foundCar.isPresent()) {
 				this.carPanels.remove(foundCar.get());
 			}
-
 		}
 		for (Car newCar : this.track.getNewCars()) {
 			this.carPanels.add(new CarPanel(newCar, this.track.getLanes().size(), trackOffset));
