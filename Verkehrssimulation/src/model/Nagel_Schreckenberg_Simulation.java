@@ -46,6 +46,7 @@ public class Nagel_Schreckenberg_Simulation {
 				Car car = carLocator.element();
 				moveCar(lane, car);				
 			}
+			// Neues Zufälliges Auto hinzufügen, wenn es Platz hat.
 			if(lane.getFirstCar() == null || (lane.getFirstCar() != null && lane.getFirstCar().getBackPosition() > 20)){
 				Car randomCar = RandomPool.getNewCar(this.track, lane);
 				randomCar.getCurrentLane().addCar(randomCar);
@@ -65,13 +66,14 @@ public class Nagel_Schreckenberg_Simulation {
 					nextCar = car.getCurrentLane().getFirstCar();
 				}
 				int possibleSpeedOnRightLane = calculateNextSpeed(lane.getRightLane(), car);		
-				
+
 				if (lane.isPassableLeft() && car.getSpeed() > nextCar.getSpeed() && car.getSpeed() > car.getNextSpeed()) {
 					// Kann ich überholen?
 					boolean canChangeToLeftLane = IsEnoughSpaceBetweenBeforeAndAfter(lane.getLeftLane(), car);
-					if(canChangeToLeftLane){
+					if (canChangeToLeftLane) {
+						// Überholen
 						car.setNext(calculateNextSpeed(lane.getLeftLane(), car), false, true);
-					}else {
+					} else {
 						// Nein, trödeln.
 						car.setNext(calculateTrödel(car), false, false);
 					}
@@ -79,6 +81,7 @@ public class Nagel_Schreckenberg_Simulation {
 					// Kann ich zurück auf die slow lane?
 					boolean canChangeToRightLane = IsEnoughSpaceBetweenBeforeAndAfter(lane.getRightLane(), car);
 					if (canChangeToRightLane) {
+						// Zurück auf die rechte Spur
 						car.setNext(calculateNextSpeed(lane.getRightLane(), car), true, false);
 					} else {
 						// Nein, trödeln.
@@ -93,6 +96,7 @@ public class Nagel_Schreckenberg_Simulation {
 		
 		// TODO: Überhol-Konflikte abfangen.
 		// TODO: Rechts überholen verhindern.
+		// TODO: Überholen mit Geschwindigkein 0 verhindern
 //		for (Lane lane : this.track.getLanes()) {
 //			for (Locator<Integer, Car> carLocator : lane) {
 //				Car car = carLocator.element();
@@ -193,9 +197,10 @@ public class Nagel_Schreckenberg_Simulation {
 
 			int maxNextPosition = closestAfter.getBackPosition() - securityDistance;
 			int minNextPosition = closestBefore.getPosition() + closestBefore.getSpeed() * 2 + this.speedDelta + securityDistance;
+			int currentCarTemporaryNextBackPosition = car.getBackPosition() + calculateNextSpeed(lane, car) - securityDistance;
 			int gapLength = maxNextPosition - minNextPosition;
 
-			if (gapLength >= car.getLength()) {
+			if (gapLength >= car.getLength() && minNextPosition <= currentCarTemporaryNextBackPosition) {
 				return true;
 			} else {
 				return false;
