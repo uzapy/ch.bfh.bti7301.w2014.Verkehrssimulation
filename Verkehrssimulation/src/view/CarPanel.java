@@ -32,7 +32,8 @@ public class CarPanel extends JPanel {
 		this.car = car;
 		this.trackOffset = trackOffset;
 		this.numberOfLanes = numberOfLanes;
-		this.xSimPosition = this.car.getPosition();
+		this.xSimPosition = this.car.getBackPosition();
+		this.ySimPosition = getLaneOffset(car.getCurrentLane().getFastLaneIndex()) * Lane.WIDTH  + (Lane.WIDTH - Car.WIDTH) / 2;
 		this.color = RandomPool.getNewColor();
 	}
 
@@ -70,10 +71,6 @@ public class CarPanel extends JPanel {
 		
 		float xSimProgress = (float)this.car.getNextSpeed() / Nagel_Schreckenberg_Simulation.FRAMES_PER_SECOND * (float)simStep;
 		this.xSimPosition = ((float)this.car.getBackPosition() + xSimProgress);
-	
-		if (this.xSimPosition > this.car.getNextLane().getLength()) {
-			this.xSimPosition = this.xSimPosition - this.car.getNextLane().getLength();
-		}
 
 		this.ySimPosition = getLaneOffset(car.getCurrentLane().getFastLaneIndex()) * Lane.WIDTH  + (Lane.WIDTH - Car.WIDTH) / 2;
 		
@@ -90,11 +87,6 @@ public class CarPanel extends JPanel {
 				this.ySimPosition = this.ySimPosition + ySimProgress; // Zurück auf normale spur	
 			}
 		}
-		
-//		if (this.car.getId() == 1) {
-//			System.out.println(this.car.getBackPosition() + "|" + this.car.getNextSpeed() + "|" + simStep + "|" + this.xSimPosition + "|" +
-//					this.car.getCurrentLane().getFastLaneIndex() + "|" + this.ySimPosition);
-//		}
 	}
 	
 	public int getLaneOffset(int fastLaneIndex) {

@@ -7,7 +7,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.util.LinkedList;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 import javax.swing.JPanel;
 
@@ -72,14 +71,14 @@ public class TrackPanel extends JPanel {
 	}
 
 	public void setTrack() {
-		for(Car oldCar : this.track.getOldCars()){
+		for (Car oldCar : this.track.getOldCars()) {
 			Optional<CarPanel> foundCar = this.carPanels.stream().filter(cp -> cp.getId() == oldCar.getId()).findFirst();
-			if(foundCar.isPresent()){
+			if (foundCar.isPresent()) {
 				this.carPanels.remove(foundCar.get());
 			}
 
 		}
-		for(Car newCar : this.track.getNewCars()){
+		for (Car newCar : this.track.getNewCars()) {
 			this.carPanels.add(new CarPanel(newCar, this.track.getLanes().size(), trackOffset));
 		}
 		this.track.clearNewCars();
