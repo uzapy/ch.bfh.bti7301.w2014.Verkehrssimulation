@@ -35,6 +35,14 @@ public class RandomPool {
 		return r.nextDouble();
 	}
 
+	public static Car getNewCar(Track track, Lane lane){
+		int speed = getNewCarSpeed();
+		double trödelFactor = r.nextDouble() * (0.8 - 0.2) + 0.2;
+		int length = getNewCarLength();
+		id++;
+		return new Car(id, speed, trödelFactor, 0, length, lane);
+	}
+
 	/**
 	 * @author bublm1
 	 * @return
@@ -45,17 +53,9 @@ public class RandomPool {
 		return r.nextInt(longest - shortest) + shortest;
 	}
 	
-	public static int getNewNumberOfCars(){
-		int shortest = 1;
-		int longest = 3;
-		return r.nextInt(longest - shortest) + shortest;
-	}
-	
-	public static Car getNewCar(Track track, Lane lane){
-		int speed = r.nextInt(18 - 3) + 3;
-		double trödelFactor = r.nextDouble() * (0.8 - 0.2) + 0.2;
-		int length = getNewCarLength();
-		id++;
-		return new Car(id, speed, trödelFactor, 0, length, lane);
+	public static int getNewCarSpeed() {
+		int fastest = 18;
+		int slowest = 3;
+		return r.nextInt(fastest - slowest) + slowest;
 	}
 }
