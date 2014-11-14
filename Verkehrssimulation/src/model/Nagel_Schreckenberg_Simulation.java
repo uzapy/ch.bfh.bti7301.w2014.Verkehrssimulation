@@ -47,7 +47,7 @@ public class Nagel_Schreckenberg_Simulation {
 				moveCar(lane, car);				
 			}
 			// Neues Zufälliges Auto hinzufügen, wenn es Platz hat.
-			if(lane.getFirstCar() == null || (lane.getFirstCar() != null && lane.getFirstCar().getBackPosition() > 20)){
+			if(lane.getFirstCar() == null || (lane.getFirstCar() != null && lane.getFirstCar().getBackPosition() > 10)){
 				Car randomCar = RandomPool.getNewCar(this.track, lane);
 				randomCar.getCurrentLane().addCar(randomCar);
 				randomCar.setNext(randomCar.getSpeed(), false, false);
