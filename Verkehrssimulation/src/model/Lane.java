@@ -1,6 +1,7 @@
 package model;
 
 import java.util.Iterator;
+import java.util.Optional;
 
 import skiplist.Locator;
 import skiplist.MySkipList;
@@ -22,6 +23,7 @@ public class Lane implements Iterable<Locator<Integer, Car>> {
 	private Lane rightLane;
 	private boolean isPassableLeft;
 	private boolean isPassableRight;
+	private SegmentCollection segments = new SegmentCollection();
 	
 	public Lane(int maxVelocity, int length, int fastLaneIndex){
 		this.length = length;
@@ -62,8 +64,13 @@ public class Lane implements Iterable<Locator<Integer, Car>> {
 		return fastLaneIndex;
 	}
 
-	public int getMaxVelocity() {
-		return maxVelocity;
+	public int getMaxVelocity(int position) {
+		Optional<Segment> foundSegment = this.getSegmentAt(position, VelocitySegment.class);
+		if (foundSegment.isPresent()) {
+			return ((VelocitySegment)foundSegment.get()).getMaxVelocity();
+		} else {
+			return maxVelocity;			
+		}
 	}
 
 	public int getLength() {
@@ -105,6 +112,17 @@ public class Lane implements Iterable<Locator<Integer, Car>> {
 	public boolean containsKey(Car car) {
 		return (this.lane.find(car.getLocator().key()) != null);
 	}
+	
+	/**
+	 * @author bublm1
+	 * @param position
+	 * @param maxvelocity2
+	 * @return
+	 */
+	// TODO: Class<Segment>
+	private Optional<Segment> getSegmentAt(int position, @SuppressWarnings("rawtypes") Class segmentClass) {
+		return this.segments.get(position, segmentClass);
+	}
 
 	/* (non-Javadoc)
 	 * @see java.lang.Iterable#iterator()
@@ -133,5 +151,13 @@ public class Lane implements Iterable<Locator<Integer, Car>> {
 	 */
 	public void updateCarPosition(Car car) {
 		this.lane.updateKey(car.getLocator(), car.getPosition());
+	}
+
+	/**
+	 * @author bublm1
+	 * @param velocitySegment1
+	 */
+	public void addSegment(Segment segment) {
+		this.segments.add(segment);		
 	}
 }
