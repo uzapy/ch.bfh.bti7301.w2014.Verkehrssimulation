@@ -38,6 +38,14 @@ public class Nagel_Schreckenberg_Simulation {
 		this.track.addLane(lane1);
 		this.track.addLane(lane2);
 //		this.track.addLane(lane3);
+		
+		Segment velocitySegment0 = new VelocitySegment(50, 100, 5);
+		Segment velocitySegment1 = new VelocitySegment(50, 100, 5);
+		Segment velocitySegment2 = new VelocitySegment(50, 100, 5);
+		
+		lane0.addSegment(velocitySegment0);
+		lane1.addSegment(velocitySegment1);
+		lane2.addSegment(velocitySegment2);
 	}
 
 	public void performStep() {
@@ -96,7 +104,7 @@ public class Nagel_Schreckenberg_Simulation {
 		
 		// TODO: Überhol-Konflikte abfangen.
 		// TODO: Rechts überholen verhindern.
-		// TODO: Überholen mit Geschwindigkein 0 verhindern
+		// TODO: Überholen mit Geschwindigkeit 0 verhindern
 //		for (Lane lane : this.track.getLanes()) {
 //			for (Locator<Integer, Car> carLocator : lane) {
 //				Car car = carLocator.element();
@@ -223,14 +231,14 @@ public class Nagel_Schreckenberg_Simulation {
 		}
 		int speed = car.getSpeed();
 		// Beschleunigen
-		if (car.getSpeed() < lane.getMaxVelocity()) {
-			if (car.getSpeed() + this.speedDelta > lane.getMaxVelocity()) {
-				speed = lane.getMaxVelocity();
+		if (car.getSpeed() < lane.getMaxVelocity(car.getPosition())) {
+			if (car.getSpeed() + this.speedDelta > lane.getMaxVelocity(car.getPosition())) {
+				speed = lane.getMaxVelocity(car.getPosition());
 			} else {
 				speed = car.getSpeed() + this.speedDelta;
 			}
 		} else {
-			speed = lane.getMaxVelocity();
+			speed = lane.getMaxVelocity(car.getPosition());
 		}
 		
 		// nächstes Auto
