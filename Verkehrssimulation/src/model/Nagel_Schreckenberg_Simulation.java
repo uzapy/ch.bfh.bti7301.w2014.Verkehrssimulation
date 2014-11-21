@@ -109,51 +109,6 @@ public class Nagel_Schreckenberg_Simulation {
 			}
 		}
 		clearConflicts();
-		// TODO: Überhol-Konflikte abfangen.
-		// TODO: Rechts überholen verhindern.
-//		for (Lane lane : this.track.getLanes()) {
-//			for (Locator<Integer, Car> carLocator : lane) {
-//				Car car = carLocator.element();
-//				
-//				if (car.isBlinkLeft() || car.isBlinkRight()) {					
-//					// Alle die Blinken => nextPosition und nextBackPosition
-//					
-//					// Alle die blinken auf der übernächsten Spur
-//					if (car.getNextLane().isPassableLeft()) {
-//						List<Car> blinkingRightCars = new ArrayList<Car>();
-//						for (Locator<Integer, Car> blinkingRightCarLocator : car.getNextLane().getLeftLane()) {
-//							if (blinkingRightCarLocator.element().isBlinkRight()) {
-//								blinkingRightCars.add(blinkingRightCarLocator.element());
-//							}
-//						}
-//
-//						for (Car blinkingRightCar : blinkingRightCars) {
-//							if (blinkingRightCar.getNextBackPosition() <= car.getNextPosition()
-//									&& blinkingRightCar.getNextPosition() >= car.getNextBackPosition()) {
-//								car.setNext(getPossibleMaximumSpeed(car.getCurrentLane(), car), false, false);
-//								car.setNextLane(car.getCurrentLane());
-//							}
-//						}
-//					}
-//
-//					if (car.getNextLane().isPassableRight()) {
-//						List<Car> blinkingLeftCars = new ArrayList<Car>();
-//						for (Locator<Integer, Car> blinkingLeftCar : car.getNextLane().getRightLane()) {
-//							if (blinkingLeftCar.element().isBlinkLeft()) {
-//								blinkingLeftCars.add(blinkingLeftCar.element());
-//							}
-//						}
-//						
-//						for (Car blinkingLeftCar : blinkingLeftCars) {
-//							if (blinkingLeftCar.getNextBackPosition()   <= car.getNextPosition()   && blinkingLeftCar.getNextPosition()   >= car.getNextBackPosition()  ) {
-//								blinkingLeftCar.setNext(getPossibleMaximumSpeed(blinkingLeftCar.getCurrentLane(), blinkingLeftCar), false, false);
-//								blinkingLeftCar.setNextLane(blinkingLeftCar.getCurrentLane());
-//							}
-//						}
-//					}
-//				}
-//			}
-//		}
 	}
 	
 	private void clearConflicts(){
