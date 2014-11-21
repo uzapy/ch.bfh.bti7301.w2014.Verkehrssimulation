@@ -19,7 +19,7 @@ public class SegmentCollection {
 	private HashMap<Class,MySkipList<Integer,Segment>> segmentsPool = new HashMap<Class,MySkipList<Integer,Segment>>();
 	private int length = 150; 
 	/**
-	 * @author bublm1,burkt4
+	 * @author bublm1,burkt4, stahr2
 	 * @param position
 	 * @param segmentType
 	 * @return
@@ -37,7 +37,6 @@ public class SegmentCollection {
 			else{
 				result = segmentList.closestBefore(position);
 				if (result != null){
-					result = segmentList.closestBefore(position);
 					int end = result.element().end();
 					if(position <= end){
 						foundSegment = result.element();
