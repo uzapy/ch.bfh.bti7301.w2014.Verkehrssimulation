@@ -1,7 +1,6 @@
 package model;
 
 import java.util.Iterator;
-import java.util.Optional;
 
 import skiplist.Locator;
 import skiplist.MySkipList;

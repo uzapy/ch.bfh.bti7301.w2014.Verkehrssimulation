@@ -63,6 +63,7 @@ public class Nagel_Schreckenberg_Simulation {
 				this.track.addToNewCars(randomCar);					
 			}
 		}
+		
 		for (Lane lane : this.track.getLanes()) {
 			for(Locator<Integer, Car> carLocator : lane) {
 				Car car = carLocator.element();
@@ -73,14 +74,17 @@ public class Nagel_Schreckenberg_Simulation {
 				if (nextCar == null) {
 					nextCar = car.getCurrentLane().getFirstCar();
 				}
+				
 				int possibleSpeedOnRightLane = calculateNextSpeed(lane.getRightLane(), car);		
 
+				// Will ich überholen?
 				if (lane.isPassableLeft() && car.getSpeed() > nextCar.getSpeed() && car.getSpeed() > car.getNextSpeed()) {
 					// Kann ich überholen?
 					boolean canChangeToLeftLane = IsEnoughSpaceBetweenBeforeAndAfter(lane.getLeftLane(), car);
-					if (canChangeToLeftLane) {
+					int speedOnLeftLane = calculateNextSpeed(lane.getLeftLane(), car);
+					if (canChangeToLeftLane && speedOnLeftLane > 0) {
 						// Überholen
-						car.setNext(calculateNextSpeed(lane.getLeftLane(), car), false, true);
+						car.setNext(speedOnLeftLane, false, true);
 					} else {
 						// Nein, trödeln.
 						car.setNext(calculateTrödel(car), false, false);
@@ -88,9 +92,10 @@ public class Nagel_Schreckenberg_Simulation {
 				} else if (lane.isPassableRight() && car.getSpeed() * 2 <= possibleSpeedOnRightLane) {
 					// Kann ich zurück auf die slow lane?
 					boolean canChangeToRightLane = IsEnoughSpaceBetweenBeforeAndAfter(lane.getRightLane(), car);
-					if (canChangeToRightLane) {
+					int speedOnRightLane = calculateNextSpeed(lane.getRightLane(), car);
+					if (canChangeToRightLane && speedOnRightLane > 0) {
 						// Zurück auf die rechte Spur
-						car.setNext(calculateNextSpeed(lane.getRightLane(), car), true, false);
+						car.setNext(speedOnRightLane, true, false);
 					} else {
 						// Nein, trödeln.
 						car.setNext(calculateTrödel(car), false, false);
