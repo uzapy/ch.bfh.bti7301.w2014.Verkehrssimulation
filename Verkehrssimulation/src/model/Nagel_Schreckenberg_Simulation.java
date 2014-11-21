@@ -213,7 +213,7 @@ public class Nagel_Schreckenberg_Simulation {
 			int currentCarTemporaryNextBackPosition = car.getBackPosition() + calculateNextSpeed(lane, car) - securityDistance;
 			int gapLength = maxNextPosition - minNextPosition;
 
-			if (gapLength >= car.getLength() && minNextPosition <= currentCarTemporaryNextBackPosition) {
+			if (gapLength > car.getLength() && minNextPosition < currentCarTemporaryNextBackPosition) {
 				return true;
 			} else {
 				return false;
