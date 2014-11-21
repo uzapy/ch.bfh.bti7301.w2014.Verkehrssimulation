@@ -5,6 +5,12 @@ public class PassableRightSegment implements Segment {
 	int start;
 	int end;
 	boolean passable;
+	
+	public PassableRightSegment(int start, int end, boolean passable){
+		this.start = start;
+		this.end = end;
+		this.passable = passable;
+	}
 
 	@Override
 	public int start() {

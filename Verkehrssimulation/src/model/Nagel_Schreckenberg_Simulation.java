@@ -5,6 +5,8 @@ package model;
 
 import java.util.ArrayList;
 
+import segment.PassableLeftSegment;
+import segment.PassableRightSegment;
 import segment.Segment;
 import segment.VelocitySegment;
 import skiplist.Locator;
@@ -41,13 +43,17 @@ public class Nagel_Schreckenberg_Simulation {
 		this.track.addLane(lane2);
 //		this.track.addLane(lane3);
 		
-//		Segment velocitySegment0 = new VelocitySegment(50, 100, 50);
-//		Segment velocitySegment1 = new VelocitySegment(50, 100, 5);
-//		Segment velocitySegment2 = new VelocitySegment(50, 100, 5);
-//		
-//		lane0.addSegment(velocitySegment0);
-//		lane1.addSegment(velocitySegment1);
-//		lane2.addSegment(velocitySegment2);
+		Segment velocitySegment0 = new VelocitySegment(50, 100, 50);
+		Segment velocitySegment1 = new VelocitySegment(50, 100, 5);
+		Segment velocitySegment2 = new VelocitySegment(50, 100, 5);
+		Segment passableLeftSegment = new PassableLeftSegment(25,120,false);
+		Segment passableRightSegment = new PassableRightSegment(40,100,false);
+		
+		lane0.addSegment(velocitySegment0);
+		lane1.addSegment(velocitySegment1);
+		lane2.addSegment(velocitySegment2);
+		lane0.addSegment(passableRightSegment);
+		lane2.addSegment(passableLeftSegment);
 	}
 
 	public void performStep() {
@@ -80,7 +86,7 @@ public class Nagel_Schreckenberg_Simulation {
 				int possibleSpeedOnRightLane = calculateNextSpeed(lane.getRightLane(), car);		
 
 				// Will ich überholen?
-				if (lane.isPassableLeft() && car.getSpeed() > nextCar.getSpeed() && car.getSpeed() > car.getNextSpeed()) {
+				if (lane.isPassableLeft(car.getPosition()) && car.getSpeed() > nextCar.getSpeed() && car.getSpeed() > car.getNextSpeed()) {
 					// Kann ich überholen?
 					boolean canChangeToLeftLane = IsEnoughSpaceBetweenBeforeAndAfter(lane.getLeftLane(), car);
 					int speedOnLeftLane = calculateNextSpeed(lane.getLeftLane(), car);
@@ -91,7 +97,7 @@ public class Nagel_Schreckenberg_Simulation {
 						// Nein, trödeln.
 						car.setNext(calculateTrödel(car), false, false);
 					}
-				} else if (lane.isPassableRight() && car.getSpeed() * 2 <= possibleSpeedOnRightLane) {
+				} else if (lane.isPassableRight(car.getPosition()) && car.getSpeed() * 2 <= possibleSpeedOnRightLane) {
 					// Kann ich zurück auf die slow lane?
 					boolean canChangeToRightLane = IsEnoughSpaceBetweenBeforeAndAfter(lane.getRightLane(), car);
 					int speedOnRightLane = calculateNextSpeed(lane.getRightLane(), car);

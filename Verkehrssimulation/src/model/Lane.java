@@ -2,6 +2,8 @@ package model;
 
 import java.util.Iterator;
 
+import segment.PassableLeftSegment;
+import segment.PassableRightSegment;
 import segment.Segment;
 import segment.SegmentCollection;
 import segment.VelocitySegment;
@@ -47,12 +49,22 @@ public class Lane implements Iterable<Locator<Integer, Car>> {
 		}
 	}
 	
-	public boolean isPassableLeft() {
-		return isPassableLeft;
+	public boolean isPassableLeft(int position) {
+		Segment foundSegment = this.getSegmentAt(position, PassableLeftSegment.class);
+		if (foundSegment != null) {
+			return ((PassableLeftSegment)foundSegment).isPassable();
+		} else {
+			return isPassableLeft;			
+		}
 	}
 
-	public boolean isPassableRight() {
-		return isPassableRight;
+	public boolean isPassableRight(int position) {
+		Segment foundSegment = this.getSegmentAt(position, PassableRightSegment.class);
+		if (foundSegment != null) {
+			return ((PassableRightSegment)foundSegment).isPassable();
+		} else {
+			return isPassableRight;			
+		}
 	}
 	
 	public Lane getLeftLane() {
