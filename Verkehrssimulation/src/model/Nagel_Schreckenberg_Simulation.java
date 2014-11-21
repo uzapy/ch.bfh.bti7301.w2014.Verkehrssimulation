@@ -39,7 +39,7 @@ public class Nagel_Schreckenberg_Simulation {
 		this.track.addLane(lane2);
 //		this.track.addLane(lane3);
 		
-		Segment velocitySegment0 = new VelocitySegment(50, 100, 5);
+		Segment velocitySegment0 = new VelocitySegment(50, 100, 50);
 		Segment velocitySegment1 = new VelocitySegment(50, 100, 5);
 		Segment velocitySegment2 = new VelocitySegment(50, 100, 5);
 		

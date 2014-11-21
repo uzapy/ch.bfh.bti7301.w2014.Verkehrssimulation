@@ -65,9 +65,9 @@ public class Lane implements Iterable<Locator<Integer, Car>> {
 	}
 
 	public int getMaxVelocity(int position) {
-		Optional<Segment> foundSegment = this.getSegmentAt(position, VelocitySegment.class);
-		if (foundSegment.isPresent()) {
-			return ((VelocitySegment)foundSegment.get()).getMaxVelocity();
+		Segment foundSegment = this.getSegmentAt(position, VelocitySegment.class);
+		if (foundSegment != null) {
+			return ((VelocitySegment)foundSegment).getMaxVelocity();
 		} else {
 			return maxVelocity;			
 		}
@@ -120,7 +120,7 @@ public class Lane implements Iterable<Locator<Integer, Car>> {
 	 * @return
 	 */
 	// TODO: Class<Segment>
-	private Optional<Segment> getSegmentAt(int position, @SuppressWarnings("rawtypes") Class segmentClass) {
+	private Segment getSegmentAt(int position, @SuppressWarnings("rawtypes") Class segmentClass) {
 		return this.segments.get(position, segmentClass);
 	}
 
