@@ -33,12 +33,12 @@ public class MainFrame extends JFrame implements IImpulsable {
 
 		// Layout manager
 		setLayout(new BorderLayout());
-
+		
 		// Swing components
 		JButton button = new JButton("Click me!");
 		
 		// Add Swing Components
-		Container container = getContentPane();
+		Container container = this.getContentPane();
 		container.add(this.trackPanel, BorderLayout.CENTER);
 		container.add(button, BorderLayout.SOUTH);
 		// Tutorial: http://www.youtube.com/watch?v=svM0SBFqp4s

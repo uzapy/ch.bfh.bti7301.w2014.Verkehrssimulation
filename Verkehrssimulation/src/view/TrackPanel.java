@@ -26,6 +26,7 @@ public class TrackPanel extends JPanel {
 	private LinkedList<CarPanel> carPanels = new LinkedList<CarPanel>();
 	
 	private int trackOffset = 2;
+	private int interval = 50;
 
 	/**
 	 * @author burkt4
@@ -52,6 +53,18 @@ public class TrackPanel extends JPanel {
 		
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, MetricToPixel.scale(track.getLane(0).getLength()), MetricToPixel.scale(trackOffset));
+		
+		g.setColor(Color.YELLOW);
+		int yStart = 0;
+		int yEnd = MetricToPixel.scale(trackOffset);
+		
+		int numberOfMarkers = track.getLane(0).getLength() / interval;
+		for (int i = 0; i < numberOfMarkers; i++) {
+			int xStart = MetricToPixel.scale(i * interval);
+			int xEnd = MetricToPixel.scale(i * interval);
+			g.drawLine(xStart, yStart, xEnd, yEnd);
+			g.drawString(Integer.toString(i * interval), MetricToPixel.scale(i * interval) + 2, MetricToPixel.scale(trackOffset) - 2);
+		}	
 		
 		for (LanePanel lanePanel : this.lanePanels) {
 			lanePanel.paintComponent(g);
