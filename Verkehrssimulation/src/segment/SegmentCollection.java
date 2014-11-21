@@ -1,7 +1,7 @@
 /**
  * 
  */
-package model;
+package segment;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -2,6 +2,9 @@ package model;
 
 import java.util.Iterator;
 
+import segment.Segment;
+import segment.SegmentCollection;
+import segment.VelocitySegment;
 import skiplist.Locator;
 import skiplist.MySkipList;
 

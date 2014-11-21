@@ -5,6 +5,8 @@ package model;
 
 import java.util.ArrayList;
 
+import segment.Segment;
+import segment.VelocitySegment;
 import skiplist.Locator;
 import util.RandomPool;
 
@@ -153,6 +155,12 @@ public class Nagel_Schreckenberg_Simulation {
 //			}
 //		}
 	}
+	
+	private void clearConflicts(){
+		ArrayList<Car> blinkingRightCars, blinkingLeftCars = new ArrayList<Car>();
+		
+		
+	}
 
 	private void moveCar(Lane lane, Car car) {
 		if(car.isToBeDeleted()){
@@ -212,7 +220,7 @@ public class Nagel_Schreckenberg_Simulation {
 			int currentCarTemporaryNextBackPosition = car.getBackPosition() + calculateNextSpeed(lane, car) - securityDistance;
 			int gapLength = maxNextPosition - minNextPosition;
 
-			if (gapLength >= car.getLength() && minNextPosition <= currentCarTemporaryNextBackPosition) {
+			if (gapLength > car.getLength() && minNextPosition < currentCarTemporaryNextBackPosition) {
 				return true;
 			} else {
 				return false;

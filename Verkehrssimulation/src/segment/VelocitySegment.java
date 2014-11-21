@@ -1,7 +1,7 @@
 /**
  * 
  */
-package model;
+package segment;
 
 /**
  * @author bublm1
