@@ -26,7 +26,8 @@ public class TrackPanel extends JPanel {
 	private LinkedList<CarPanel> carPanels = new LinkedList<CarPanel>();
 	
 	private int trackOffset = 2;
-	private int interval = 50;
+	private int viewOffset = 0;
+	private int markerInterval = 50;
 
 	/**
 	 * @author burkt4
@@ -51,20 +52,12 @@ public class TrackPanel extends JPanel {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		
+		g.translate(MetricToPixel.scale(viewOffset), 0);
+		
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, MetricToPixel.scale(track.getLane(0).getLength()), MetricToPixel.scale(trackOffset));
 		
-		g.setColor(Color.YELLOW);
-		int yStart = 0;
-		int yEnd = MetricToPixel.scale(trackOffset);
-		
-		int numberOfMarkers = track.getLane(0).getLength() / interval;
-		for (int i = 0; i < numberOfMarkers; i++) {
-			int xStart = MetricToPixel.scale(i * interval);
-			int xEnd = MetricToPixel.scale(i * interval);
-			g.drawLine(xStart, yStart, xEnd, yEnd);
-			g.drawString(Integer.toString(i * interval), MetricToPixel.scale(i * interval) + 2, MetricToPixel.scale(trackOffset) - 2);
-		}	
+		drawMarkers(g);	
 		
 		for (LanePanel lanePanel : this.lanePanels) {
 			lanePanel.paintComponent(g);
@@ -81,6 +74,28 @@ public class TrackPanel extends JPanel {
 		
 		g.setColor(Color.BLACK);
 		g.fillRect(xPosition, yPosition, length, width);
+	}
+
+	/**
+	 * @author bublm1
+	 * @param g
+	 */
+	private void drawMarkers(Graphics g) {
+		g.setColor(Color.YELLOW);
+		int xStart = 0;
+		int yStart = 0;
+		int xEnd = 0;
+		int yEnd = MetricToPixel.scale(trackOffset);
+		
+		int numberOfMarkers = track.getLane(0).getLength() / markerInterval;
+		for (int i = 0; i < numberOfMarkers; i++) {
+			xStart = MetricToPixel.scale(i * markerInterval);
+			xEnd = MetricToPixel.scale(i * markerInterval);
+			
+			g.drawLine(xStart, yStart, xEnd, yEnd);
+			g.drawString(Integer.toString(i * markerInterval),
+					MetricToPixel.scale(i * markerInterval) + 2, MetricToPixel.scale(trackOffset) - 2);
+		}
 	}
 
 	public void updateTrack() {
@@ -106,6 +121,20 @@ public class TrackPanel extends JPanel {
 			carPanel.performSimStep(simStep);
 		}
 		this.repaint();
+	}
+
+	/**
+	 * @author bublm1
+	 */
+	public void moveTrackRight() {
+		this.viewOffset -= 50;
+	}
+
+	/**
+	 * @author bublm1
+	 */
+	public void moveTrackLeft() {
+		this.viewOffset += 50;
 	}
 
 }
