@@ -5,6 +5,8 @@ package model;
 
 import java.util.ArrayList;
 
+import segment.Segment;
+import segment.VelocitySegment;
 import skiplist.Locator;
 import util.RandomPool;
 
