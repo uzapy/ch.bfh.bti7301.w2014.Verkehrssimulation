@@ -109,7 +109,6 @@ public class Nagel_Schreckenberg_Simulation {
 		
 		// TODO: Überhol-Konflikte abfangen.
 		// TODO: Rechts überholen verhindern.
-		// TODO: Überholen mit Geschwindigkeit 0 verhindern
 //		for (Lane lane : this.track.getLanes()) {
 //			for (Locator<Integer, Car> carLocator : lane) {
 //				Car car = carLocator.element();
