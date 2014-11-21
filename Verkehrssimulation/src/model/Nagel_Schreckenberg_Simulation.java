@@ -41,13 +41,13 @@ public class Nagel_Schreckenberg_Simulation {
 		this.track.addLane(lane2);
 //		this.track.addLane(lane3);
 		
-		Segment velocitySegment0 = new VelocitySegment(50, 100, 50);
-		Segment velocitySegment1 = new VelocitySegment(50, 100, 5);
-		Segment velocitySegment2 = new VelocitySegment(50, 100, 5);
-		
-		lane0.addSegment(velocitySegment0);
-		lane1.addSegment(velocitySegment1);
-		lane2.addSegment(velocitySegment2);
+//		Segment velocitySegment0 = new VelocitySegment(50, 100, 50);
+//		Segment velocitySegment1 = new VelocitySegment(50, 100, 5);
+//		Segment velocitySegment2 = new VelocitySegment(50, 100, 5);
+//		
+//		lane0.addSegment(velocitySegment0);
+//		lane1.addSegment(velocitySegment1);
+//		lane2.addSegment(velocitySegment2);
 	}
 
 	public void performStep() {
@@ -310,6 +310,17 @@ public class Nagel_Schreckenberg_Simulation {
 		if (nextCar != null) {
 			int availableSpace = nextCar.getBackPosition() - securityDistance - car.getPosition(); // Sicherheitsabstand
 			speed = setSpeedAccordingToAvaliableSpace(speed, availableSpace);
+		}
+		
+		//Rechts überholen
+		if(lane.getLeftLane() != null){
+			Car leftCar = lane.getLeftLane().getClosestAfter(car);
+			if(leftCar != null){
+				int speedDelta = (leftCar.getPosition() + leftCar.getSpeed()) - (car.getPosition() + speed);
+				if(speedDelta < 0){
+					speed += speedDelta;				
+				}	
+			}
 		}
 
 		return speed;
