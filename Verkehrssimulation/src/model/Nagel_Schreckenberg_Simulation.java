@@ -154,6 +154,12 @@ public class Nagel_Schreckenberg_Simulation {
 //			}
 //		}
 	}
+	
+	private void clearConflicts(){
+		ArrayList<Car> blinkingRightCars, blinkingLeftCars = new ArrayList<Car>();
+		
+		
+	}
 
 	private void moveCar(Lane lane, Car car) {
 		if(car.isToBeDeleted()){
