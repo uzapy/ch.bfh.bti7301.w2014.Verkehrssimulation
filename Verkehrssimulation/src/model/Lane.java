@@ -25,13 +25,14 @@ public class Lane implements Iterable<Locator<Integer, Car>> {
 	private Lane rightLane;
 	private boolean isPassableLeft;
 	private boolean isPassableRight;
-	private SegmentCollection segments = new SegmentCollection();
+	private SegmentCollection segments;
 	
 	public Lane(int maxVelocity, int length, int fastLaneIndex){
 		this.length = length;
 		this.maxVelocity = maxVelocity;
 		this.lane = new MySkipList<Integer, Car>(-1, this.length+1);
 		this.fastLaneIndex = fastLaneIndex;
+		this.segments = new SegmentCollection(this.length);
 	}
 	
 	public void setAdjacentLanes(Lane leftLane, Lane rightLane) {

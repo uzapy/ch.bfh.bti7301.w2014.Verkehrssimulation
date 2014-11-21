@@ -17,13 +17,19 @@ public class SegmentCollection {
 	
 	private List<Segment> segments = new ArrayList<Segment>();
 	private HashMap<Class,MySkipList<Integer,Segment>> segmentsPool = new HashMap<Class,MySkipList<Integer,Segment>>();
-	private int length = 150; 
+	private int length; 
+	
+	public SegmentCollection(int length){
+		this.length = length;
+	}
+	
 	/**
 	 * @author bublm1,burkt4, stahr2
 	 * @param position
 	 * @param segmentType
 	 * @return
 	 */
+	
 	public Segment get(int position, @SuppressWarnings("rawtypes") Class segmentClass) {
 		
 		Segment foundSegment = null;
