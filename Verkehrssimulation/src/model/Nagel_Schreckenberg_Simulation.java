@@ -108,7 +108,7 @@ public class Nagel_Schreckenberg_Simulation {
 				}
 			}
 		}
-		
+		clearConflicts();
 		// TODO: Überhol-Konflikte abfangen.
 		// TODO: Rechts überholen verhindern.
 //		for (Lane lane : this.track.getLanes()) {
@@ -157,8 +157,60 @@ public class Nagel_Schreckenberg_Simulation {
 	}
 	
 	private void clearConflicts(){
-		ArrayList<Car> blinkingRightCars, blinkingLeftCars = new ArrayList<Car>();
-		
+		for (Lane lane : this.track.getLanes()) {
+			Car car = lane.getLastCar();
+			
+			while(car != null){
+				
+				if(car.isBlinkLeft() || car.isBlinkRight()){
+					Lane leftlane = car.getNextLane().getLeftLane();
+					Lane rightLane = car.getNextLane().getRightLane();
+					if (leftlane != null){
+						
+						Car blinkingRightCar = leftlane.getLastCar();
+						
+						while(blinkingRightCar != null){
+							
+							if (blinkingRightCar.isBlinkRight() && blinkingRightCar.getId() != car.getId()){
+								
+								if (blinkingRightCar.getNextBackPosition() <= car.getNextPosition()
+										&& blinkingRightCar.getNextPosition() >= car.getNextBackPosition()){
+									int blinkingRightcarspeed = calculateNextSpeed(blinkingRightCar.getCurrentLane(), blinkingRightCar);
+									blinkingRightCar.setNext(blinkingRightcarspeed, false, false);
+								}
+								
+							}
+							
+							blinkingRightCar = leftlane.getPreviousCar(blinkingRightCar);
+						}
+						
+					}
+
+					if (rightLane != null){
+						
+						Car blinkingLeftCar = rightLane.getLastCar();
+						
+						while(blinkingLeftCar != null){
+							
+							if (blinkingLeftCar.isBlinkLeft() && blinkingLeftCar.getId() != car.getId()){
+								
+								if (blinkingLeftCar.getNextBackPosition() <= car.getNextPosition()
+										&& blinkingLeftCar.getNextPosition() >= car.getNextBackPosition()){
+									int blinkingLeftcarspeed = calculateNextSpeed(blinkingLeftCar.getCurrentLane(), blinkingLeftCar);
+									blinkingLeftCar.setNext(blinkingLeftcarspeed, false, false);
+								}	
+								
+							}
+							blinkingLeftCar = rightLane.getPreviousCar(blinkingLeftCar);
+						}
+						
+					}
+				}
+				
+				car = lane.getPreviousCar(car);
+			}
+
+		}
 		
 	}
 
