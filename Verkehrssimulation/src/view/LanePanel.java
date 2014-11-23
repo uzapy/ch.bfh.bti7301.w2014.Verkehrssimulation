@@ -48,6 +48,6 @@ public class LanePanel extends JPanel  {
 		// TODO: add gschtrichleti linie
 		
 		g.setColor(Color.MAGENTA);
-		g.drawString(Integer.toString(lane.getFastLaneIndex()), xPosition+10, yPosition+20);
+		g.drawString(Integer.toString(lane.getMaxVelocity(0)), xPosition+10, yPosition+20);
 	}
 }

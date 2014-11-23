@@ -16,8 +16,9 @@ import skiplist.MySkipList;
 public class SegmentCollection {
 	
 	private List<Segment> segments = new ArrayList<Segment>();
-	private HashMap<Class,MySkipList<Integer,Segment>> segmentsPool = new HashMap<Class,MySkipList<Integer,Segment>>();
-	private int length; 
+	@SuppressWarnings("rawtypes")
+	private HashMap<Class, MySkipList<Integer, Segment>> segmentsPool = new HashMap<Class, MySkipList<Integer, Segment>>();
+	private int length;
 	
 	public SegmentCollection(int length){
 		this.length = length;
@@ -34,26 +35,22 @@ public class SegmentCollection {
 		
 		Segment foundSegment = null;
 
-		if (segmentsPool.containsKey(segmentClass)){
+		if (segmentsPool.containsKey(segmentClass)) {
 			MySkipList<Integer, Segment> segmentList = segmentsPool.get(segmentClass);
-			Locator<Integer,Segment> result = segmentList.find(position);
-			if (result != null){
+			Locator<Integer, Segment> result = segmentList.find(position);
+			if (result != null) {
 				foundSegment = result.element();
-			}
-			else{
+			} else {
 				result = segmentList.closestBefore(position);
-				if (result != null){
+				if (result != null) {
 					int end = result.element().end();
-					if(position <= end){
+					if (position <= end) {
 						foundSegment = result.element();
 					}
 				}
-				
 			}
 		}
-		
 		return foundSegment;
-		
 		//return this.segments.stream().filter(s -> s.getClass() == segmentClass && s.start() <= position && s.end() >= position).findFirst();
 	}
 
@@ -63,24 +60,21 @@ public class SegmentCollection {
 	 */
 	public void add(Segment segment) {
 		this.segments.add(segment);
-		
-		if (!segmentsPool.containsKey(segment.getClass())){
-			segmentsPool.put(segment.getClass(), new MySkipList<Integer, Segment>(-1, this.length+1));
+
+		if (!segmentsPool.containsKey(segment.getClass())) {
+			segmentsPool.put(segment.getClass(), new MySkipList<Integer, Segment>(-1, this.length + 1));
 		}
 		MySkipList<Integer, Segment> segmentList = segmentsPool.get(segment.getClass());
-		//TODO check for overlap
-		Locator<Integer,Segment> result = segmentList.closestBefore(segment.end());
-		if (result != null && result.element().end() >= segment.start()){
+		// TODO check for overlap
+		Locator<Integer, Segment> result = segmentList.closestBefore(segment.end());
+		if (result != null && result.element().end() >= segment.start()) {
 			throw new RuntimeException("segments overlap!");
-		}
-		else{
+		} else {
 			result = segmentList.find(segment.end());
-			if (result != null){
+			if (result != null) {
 				throw new RuntimeException("segments overlap!");
 			}
 		}
-
 		segmentList.insert(segment.start(), segment);
 	}
-
 }

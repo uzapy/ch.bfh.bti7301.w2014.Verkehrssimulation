@@ -51,6 +51,7 @@ public class MainFrame extends JFrame implements IImpulsable, ActionListener {
 		buttonRight.addActionListener(this);
 		buttonZoomOut.addActionListener(this);
 		buttonLeft.addActionListener(this);
+		buttonLeft.setEnabled(false);
 		navigationPanel.add(buttonZoomIn, BorderLayout.NORTH);
 		navigationPanel.add(buttonRight, BorderLayout.EAST);
 		navigationPanel.add(buttonZoomOut, BorderLayout.SOUTH);
@@ -81,6 +82,12 @@ public class MainFrame extends JFrame implements IImpulsable, ActionListener {
 		} else if (ae.getSource() == this.buttonLeft) {
 			this.trackPanel.moveTrackLeft();
 		}
+		
+		// do the Button-Magic
+		this.buttonZoomIn.setEnabled(MetricToPixel.SCALING_FACTOR <= 50);
+		this.buttonZoomOut.setEnabled(MetricToPixel.SCALING_FACTOR > 1);
+//		this.buttonRight.setEnabled(???);
+		this.buttonLeft.setEnabled(this.trackPanel.getViewOffset() < 0);
 	}
 
 	/* (non-Javadoc)

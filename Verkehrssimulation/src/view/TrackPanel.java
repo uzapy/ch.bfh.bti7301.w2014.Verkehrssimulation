@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 import model.Car;
 import model.Lane;
 import model.Track;
+import segment.Segment;
 import skiplist.Locator;
 import util.MetricToPixel;
 
@@ -23,6 +24,7 @@ import util.MetricToPixel;
 public class TrackPanel extends JPanel {
 	private Track track;
 	private LinkedList<LanePanel> lanePanels = new LinkedList<LanePanel>();
+	private LinkedList<SegmentPanel> segmentPanels = new LinkedList<SegmentPanel>();
 	private LinkedList<CarPanel> carPanels = new LinkedList<CarPanel>();
 	
 	private int trackOffset = 2;
@@ -42,7 +44,11 @@ public class TrackPanel extends JPanel {
 			
 			this.lanePanels.add(new LanePanel(lane, fastLaneOffset, trackOffset));
 			
-			for(Locator<Integer, Car> carLocator : lane) {
+//			for (Segment segment : lane.getSegmentCollection()) {
+//				
+//			}
+			
+			for (Locator<Integer, Car> carLocator : lane) {
 				Car car = carLocator.element();
 				this.carPanels.add(new CarPanel(car, this.track.getLanes().size(), trackOffset));
 			}
@@ -127,14 +133,22 @@ public class TrackPanel extends JPanel {
 	 * @author bublm1
 	 */
 	public void moveTrackRight() {
-		this.viewOffset -= 50;
+		this.viewOffset -= 25;
 	}
 
 	/**
 	 * @author bublm1
 	 */
 	public void moveTrackLeft() {
-		this.viewOffset += 50;
+		this.viewOffset += 25;
+	}
+
+	/**
+	 * @author bublm1
+	 * @return
+	 */
+	public int getViewOffset() {
+		return this.viewOffset;
 	}
 
 }

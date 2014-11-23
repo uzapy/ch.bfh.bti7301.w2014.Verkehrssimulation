@@ -36,7 +36,7 @@ public class RandomPool {
 	}
 
 	public static Car getNewCar(Track track, Lane lane){
-		int speed = getNewCarSpeed();
+		int speed = getNewCarSpeed(lane.getMaxVelocity(0));
 		double trödelFactor = r.nextDouble() * (0.8 - 0.2) + 0.2;
 		int length = getNewCarLength();
 		id++;
@@ -53,8 +53,8 @@ public class RandomPool {
 		return r.nextInt(longest - shortest) + shortest;
 	}
 	
-	public static int getNewCarSpeed() {
-		int fastest = 18;
+	public static int getNewCarSpeed(int maxVelocity) {
+		int fastest = maxVelocity;
 		int slowest = 3;
 		return r.nextInt(fastest - slowest) + slowest;
 	}

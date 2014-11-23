@@ -27,10 +27,10 @@ public class Nagel_Schreckenberg_Simulation {
 	 * @author bublm1
 	 */
 	public Nagel_Schreckenberg_Simulation() {
-		Lane lane0 = new Lane(20, 150, 0);
-		Lane lane1 = new Lane(20, 150, 1);
-		Lane lane2 = new Lane(20, 150, 2);
-//		Lane lane3 = new Lane(20, 150, 3);
+		Lane lane0 = new Lane(28, 500, 0);
+		Lane lane1 = new Lane(33, 500, 1);
+		Lane lane2 = new Lane(36, 500, 2);
+//		Lane lane3 = new Lane(20, 500, 3);
 		
 		lane0.setAdjacentLanes(lane1, null);
 		lane1.setAdjacentLanes(lane2, lane0);
@@ -43,11 +43,11 @@ public class Nagel_Schreckenberg_Simulation {
 		this.track.addLane(lane2);
 //		this.track.addLane(lane3);
 		
-		Segment velocitySegment0 = new VelocitySegment(50, 100, 50);
-		Segment velocitySegment1 = new VelocitySegment(50, 100, 5);
-		Segment velocitySegment2 = new VelocitySegment(50, 100, 5);
-		Segment passableLeftSegment = new PassableLeftSegment(25,120,false);
-		Segment passableRightSegment = new PassableRightSegment(40,100,false);
+		Segment velocitySegment0 = new VelocitySegment(200, 300, 17);
+		Segment velocitySegment1 = new VelocitySegment(200, 300, 17);
+		Segment velocitySegment2 = new VelocitySegment(200, 300, 17);
+		Segment passableLeftSegment = new PassableLeftSegment(25, 120, false);
+		Segment passableRightSegment = new PassableRightSegment(40, 100, false);
 		
 		lane0.addSegment(velocitySegment0);
 		lane1.addSegment(velocitySegment1);
@@ -62,6 +62,7 @@ public class Nagel_Schreckenberg_Simulation {
 				Car car = carLocator.element();
 				moveCar(lane, car);				
 			}
+			
 			// Neues Zufälliges Auto hinzufügen, wenn es Platz hat.
 			if(lane.getFirstCar() == null || (lane.getFirstCar() != null && lane.getFirstCar().getBackPosition() > 10)){
 				Car randomCar = RandomPool.getNewCar(this.track, lane);
@@ -117,91 +118,78 @@ public class Nagel_Schreckenberg_Simulation {
 		clearConflicts();
 	}
 	
-	private void clearConflicts(){
+	private void clearConflicts() {
 		for (Lane lane : this.track.getLanes()) {
 			Car car = lane.getLastCar();
-			
-			while(car != null){
-				
-				if(car.isBlinkLeft() || car.isBlinkRight()){
+
+			while (car != null) {
+
+				if (car.isBlinkLeft() || car.isBlinkRight()) {
 					Lane leftlane = car.getNextLane().getLeftLane();
 					Lane rightLane = car.getNextLane().getRightLane();
-					if (leftlane != null){
-						
+					if (leftlane != null) {
+
 						Car blinkingRightCar = leftlane.getLastCar();
-						
-						while(blinkingRightCar != null){
-							
-							if (blinkingRightCar.isBlinkRight() && blinkingRightCar.getId() != car.getId()){
-								
+
+						while (blinkingRightCar != null) {
+
+							if (blinkingRightCar.isBlinkRight() && blinkingRightCar.getId() != car.getId()) {
+
 								if (blinkingRightCar.getNextBackPosition() <= car.getNextPosition()
-										&& blinkingRightCar.getNextPosition() >= car.getNextBackPosition()){
+										&& blinkingRightCar.getNextPosition() >= car.getNextBackPosition()) {
 									int blinkingRightcarspeed = calculateNextSpeed(blinkingRightCar.getCurrentLane(), blinkingRightCar);
 									blinkingRightCar.setNext(blinkingRightcarspeed, false, false);
 								}
-								
 							}
-							
 							blinkingRightCar = leftlane.getPreviousCar(blinkingRightCar);
 						}
-						
 					}
 
-					if (rightLane != null){
-						
+					if (rightLane != null) {
+
 						Car blinkingLeftCar = rightLane.getLastCar();
-						
-						while(blinkingLeftCar != null){
-							
-							if (blinkingLeftCar.isBlinkLeft() && blinkingLeftCar.getId() != car.getId()){
-								
+
+						while (blinkingLeftCar != null) {
+
+							if (blinkingLeftCar.isBlinkLeft() && blinkingLeftCar.getId() != car.getId()) {
+
 								if (blinkingLeftCar.getNextBackPosition() <= car.getNextPosition()
-										&& blinkingLeftCar.getNextPosition() >= car.getNextBackPosition()){
+										&& blinkingLeftCar.getNextPosition() >= car.getNextBackPosition()) {
 									int blinkingLeftcarspeed = calculateNextSpeed(blinkingLeftCar.getCurrentLane(), blinkingLeftCar);
 									blinkingLeftCar.setNext(blinkingLeftcarspeed, false, false);
-								}	
-								
+								}
 							}
 							blinkingLeftCar = rightLane.getPreviousCar(blinkingLeftCar);
 						}
-						
 					}
 				}
-				
+
 				car = lane.getPreviousCar(car);
 			}
-
 		}
-		
 	}
 
 	private void moveCar(Lane lane, Car car) {
-		if(car.isToBeDeleted()){
+		if (car.isToBeDeleted()) {
 			lane.removeCar(car);
 			this.track.addToOldCars(car);
-		}
-		else{
-			if(!car.isMoved()){
-			boolean passedEnd = car.getPosition()> car.getNextPosition();
-			
-			car.setSpeed(car.getNextSpeed());
-			car.setPosition(car.getNextPosition());
-			car.setLane(car.getNextLane());
-			
-			if((lane.getFastLaneIndex() != car.getNextLane().getFastLaneIndex()) || passedEnd){
-				lane.removeCar(car);
-				car.getCurrentLane().addCar(car);
-			}
-			else{
-				lane.updateCarPosition(car);
-			}
+		} else {
+			if (!car.isMoved()) {
+				car.setSpeed(car.getNextSpeed());
+				car.setPosition(car.getNextPosition());
+				car.setLane(car.getNextLane());
 
+				if ((lane.getFastLaneIndex() != car.getNextLane().getFastLaneIndex())) {
+					lane.removeCar(car);
+					car.getCurrentLane().addCar(car);
+				} else {
+					lane.updateCarPosition(car);
+				}
 
-			
-			car.setBlinkLeft(false);
-			car.setBlinkRight(false);
-			car.setMoved(true);
-			}	
+				car.setBlinkLeft(false);
+				car.setBlinkRight(false);
+				car.setMoved(true);
+			}
 		}
 	}
 	
@@ -273,7 +261,7 @@ public class Nagel_Schreckenberg_Simulation {
 			speed = setSpeedAccordingToAvaliableSpace(speed, availableSpace);
 		}
 		
-		//Rechts überholen
+		// Rechts überholen
 		if(lane.getLeftLane() != null){
 			Car leftCar = lane.getLeftLane().getClosestAfter(car);
 			if(leftCar != null){
