@@ -1,6 +1,7 @@
 package model;
 
 import java.util.Iterator;
+import java.util.List;
 
 import segment.PassableLeftSegment;
 import segment.PassableRightSegment;
@@ -174,5 +175,13 @@ public class Lane implements Iterable<Locator<Integer, Car>> {
 	 */
 	public void addSegment(Segment segment) {
 		this.segments.add(segment);		
+	}
+
+	/**
+	 * @author bublm1
+	 * @return
+	 */
+	public List<Segment> getSegments() {
+		return this.segments.getSegments();
 	}
 }

@@ -44,13 +44,12 @@ public class TrackPanel extends JPanel {
 			
 			this.lanePanels.add(new LanePanel(lane, fastLaneOffset, trackOffset));
 			
-//			for (Segment segment : lane.getSegmentCollection()) {
-//				
-//			}
+			for (Segment segment : lane.getSegments()) {
+				this.segmentPanels.add(new SegmentPanel(segment, this.track.getLanes().size(), fastLaneOffset, trackOffset));
+			}
 			
 			for (Locator<Integer, Car> carLocator : lane) {
-				Car car = carLocator.element();
-				this.carPanels.add(new CarPanel(car, this.track.getLanes().size(), trackOffset));
+				this.carPanels.add(new CarPanel(carLocator.element(), this.track.getLanes().size(), trackOffset));
 			}
 		}
 	}
@@ -67,6 +66,10 @@ public class TrackPanel extends JPanel {
 		
 		for (LanePanel lanePanel : this.lanePanels) {
 			lanePanel.paintComponent(g);
+		}
+		
+		for (SegmentPanel segmentPanel : this.segmentPanels) {
+			segmentPanel.paintComponent(g);
 		}
 		
 		for (CarPanel carPanel : carPanels) {

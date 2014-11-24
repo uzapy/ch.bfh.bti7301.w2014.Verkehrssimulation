@@ -30,7 +30,6 @@ public class SegmentCollection {
 	 * @param segmentType
 	 * @return
 	 */
-	
 	public Segment get(int position, @SuppressWarnings("rawtypes") Class segmentClass) {
 		
 		Segment foundSegment = null;
@@ -76,5 +75,13 @@ public class SegmentCollection {
 			}
 		}
 		segmentList.insert(segment.start(), segment);
+	}
+
+	/**
+	 * @author bublm1
+	 * @return
+	 */
+	public List<Segment> getSegments() {
+		return this.segments;
 	}
 }
