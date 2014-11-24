@@ -3,6 +3,7 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.Button;
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -49,8 +50,10 @@ public class MainFrame extends JFrame implements IImpulsable, ActionListener {
 		navigationPanel.setLayout(navigationLayout);
 		buttonZoomIn.addActionListener(this);
 		buttonRight.addActionListener(this);
+		buttonRight.setPreferredSize(new Dimension(30, 100));
 		buttonZoomOut.addActionListener(this);
 		buttonLeft.addActionListener(this);
+		buttonLeft.setPreferredSize(new Dimension(30, 100));
 		buttonLeft.setEnabled(false);
 		navigationPanel.add(buttonZoomIn, BorderLayout.NORTH);
 		navigationPanel.add(buttonRight, BorderLayout.EAST);
