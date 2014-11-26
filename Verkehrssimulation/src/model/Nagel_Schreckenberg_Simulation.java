@@ -43,17 +43,19 @@ public class Nagel_Schreckenberg_Simulation {
 		this.track.addLane(lane2);
 //		this.track.addLane(lane3);
 		
-		Segment velocitySegment0 = new VelocitySegment(200, 300, 17);
-		Segment velocitySegment1 = new VelocitySegment(200, 300, 17);
-		Segment velocitySegment2 = new VelocitySegment(200, 300, 17);
+		Segment velocitySegment0 = new VelocitySegment(200, 300, 10);
+		Segment velocitySegment1 = new VelocitySegment(200, 300, 10);
+		Segment velocitySegment2 = new VelocitySegment(200, 300, 10);
 		Segment passableLeftSegment = new PassableLeftSegment(25, 120, false);
 		Segment passableRightSegment = new PassableRightSegment(40, 100, false);
 		
 		lane0.addSegment(velocitySegment0);
 		lane1.addSegment(velocitySegment1);
 		lane2.addSegment(velocitySegment2);
-		lane0.addSegment(passableRightSegment);
-		lane2.addSegment(passableLeftSegment);
+		lane0.addSegment(passableLeftSegment);
+		lane1.addSegment(passableLeftSegment);
+		lane1.addSegment(passableRightSegment);
+		lane2.addSegment(passableRightSegment);
 	}
 
 	public void performStep() {
@@ -87,7 +89,11 @@ public class Nagel_Schreckenberg_Simulation {
 				int possibleSpeedOnRightLane = calculateNextSpeed(lane.getRightLane(), car);		
 
 				// Will ich überholen?
-				if (lane.isPassableLeft(car.getPosition()) && car.getSpeed() > nextCar.getSpeed() && car.getSpeed() > car.getNextSpeed()) {
+				boolean isPassableLeft = lane.isPassableLeft(car.getPosition());
+				boolean isFasterThanNextCar = car.getSpeed() > nextCar.getSpeed();
+				boolean isNextCarClose = nextCar.getBackPosition() - car.getPosition() < lane.getMaxVelocity(car.getPosition());
+//				boolean isNextSpeedSmaller = car.getSpeed() > car.getNextSpeed();
+				if (isPassableLeft && isFasterThanNextCar && isNextCarClose) {
 					// Kann ich überholen?
 					boolean canChangeToLeftLane = IsEnoughSpaceBetweenBeforeAndAfter(lane.getLeftLane(), car);
 					int speedOnLeftLane = calculateNextSpeed(lane.getLeftLane(), car);

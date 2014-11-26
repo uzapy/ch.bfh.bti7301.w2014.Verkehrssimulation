@@ -14,6 +14,7 @@ import model.Car;
 import model.Lane;
 import model.Track;
 import segment.Segment;
+import segment.VelocitySegment;
 import skiplist.Locator;
 import util.MetricToPixel;
 
@@ -44,8 +45,8 @@ public class TrackPanel extends JPanel {
 			
 			this.lanePanels.add(new LanePanel(lane, fastLaneOffset, trackOffset));
 			
-			for (Segment segment : lane.getSegments()) {
-				this.segmentPanels.add(new SegmentPanel(segment, this.track.getLanes().size(), fastLaneOffset, trackOffset));
+			for (Segment segment : lane.getSegments(VelocitySegment.class)) {
+				this.segmentPanels.add(new VelocitySegmentPanel(segment, this.track.getLanes().size(), fastLaneOffset, trackOffset));
 			}
 			
 			for (Locator<Integer, Car> carLocator : lane) {
