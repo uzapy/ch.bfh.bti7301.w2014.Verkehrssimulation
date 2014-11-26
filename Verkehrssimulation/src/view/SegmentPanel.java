@@ -18,9 +18,9 @@ import util.MetricToPixel;
 @SuppressWarnings("serial")
 public class SegmentPanel extends JPanel {
 
-	private Segment segment;
-	private int trackOffset;
-	private int fastLaneOffset; 
+	protected Segment segment;
+	protected int trackOffset;
+	protected int fastLaneOffset; 
 	
 	/**
 	 * @author bublm1

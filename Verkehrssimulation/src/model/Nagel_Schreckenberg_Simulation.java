@@ -5,8 +5,7 @@ package model;
 
 import java.util.ArrayList;
 
-import segment.PassableLeftSegment;
-import segment.PassableRightSegment;
+import segment.PassableSegment;
 import segment.Segment;
 import segment.VelocitySegment;
 import skiplist.Locator;
@@ -46,16 +45,17 @@ public class Nagel_Schreckenberg_Simulation {
 		Segment velocitySegment0 = new VelocitySegment(200, 300, 10);
 		Segment velocitySegment1 = new VelocitySegment(200, 300, 10);
 		Segment velocitySegment2 = new VelocitySegment(200, 300, 10);
-		Segment passableLeftSegment = new PassableLeftSegment(25, 120, false);
-		Segment passableRightSegment = new PassableRightSegment(40, 100, false);
+		
+		Segment notPassableSegment0 = new PassableSegment(25, 120, true, false);
+		Segment notPassableSegment1 = new PassableSegment(25, 120, true, false);
+		Segment notPassableSegment2 = new PassableSegment(25, 120, false, false);
 		
 		lane0.addSegment(velocitySegment0);
 		lane1.addSegment(velocitySegment1);
 		lane2.addSegment(velocitySegment2);
-		lane0.addSegment(passableLeftSegment);
-		lane1.addSegment(passableLeftSegment);
-		lane1.addSegment(passableRightSegment);
-		lane2.addSegment(passableRightSegment);
+		lane0.addSegment(notPassableSegment0);
+		lane1.addSegment(notPassableSegment1);
+		lane2.addSegment(notPassableSegment2);
 	}
 
 	public void performStep() {

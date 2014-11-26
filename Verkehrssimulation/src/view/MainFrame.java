@@ -7,7 +7,10 @@ import java.awt.Dimension;
 import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -70,6 +73,15 @@ public class MainFrame extends JFrame implements IImpulsable, ActionListener {
 		container.add(this.trackPanel, BorderLayout.CENTER);
 		container.add(button, BorderLayout.SOUTH);
 		// Tutorial: http://www.youtube.com/watch?v=svM0SBFqp4s
+		
+		try {
+			PassableSegmentPanel.STRAIGHT = ImageIO.read(new File("src/resources/straight.png"));
+			PassableSegmentPanel.STRAIGHT_LEFT = ImageIO.read(new File("src/resources/straight-left.png"));
+			PassableSegmentPanel.STRAIGHT_RIGHT = ImageIO.read(new File("src/resources/straight-right.png"));
+			VelocitySegmentPanel.MAX = ImageIO.read(new File("src/resources/max.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	/* (non-Javadoc)

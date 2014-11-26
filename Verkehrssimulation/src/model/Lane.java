@@ -3,8 +3,7 @@ package model;
 import java.util.Iterator;
 import java.util.List;
 
-import segment.PassableLeftSegment;
-import segment.PassableRightSegment;
+import segment.PassableSegment;
 import segment.Segment;
 import segment.SegmentCollection;
 import segment.VelocitySegment;
@@ -51,18 +50,18 @@ public class Lane implements Iterable<Locator<Integer, Car>> {
 	}
 	
 	public boolean isPassableLeft(int position) {
-		Segment foundSegment = this.getSegmentAt(position, PassableLeftSegment.class);
+		Segment foundSegment = this.getSegmentAt(position, PassableSegment.class);
 		if (foundSegment != null) {
-			return ((PassableLeftSegment)foundSegment).isPassable();
+			return ((PassableSegment)foundSegment).isPassableLeft();
 		} else {
 			return isPassableLeft;			
 		}
 	}
 
 	public boolean isPassableRight(int position) {
-		Segment foundSegment = this.getSegmentAt(position, PassableRightSegment.class);
+		Segment foundSegment = this.getSegmentAt(position, PassableSegment.class);
 		if (foundSegment != null) {
-			return ((PassableRightSegment)foundSegment).isPassable();
+			return ((PassableSegment)foundSegment).isPassableRight();
 		} else {
 			return isPassableRight;			
 		}
@@ -132,11 +131,11 @@ public class Lane implements Iterable<Locator<Integer, Car>> {
 	/**
 	 * @author bublm1
 	 * @param position
-	 * @param maxvelocity2
+	 * @param maxvelocity
 	 * @return
 	 */
-	// TODO: Class<Segment>
-	private Segment getSegmentAt(int position, @SuppressWarnings("rawtypes") Class segmentClass) {
+	@SuppressWarnings("rawtypes")
+	private Segment getSegmentAt(int position, Class segmentClass) {
 		return this.segments.get(position, segmentClass);
 	}
 
