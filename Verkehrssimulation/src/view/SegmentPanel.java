@@ -44,5 +44,4 @@ public class SegmentPanel extends JPanel {
 		
 		g.fillRect(xPosition, yPosition, length, width);
 	}
-
 }

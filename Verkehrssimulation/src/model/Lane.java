@@ -181,7 +181,8 @@ public class Lane implements Iterable<Locator<Integer, Car>> {
 	 * @author bublm1
 	 * @return
 	 */
-	public List<Segment> getSegments() {
-		return this.segments.getSegments();
+	@SuppressWarnings("rawtypes")
+	public List<Segment> getSegments(Class segmentClass) {
+		return this.segments.getSegments(segmentClass);
 	}
 }

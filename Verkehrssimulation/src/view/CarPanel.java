@@ -52,10 +52,10 @@ public class CarPanel extends JPanel {
 		
 		g.fillRect(xPosition, yPosition, length, width);
 		
-		g.setColor(Color.MAGENTA);
-		g.drawString(Integer.toString(this.car.getId()),
-				MetricToPixel.scale(this.xSimPosition + this.car.getLength()),
-				MetricToPixel.scale(trackOffset) + MetricToPixel.scale(this.ySimPosition + Car.WIDTH));
+//		g.setColor(Color.MAGENTA);
+//		g.drawString(Integer.toString(this.car.getId()),
+//				MetricToPixel.scale(this.xSimPosition + this.car.getLength()),
+//				MetricToPixel.scale(trackOffset) + MetricToPixel.scale(this.ySimPosition + Car.WIDTH));
 		
 		g.setColor(Color.CYAN);
 		g.drawString(Integer.toString(this.car.getNextSpeed()),

@@ -55,6 +55,7 @@ public class MainFrame extends JFrame implements IImpulsable, ActionListener {
 		buttonLeft.addActionListener(this);
 		buttonLeft.setPreferredSize(new Dimension(30, 100));
 		buttonLeft.setEnabled(false);
+		
 		navigationPanel.add(buttonZoomIn, BorderLayout.NORTH);
 		navigationPanel.add(buttonRight, BorderLayout.EAST);
 		navigationPanel.add(buttonZoomOut, BorderLayout.SOUTH);

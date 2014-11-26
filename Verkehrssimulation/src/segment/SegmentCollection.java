@@ -15,9 +15,10 @@ import skiplist.MySkipList;
  */
 public class SegmentCollection {
 	
-	private List<Segment> segments = new ArrayList<Segment>();
 	@SuppressWarnings("rawtypes")
 	private HashMap<Class, MySkipList<Integer, Segment>> segmentsPool = new HashMap<Class, MySkipList<Integer, Segment>>();
+	@SuppressWarnings("rawtypes")
+	private HashMap<Class, List<Segment>> segments = new HashMap<Class, List<Segment>>();
 	private int length;
 	
 	public SegmentCollection(int length){
@@ -58,13 +59,15 @@ public class SegmentCollection {
 	 * @param segment
 	 */
 	public void add(Segment segment) {
-		this.segments.add(segment);
+		if (!segments.containsKey(segment.getClass())) {
+			segments.put(segment.getClass(), new ArrayList<Segment>());
+		}
+		this.segments.get(segment.getClass()).add(segment);
 
 		if (!segmentsPool.containsKey(segment.getClass())) {
 			segmentsPool.put(segment.getClass(), new MySkipList<Integer, Segment>(-1, this.length + 1));
 		}
 		MySkipList<Integer, Segment> segmentList = segmentsPool.get(segment.getClass());
-		// TODO check for overlap
 		Locator<Integer, Segment> result = segmentList.closestBefore(segment.end());
 		if (result != null && result.element().end() >= segment.start()) {
 			throw new RuntimeException("segments overlap!");
@@ -81,7 +84,8 @@ public class SegmentCollection {
 	 * @author bublm1
 	 * @return
 	 */
-	public List<Segment> getSegments() {
-		return this.segments;
+	@SuppressWarnings("rawtypes")
+	public List<Segment> getSegments(Class segmentClass) {
+		return this.segments.get(segmentClass);
 	}
 }
