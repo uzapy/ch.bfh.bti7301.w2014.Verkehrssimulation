@@ -8,9 +8,9 @@ package segment;
  */
 public class OpenToTrafficSegment implements Segment {
 
-	int start;
-	int end;
-	boolean openToTraffic;
+	private int start;
+	private int end;
+	private boolean openToTraffic;
 	
 	public OpenToTrafficSegment(int start, int end, boolean openToTraffic){
 		this.start = start;
@@ -18,12 +18,12 @@ public class OpenToTrafficSegment implements Segment {
 		this.openToTraffic = openToTraffic;
 	}
 
-
+	@Override
 	public int start() {
-
 		return this.start;
 	}
 
+	@Override
 	public int end() {
 		return this.end;
 	}

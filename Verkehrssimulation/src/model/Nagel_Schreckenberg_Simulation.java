@@ -46,13 +46,14 @@ public class Nagel_Schreckenberg_Simulation {
 		Segment velocitySegment1 = new VelocitySegment(200, 300, 10);
 		Segment velocitySegment2 = new VelocitySegment(200, 300, 10);
 		
-		Segment notPassableSegment0 = new PassableSegment(25, 120, true, false);
-		Segment notPassableSegment1 = new PassableSegment(25, 120, true, false);
-		Segment notPassableSegment2 = new PassableSegment(25, 120, false, false);
+		Segment notPassableSegment0 = new PassableSegment(20, 120, true, false);
+		Segment notPassableSegment1 = new PassableSegment(20, 120, false, true);
+		Segment notPassableSegment2 = new PassableSegment(20, 120, false, false);
 		
 		lane0.addSegment(velocitySegment0);
 		lane1.addSegment(velocitySegment1);
 		lane2.addSegment(velocitySegment2);
+		
 		lane0.addSegment(notPassableSegment0);
 		lane1.addSegment(notPassableSegment1);
 		lane2.addSegment(notPassableSegment2);

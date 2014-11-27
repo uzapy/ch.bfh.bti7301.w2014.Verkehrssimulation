@@ -9,10 +9,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.Hashtable;
 
 import javax.imageio.ImageIO;
+import javax.swing.BoxLayout;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSlider;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import model.Nagel_Schreckenberg_Simulation;
 import model.Track;
@@ -24,7 +30,7 @@ import util.MetricToPixel;
  * @author bublm1
  */
 @SuppressWarnings("serial")
-public class MainFrame extends JFrame implements IImpulsable, ActionListener {
+public class MainFrame extends JFrame implements IImpulsable, ActionListener, ChangeListener {
 	
 	private Nagel_Schreckenberg_Simulation simulation;
 	private TrackPanel trackPanel;
@@ -32,6 +38,7 @@ public class MainFrame extends JFrame implements IImpulsable, ActionListener {
 	private Button buttonZoomOut = new Button("-");
 	private Button buttonLeft = new Button("<");
 	private Button buttonRight = new Button(">");
+	private JSlider fpsSlider = new JSlider(1, 60, 30);
 	private int simStep;
 	
 	public MainFrame(String title) {
@@ -47,16 +54,16 @@ public class MainFrame extends JFrame implements IImpulsable, ActionListener {
 		// Layout manager
 		this.setLayout(new BorderLayout());
 		
-		// Swing components
+		// Navigation Panel
 		JPanel navigationPanel = new JPanel();
 		BorderLayout navigationLayout = new BorderLayout();
 		navigationPanel.setLayout(navigationLayout);
 		buttonZoomIn.addActionListener(this);
 		buttonRight.addActionListener(this);
-		buttonRight.setPreferredSize(new Dimension(30, 100));
+		buttonRight.setPreferredSize(new Dimension(30, 70));
 		buttonZoomOut.addActionListener(this);
 		buttonLeft.addActionListener(this);
-		buttonLeft.setPreferredSize(new Dimension(30, 100));
+		buttonLeft.setPreferredSize(new Dimension(30, 70));
 		buttonLeft.setEnabled(false);
 		
 		navigationPanel.add(buttonZoomIn, BorderLayout.NORTH);
@@ -65,13 +72,37 @@ public class MainFrame extends JFrame implements IImpulsable, ActionListener {
 		navigationPanel.add(buttonLeft, BorderLayout.WEST);
 		navigationPanel.add(new Label("NAV"), BorderLayout.CENTER);
 		
+		// Parameter Panel
+		JPanel parameterPanel = new JPanel();
+		BoxLayout parameterLayout = new BoxLayout(parameterPanel, BoxLayout.Y_AXIS);
+		parameterPanel.setLayout(parameterLayout);
+		
+		fpsSlider.addChangeListener(this);
+		Hashtable<Integer, JLabel> labelTable = new Hashtable<Integer, JLabel>();
+		labelTable.put( new Integer( 1 ), new JLabel("1") );
+		labelTable.put( new Integer( 30 ), new JLabel("Frames per Second") );
+		labelTable.put( new Integer( 60 ), new JLabel("60") );
+		fpsSlider.setLabelTable(labelTable);
+		fpsSlider.setPaintLabels(true);
+		parameterPanel.add(fpsSlider);
+		
+		// Button
 		Button button = new Button("Click me!");
+		
+		// Bottom Border-Layout
+		JPanel controlPanel = new JPanel();
+		BorderLayout controlLayout = new BorderLayout();
+		controlPanel.setLayout(controlLayout);
+
+		controlPanel.add(navigationPanel, BorderLayout.WEST);
+		controlPanel.add(parameterPanel, BorderLayout.CENTER);
+		controlPanel.add(button, BorderLayout.EAST);		
 		
 		// Add Swing Components
 		Container container = this.getContentPane();
-		container.add(navigationPanel, BorderLayout.EAST);
 		container.add(this.trackPanel, BorderLayout.CENTER);
-		container.add(button, BorderLayout.SOUTH);
+		container.add(controlPanel, BorderLayout.SOUTH);
+//		container.add(button, BorderLayout.SOUTH);
 		// Tutorial: http://www.youtube.com/watch?v=svM0SBFqp4s
 		
 		try {
@@ -102,8 +133,19 @@ public class MainFrame extends JFrame implements IImpulsable, ActionListener {
 		// do the Button-Magic
 		this.buttonZoomIn.setEnabled(MetricToPixel.SCALING_FACTOR <= 50);
 		this.buttonZoomOut.setEnabled(MetricToPixel.SCALING_FACTOR > 1);
-//		this.buttonRight.setEnabled(???);
+//		this.buttonRight.setEnabled(???); TODO: Wann ist Button Right disabled?
 		this.buttonLeft.setEnabled(this.trackPanel.getViewOffset() < 0);
+	}
+	
+	/* (non-Javadoc)
+	 * @see javax.swing.event.ChangeListener#stateChanged(javax.swing.event.ChangeEvent)
+	 */
+	@Override
+	public void stateChanged(ChangeEvent ce) {
+		JSlider sourceSlider = (JSlider)ce.getSource();
+		if (sourceSlider == this.fpsSlider && !sourceSlider.getValueIsAdjusting()) {
+			Nagel_Schreckenberg_Simulation.FRAMES_PER_SECOND = (int)sourceSlider.getValue();
+		}
 	}
 
 	/* (non-Javadoc)

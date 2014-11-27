@@ -19,6 +19,7 @@ import util.MetricToPixel;
 public class VelocitySegmentPanel extends SegmentPanel {
 	
 	public static BufferedImage MAX;
+	
 	/**
 	 * @author bublm1
 	 * @param segment
