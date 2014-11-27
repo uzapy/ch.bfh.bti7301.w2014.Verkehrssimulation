@@ -129,22 +129,33 @@ public class Lane implements Iterable<Locator<Integer, Car>> {
 	}
 	
 	/**
-	 * @author bublm1
-	 * @param position
-	 * @param maxvelocity
-	 * @return
+	 * @author burkt4
+	 * @param car
 	 */
+	public void updateCarPosition(Car car) {
+		this.lane.updateKey(car.getLocator(), car.getPosition());
+	}
+	
+	/**
+	 * @author bublm1
+	 * @param velocitySegment1
+	 */
+	public void addSegment(Segment segment) {
+		this.segments.add(segment);		
+	}
+	
 	@SuppressWarnings("rawtypes")
 	private Segment getSegmentAt(int position, Class segmentClass) {
 		return this.segments.get(position, segmentClass);
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Iterable#iterator()
+	/**
+	 * @author bublm1
+	 * @return
 	 */
-	@Override
-	public Iterator<Locator<Integer, Car>> iterator() {
-		return this.lane.sortedLocators();
+	@SuppressWarnings("rawtypes")
+	public List<Segment> getSegments(Class segmentClass) {
+		return this.segments.getSegments(segmentClass);
 	}
 	
 	/**
@@ -159,29 +170,12 @@ public class Lane implements Iterable<Locator<Integer, Car>> {
 			return null;
 		}
 	}
-
-	/**
-	 * @author burkt4
-	 * @param car
+	
+	/* (non-Javadoc)
+	 * @see java.lang.Iterable#iterator()
 	 */
-	public void updateCarPosition(Car car) {
-		this.lane.updateKey(car.getLocator(), car.getPosition());
-	}
-
-	/**
-	 * @author bublm1
-	 * @param velocitySegment1
-	 */
-	public void addSegment(Segment segment) {
-		this.segments.add(segment);		
-	}
-
-	/**
-	 * @author bublm1
-	 * @return
-	 */
-	@SuppressWarnings("rawtypes")
-	public List<Segment> getSegments(Class segmentClass) {
-		return this.segments.getSegments(segmentClass);
+	@Override
+	public Iterator<Locator<Integer, Car>> iterator() {
+		return this.lane.sortedLocators();
 	}
 }

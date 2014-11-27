@@ -7,41 +7,41 @@ public class Car {
 	public static final int WIDTH = 2;	// Breite eines Autos in Meter
 	private int id;
 	private double trödelFactor;
-	private int position; 				// Position in Meter
+	private int position;	 			// Position in Meter
+	private int nextPosition;			// Zukünftige Position in Meter
 	private int speed; 					// Gesschwindigkeit in Meter pro Sekunde
 	private int nextSpeed;				// Zukünftige Geschwindigkeit in Meter pro Sekunde
 	private int length;					// Länge des Autos in Meter
-	private Lane currentLane;
+	private Lane lane;
 	private Lane nextLane;
 	private boolean blinkLeft;
 	private boolean blinkRight;
-	private boolean moved;
-	private int nextPosition;
 	private Locator<Integer, Car> locator;
-	private boolean toBeDeleted;
+	private boolean isMoved;
+	private boolean isToBeDeleted;
 
 	public Car(int id,int speed, double trödelFactor, int position, int length, Lane lane) {
 		this.id = id;
 		this.trödelFactor = trödelFactor;
 		this.position = position;
 		this.speed = speed;
-		this.currentLane = lane;
-		this.nextLane = lane;
 		this.length = length;
-		this.moved = true;
-		this.toBeDeleted = false;
+		this.lane = lane;
+		this.nextLane = lane;
+		this.isMoved = true;
+		this.isToBeDeleted = false;
 	}
 
 	public boolean isMoved() {
-		return moved;
+		return isMoved;
 	}
 
-	public void setMoved(boolean moved) {
-		this.moved = moved;
+	public void setMoved(boolean isMoved) {
+		this.isMoved = isMoved;
 	}
 	
 	public boolean isToBeDeleted() {
-		return toBeDeleted;
+		return isToBeDeleted;
 	}
 
 	public int getId() {
@@ -92,12 +92,12 @@ public class Car {
 		this.nextSpeed = nextSpeed;
 	}
 	
-	public Lane getCurrentLane() {
-		return this.currentLane;
+	public Lane getLane() {
+		return this.lane;
 	}
 	
 	public void setLane(Lane lane) {
-		this.currentLane = lane;
+		this.lane = lane;
 	}
 	
 	public Lane getNextLane() {
@@ -132,20 +132,15 @@ public class Car {
 		this.locator = locator;
 	}
 	
-	/**
-	 * @author bublm1
-	 * @return
-	 */
 	public Locator<Integer, Car> getLocator() {
 		return this.locator;
 	}
 
 	/**
 	 * @author bublm1
-	 * @param speedOnSlowLane
-	 * @param b
-	 * @param c
-	 * @param d
+	 * @param nextSpeed
+	 * @param blinkRight
+	 * @param blinkLeft
 	 */
 	public void setNext(int nextSpeed, boolean blinkRight, boolean blinkLeft) {
 		this.nextSpeed = nextSpeed;
@@ -153,14 +148,14 @@ public class Car {
 		this.blinkLeft = blinkLeft;
 		
 		if (blinkRight) {
-			nextLane = currentLane.getRightLane();
+			nextLane = lane.getRightLane();
 		} else if (blinkLeft) {
-			nextLane = currentLane.getLeftLane();
+			nextLane = lane.getLeftLane();
 		} else {
-			nextLane = currentLane;
+			nextLane = lane;
 		}
 		if(position + nextSpeed > nextLane.getLength()){
-			this.toBeDeleted = true;
+			this.isToBeDeleted = true;
 		}
 		else{
 			nextPosition = (position + nextSpeed);			

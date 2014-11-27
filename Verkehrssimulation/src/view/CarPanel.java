@@ -7,8 +7,8 @@ import javax.swing.JPanel;
 
 import model.Car;
 import model.Lane;
-import model.Nagel_Schreckenberg_Simulation;
 import util.MetricToPixel;
+import util.ParameterPool;
 import util.RandomPool;
 
 /**
@@ -33,7 +33,7 @@ public class CarPanel extends JPanel {
 		this.trackOffset = trackOffset;
 		this.numberOfLanes = numberOfLanes;
 		this.xSimPosition = this.car.getBackPosition();
-		this.ySimPosition = getLaneOffset(car.getCurrentLane().getFastLaneIndex()) * Lane.WIDTH  + (Lane.WIDTH - Car.WIDTH) / 2;
+		this.ySimPosition = getLaneOffset(car.getLane().getFastLaneIndex()) * Lane.WIDTH  + (Lane.WIDTH - Car.WIDTH) / 2;
 		this.color = RandomPool.getNewColor();
 	}
 
@@ -69,18 +69,18 @@ public class CarPanel extends JPanel {
 	 */
 	public void performSimStep(int simStep) {
 		
-		float xSimProgress = (float)this.car.getNextSpeed() / Nagel_Schreckenberg_Simulation.FRAMES_PER_SECOND * (float)simStep;
+		float xSimProgress = (float)this.car.getNextSpeed() / ParameterPool.FRAMES_PER_SECOND * (float)simStep;
 		this.xSimPosition = ((float)this.car.getBackPosition() + xSimProgress);
 
-		this.ySimPosition = getLaneOffset(car.getCurrentLane().getFastLaneIndex()) * Lane.WIDTH  + (Lane.WIDTH - Car.WIDTH) / 2;
+		this.ySimPosition = getLaneOffset(car.getLane().getFastLaneIndex()) * Lane.WIDTH  + (Lane.WIDTH - Car.WIDTH) / 2;
 		
 		if (getLaneOffset(this.car.getNextLane().getFastLaneIndex()) !=
-			getLaneOffset(this.car.getCurrentLane().getFastLaneIndex())) {
+			getLaneOffset(this.car.getLane().getFastLaneIndex())) {
 			
-			float ySimProgress = (float)Lane.WIDTH / Nagel_Schreckenberg_Simulation.FRAMES_PER_SECOND * (float)simStep;
+			float ySimProgress = (float)Lane.WIDTH / ParameterPool.FRAMES_PER_SECOND * (float)simStep;
 			
 			if (getLaneOffset(this.car.getNextLane().getFastLaneIndex()) <
-				getLaneOffset(this.car.getCurrentLane().getFastLaneIndex())) {
+				getLaneOffset(this.car.getLane().getFastLaneIndex())) {
 				this.ySimPosition = this.ySimPosition - ySimProgress; // Überholt
 			} 
 			else {

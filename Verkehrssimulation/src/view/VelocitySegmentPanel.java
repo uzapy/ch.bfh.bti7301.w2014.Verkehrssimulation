@@ -8,6 +8,7 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 import model.Lane;
+import resources.Resources;
 import segment.Segment;
 import segment.VelocitySegment;
 import util.MetricToPixel;
@@ -18,7 +19,8 @@ import util.MetricToPixel;
 @SuppressWarnings("serial")
 public class VelocitySegmentPanel extends SegmentPanel {
 	
-	public static BufferedImage MAX;
+	public static BufferedImage MAX = Resources.getImage("max");
+	
 	/**
 	 * @author bublm1
 	 * @param segment

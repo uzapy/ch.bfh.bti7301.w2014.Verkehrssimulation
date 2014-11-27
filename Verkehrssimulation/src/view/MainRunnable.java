@@ -4,8 +4,6 @@ import java.awt.GraphicsEnvironment;
 
 import javax.swing.JFrame;
 
-import util.MetricToPixel;
-
 public class MainRunnable implements Runnable {
 
 	@Override
@@ -13,7 +11,7 @@ public class MainRunnable implements Runnable {
 		int width = GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[0].getDisplayMode().getWidth();
 		
     	MainFrame mainFrame = new MainFrame("Verkehrssimulation");
-    	mainFrame.setSize(width, 40 * MetricToPixel.SCALING_FACTOR);
+    	mainFrame.setSize(width, 500);
     	mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     	mainFrame.setVisible(true);
 	}
