@@ -1,7 +1,7 @@
 /**
  * 
  */
-package view;
+package view.model;
 
 import javax.swing.JPanel;
 

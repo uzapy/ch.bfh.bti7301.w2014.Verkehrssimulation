@@ -26,4 +26,18 @@ public class MetricToPixel {
 	public static int scale(float distance) {
 		return (int) (distance * (float)MetricToPixel.SCALING_FACTOR);
 	}
+
+	/**
+	 * @author bublm1
+	 */
+	public static void zoomIn() {
+		SCALING_FACTOR++;
+	}
+
+	/**
+	 * @author bublm1
+	 */
+	public static void zoomOut() {
+		SCALING_FACTOR--;
+	}
 }

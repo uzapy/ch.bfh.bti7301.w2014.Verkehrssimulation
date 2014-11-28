@@ -1,7 +1,7 @@
 /**
  * 
  */
-package view;
+package view.model;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -18,6 +18,7 @@ import segment.Segment;
 import segment.VelocitySegment;
 import skiplist.Locator;
 import util.MetricToPixel;
+import util.ParameterPool;
 
 /**
  * @author burkt4
@@ -30,7 +31,6 @@ public class TrackPanel extends JPanel {
 	private LinkedList<CarPanel> carPanels = new LinkedList<CarPanel>();
 	
 	private int trackOffset = 2;
-	private int viewOffset = 0;
 	private int markerInterval = 50;
 
 	/**
@@ -63,7 +63,7 @@ public class TrackPanel extends JPanel {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		
-		g.translate(MetricToPixel.scale(viewOffset), 0);
+		g.translate(MetricToPixel.scale(ParameterPool.VIEW_OFFSET), 0);
 		
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, MetricToPixel.scale(track.getLane(0).getLength()), MetricToPixel.scale(trackOffset));
@@ -138,27 +138,4 @@ public class TrackPanel extends JPanel {
 		
 		this.repaint();
 	}
-
-	/**
-	 * @author bublm1
-	 */
-	public void moveTrackRight() {
-		this.viewOffset -= 25;
-	}
-
-	/**
-	 * @author bublm1
-	 */
-	public void moveTrackLeft() {
-		this.viewOffset += 25;
-	}
-
-	/**
-	 * @author bublm1
-	 * @return
-	 */
-	public int getViewOffset() {
-		return this.viewOffset;
-	}
-
 }
