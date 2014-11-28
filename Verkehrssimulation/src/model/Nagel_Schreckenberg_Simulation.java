@@ -18,7 +18,7 @@ public class Nagel_Schreckenberg_Simulation {
 
 	private Track track;
 	private int speedDelta = 3; 				// Standardbeschleunigung in Meter pro Sekunde
-	private int securityDistance = 1;
+	private int securityDistance = 1;			// Sicherheitsabstand
 	ArrayList<Car> carList = new ArrayList<Car>();
 
 	/**

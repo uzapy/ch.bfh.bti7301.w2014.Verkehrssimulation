@@ -28,8 +28,8 @@ public class VelocitySegmentPanel extends SegmentPanel {
 	 * @param fastLaneOffset
 	 * @param trackOffset
 	 */
-	public VelocitySegmentPanel(Segment segment, int numberOfLanes, int fastLaneOffset, int trackOffset) {
-		super(segment, numberOfLanes, fastLaneOffset, trackOffset);
+	public VelocitySegmentPanel(Segment segment, int fastLaneOffset, int trackOffset) {
+		super(segment, fastLaneOffset, trackOffset);
 	}
 	
 	public void paintComponent(Graphics g) {

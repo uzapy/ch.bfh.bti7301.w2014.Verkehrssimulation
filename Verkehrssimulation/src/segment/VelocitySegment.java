@@ -24,15 +24,7 @@ public class VelocitySegment implements Segment {
 		this.end = end;
 		this.maxVelocity = maxVelocity;
 	}
-
-	/**
-	 * @author bublm1
-	 * @return
-	 */
-	public int getMaxVelocity() {
-		return maxVelocity;
-	}
-
+	
 	/* (non-Javadoc)
 	 * @see model.Segment#start()
 	 */
@@ -40,7 +32,7 @@ public class VelocitySegment implements Segment {
 	public int start() {
 		return this.start;
 	}
-
+	
 	/* (non-Javadoc)
 	 * @see model.Segment#end()
 	 */
@@ -49,4 +41,11 @@ public class VelocitySegment implements Segment {
 		return this.end;
 	}
 
+	/**
+	 * @author bublm1
+	 * @return
+	 */
+	public int getMaxVelocity() {
+		return maxVelocity;
+	}
 }

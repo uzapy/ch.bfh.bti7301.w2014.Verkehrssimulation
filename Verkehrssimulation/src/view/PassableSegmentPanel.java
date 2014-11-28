@@ -29,8 +29,8 @@ public class PassableSegmentPanel extends SegmentPanel {
 	 * @param fastLaneOffset
 	 * @param trackOffset
 	 */
-	public PassableSegmentPanel(Segment segment, int numberOfLanes, int fastLaneOffset, int trackOffset) {
-		super(segment, numberOfLanes, fastLaneOffset, trackOffset);
+	public PassableSegmentPanel(Segment segment, int fastLaneOffset, int trackOffset) {
+		super(segment, fastLaneOffset, trackOffset);
 	}
 	
 	public void paintComponent(Graphics g) {
@@ -49,8 +49,6 @@ public class PassableSegmentPanel extends SegmentPanel {
 		} else if (isPassableRight) {
 			g.drawImage(STRAIGHT_RIGHT, xPosition, yPosition + 5, 20, 20, this);
 		}
-		
-//		g.drawString((new File("").getAbsolutePath()), xPosition+10, yPosition+20);
 	}
 
 }

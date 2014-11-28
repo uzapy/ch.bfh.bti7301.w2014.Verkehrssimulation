@@ -6,8 +6,6 @@ package view;
 import java.awt.Color;
 import java.awt.Graphics;
 
-import javax.swing.JPanel;
-
 import model.Lane;
 import util.MetricToPixel;
 
@@ -15,20 +13,16 @@ import util.MetricToPixel;
  * @author bublm1
  */
 @SuppressWarnings("serial")
-public class LanePanel extends JPanel  {
+public class LanePanel extends AbstractPanel<Lane>  {
 	
-	private Lane lane;
-	private int fastLaneOffset;
-	private int trackOffset;
+	private Lane lane = super.object;
 
 	/**
 	 * @author bublm1
 	 * @param lane
 	 */
 	public LanePanel(Lane lane, int fastLaneOffset, int trackOffset) {
-		this.lane = lane;
-		this.fastLaneOffset = fastLaneOffset;
-		this.trackOffset = trackOffset;
+		super(lane, fastLaneOffset, trackOffset);
 	}
 	
 	public void paintComponent(Graphics g) {

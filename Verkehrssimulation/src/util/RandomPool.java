@@ -16,7 +16,7 @@ import model.Track;
 public class RandomPool {
 
 	private static Random r = new Random();
-	private static int id = 0; //Car ID
+	private static int id = 0; 				// Car ID Counter
 
 	/**
 	 * @author bublm1

@@ -3,8 +3,6 @@ package view;
 import java.awt.Color;
 import java.awt.Graphics;
 
-import javax.swing.JPanel;
-
 import model.Car;
 import model.Lane;
 import util.MetricToPixel;
@@ -15,11 +13,10 @@ import util.RandomPool;
  * @author bublm1
  */
 @SuppressWarnings("serial")
-public class CarPanel extends JPanel {
+public class CarPanel extends AbstractPanel<Car> {
 
-	private Car car;
-	private int trackOffset;
-	private int numberOfLanes;
+	private Car car = super.object;
+	private int numberOfLanes;		// TODO: weg damit!
 	private float xSimPosition;
 	private float ySimPosition;
 	private Color color;
@@ -28,12 +25,12 @@ public class CarPanel extends JPanel {
 	 * @author bublm1
 	 * @param car
 	 */
-	public CarPanel(Car car, int numberOfLanes, int trackOffset) {
-		this.car = car;
-		this.trackOffset = trackOffset;
+	public CarPanel(Car car, int fastLaneOffset, int trackOffset, int numberOfLanes) {
+		super(car, fastLaneOffset, trackOffset);
 		this.numberOfLanes = numberOfLanes;
+
 		this.xSimPosition = this.car.getBackPosition();
-		this.ySimPosition = getLaneOffset(car.getLane().getFastLaneIndex()) * Lane.WIDTH  + (Lane.WIDTH - Car.WIDTH) / 2;
+		this.ySimPosition = getLaneOffset(this.car.getLane().getFastLaneIndex()) * Lane.WIDTH  + (Lane.WIDTH - Car.WIDTH) / 2;
 		this.color = RandomPool.getNewColor();
 	}
 
@@ -82,15 +79,14 @@ public class CarPanel extends JPanel {
 			if (getLaneOffset(this.car.getNextLane().getFastLaneIndex()) <
 				getLaneOffset(this.car.getLane().getFastLaneIndex())) {
 				this.ySimPosition = this.ySimPosition - ySimProgress; // Überholt
-			} 
-			else {
+			} else {
 				this.ySimPosition = this.ySimPosition + ySimProgress; // Zurück auf normale spur	
 			}
 		}
 	}
 	
 	public int getLaneOffset(int fastLaneIndex) {
-		return (numberOfLanes - 1) - fastLaneIndex;
+		return numberOfLanes - fastLaneIndex;
 	}
 
 	public int getId() {

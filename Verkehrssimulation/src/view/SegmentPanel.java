@@ -6,8 +6,6 @@ package view;
 import java.awt.Color;
 import java.awt.Graphics;
 
-import javax.swing.JPanel;
-
 import model.Lane;
 import segment.Segment;
 import util.MetricToPixel;
@@ -16,11 +14,9 @@ import util.MetricToPixel;
  * @author bublm1
  */
 @SuppressWarnings("serial")
-public abstract class SegmentPanel extends JPanel {
+public abstract class SegmentPanel extends AbstractPanel<Segment> {
 
-	protected Segment segment;
-	protected int trackOffset;
-	protected int fastLaneOffset; 
+	protected Segment segment = super.object;
 	
 	/**
 	 * @author bublm1
@@ -28,13 +24,13 @@ public abstract class SegmentPanel extends JPanel {
 	 * @param size
 	 * @param fastLaneOffset
 	 */
-	public SegmentPanel(Segment segment, int numberOfLanes, int fastLaneOffset, int trackOffset) {
-		this.segment = segment;
-		this.fastLaneOffset = fastLaneOffset;
-		this.trackOffset = trackOffset;
+	public SegmentPanel(Segment segment, int fastLaneOffset, int trackOffset) {
+		super(segment, fastLaneOffset, trackOffset);
 	}
 	
 	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		
 		g.setColor(new Color(255, 127, 127, 66));
 		
 		int xPosition = MetricToPixel.scale(this.segment.start());

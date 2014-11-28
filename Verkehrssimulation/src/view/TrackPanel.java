@@ -47,15 +47,15 @@ public class TrackPanel extends JPanel {
 			this.lanePanels.add(new LanePanel(lane, fastLaneOffset, trackOffset));
 			
 			for (Segment segment : lane.getSegments(VelocitySegment.class)) {
-				this.segmentPanels.add(new VelocitySegmentPanel(segment, this.track.getLanes().size(), fastLaneOffset, trackOffset));
+				this.segmentPanels.add(new VelocitySegmentPanel(segment, fastLaneOffset, trackOffset));
 			}
 			
 			for (Segment segment : lane.getSegments(PassableSegment.class)) {
-				this.segmentPanels.add(new PassableSegmentPanel(segment, this.track.getLanes().size(), fastLaneOffset, trackOffset));
+				this.segmentPanels.add(new PassableSegmentPanel(segment, fastLaneOffset, trackOffset));
 			}
 			
 			for (Locator<Integer, Car> carLocator : lane) {
-				this.carPanels.add(new CarPanel(carLocator.element(), this.track.getLanes().size(), trackOffset));
+				this.carPanels.add(new CarPanel(carLocator.element(), fastLaneOffset, trackOffset, this.track.getLanes().size() - 1));
 			}
 		}
 	}
@@ -121,7 +121,7 @@ public class TrackPanel extends JPanel {
 			}
 		}
 		for (Car newCar : this.track.getNewCars()) {
-			this.carPanels.add(new CarPanel(newCar, this.track.getLanes().size(), trackOffset));
+			this.carPanels.add(new CarPanel(newCar, this.track.getLanes().size(), trackOffset, this.track.getLanes().size() - 1));
 		}
 		this.track.clearNewCars();
 		this.track.clearOldCars();
@@ -135,6 +135,7 @@ public class TrackPanel extends JPanel {
 		for (CarPanel carPanel : this.carPanels) {
 			carPanel.performSimStep(simStep);
 		}
+		
 		this.repaint();
 	}
 
