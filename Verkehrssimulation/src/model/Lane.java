@@ -3,6 +3,7 @@ package model;
 import java.util.Iterator;
 import java.util.List;
 
+import segment.MeasuringSegment;
 import segment.PassableSegment;
 import segment.Segment;
 import segment.SegmentCollection;
@@ -85,6 +86,15 @@ public class Lane implements Iterable<Locator<Integer, Car>> {
 			return ((VelocitySegment)foundSegment).getMaxVelocity();
 		} else {
 			return maxVelocity;			
+		}
+	}
+	
+	public boolean isMeasurable(int position){
+		Segment foundSegment = this.getSegmentAt(position, MeasuringSegment.class);
+		if (foundSegment != null){
+			return true;
+		} else {
+			return false;
 		}
 	}
 

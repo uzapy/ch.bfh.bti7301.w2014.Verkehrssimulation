@@ -4,7 +4,9 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import segment.MeasuringSegment;
 import segment.PassableSegment;
 import segment.Segment;
 import segment.VelocitySegment;
@@ -49,6 +51,10 @@ public class Nagel_Schreckenberg_Simulation {
 		Segment notPassableSegment1 = new PassableSegment(20, 120, false, true);
 		Segment notPassableSegment2 = new PassableSegment(20, 120, false, false);
 		
+		Segment measureSegment0 = new MeasuringSegment(150, 180);
+		Segment measureSegment1 = new MeasuringSegment(150, 180);
+		Segment measureSegment2 = new MeasuringSegment(150, 180);
+		
 		lane0.addSegment(velocitySegment0);
 		lane1.addSegment(velocitySegment1);
 		lane2.addSegment(velocitySegment2);
@@ -56,12 +62,17 @@ public class Nagel_Schreckenberg_Simulation {
 		lane0.addSegment(notPassableSegment0);
 		lane1.addSegment(notPassableSegment1);
 		lane2.addSegment(notPassableSegment2);
+		
+		lane0.addSegment(measureSegment0);
+		lane1.addSegment(measureSegment0);
+		lane2.addSegment(measureSegment0);
 	}
 
 	public void performStep() {
 		for (Lane lane : this.track.getLanes()) {
 			for(Locator<Integer, Car> carLocator : lane) {
 				Car car = carLocator.element();
+				List<Segment> foundSegments = lane.getSegments(MeasuringSegment.class);
 				moveCar(lane, car);				
 			}
 			
