@@ -31,7 +31,7 @@ public class ControlPanel extends JPanel implements ActionListener, ChangeListen
 	private Button buttonZoomOut = new Button("-");
 	private Button buttonLeft = new Button("<");
 	private Button buttonRight = new Button(">");
-	private JSlider fpsSlider = new JSlider(1, 60, 30);
+	private JSlider fpsSlider = new JSlider(15, 60, 37);
 	
 	/**
 	 * @author bublm1
@@ -57,16 +57,22 @@ public class ControlPanel extends JPanel implements ActionListener, ChangeListen
 		
 		// Parameter Panel
 		JPanel parameterPanel = new JPanel();
-		BoxLayout parameterLayout = new BoxLayout(parameterPanel, BoxLayout.Y_AXIS);
+		BoxLayout parameterLayout = new BoxLayout(parameterPanel, BoxLayout.X_AXIS);
 		parameterPanel.setLayout(parameterLayout);
-		fpsSlider.addChangeListener(this);
+		
 		Hashtable<Integer, JLabel> labelTable = new Hashtable<Integer, JLabel>();
-		labelTable.put( new Integer( 1 ), new JLabel("1") );
-		labelTable.put( new Integer( 30 ), new JLabel("Frames per Second") );
-		labelTable.put( new Integer( 60 ), new JLabel("60") );
+		labelTable.put(15, new JLabel("doppelt"));
+		labelTable.put(37, new JLabel("Geschwindigkeit"));
+		labelTable.put(60, new JLabel("halb"));
+		
+		fpsSlider.setPreferredSize(new Dimension(300, 40));
+		fpsSlider.addChangeListener(this);
 		fpsSlider.setLabelTable(labelTable);
 		fpsSlider.setPaintLabels(true);
+		
 		parameterPanel.add(fpsSlider);
+		
+		// Measurment Panel
 		
 		// Button
 		Button button = new Button("Click me!");
