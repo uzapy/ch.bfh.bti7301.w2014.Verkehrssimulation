@@ -9,7 +9,7 @@ public class MeasuringSegment implements Segment {
 	
 	private int start;
 	private int end;
-	private int trafficDensity;
+	private float trafficDensity;
 	private int trafficFlow;
 	ArrayList<Car> carsOnSegment = new ArrayList<Car>();
 	
@@ -32,16 +32,19 @@ public class MeasuringSegment implements Segment {
 	
 	public void register(Car car){
 		if(!(carsOnSegment.contains(car))){
-			carsOnSegment.add(car);		
+			calculateTrafficDensity();
+			carsOnSegment.add(car);	
 		}	
 	}
 	
 	public void deRegister(Car car){
-		calculateTrafficDensity();
-		carsOnSegment.remove(car);
+		if(carsOnSegment.contains(car)){
+			calculateTrafficDensity();
+			carsOnSegment.remove(car);	
+		}
 	}
 
-	public int getTrafficDensity() {
+	public float getTrafficDensity() {
 		return trafficDensity;
 	}
 
@@ -50,7 +53,8 @@ public class MeasuringSegment implements Segment {
 	}
 	
 	private void calculateTrafficDensity(){
-		trafficDensity = carsOnSegment.size() / (this.end - this.start);
+		trafficDensity = (float)(carsOnSegment.size() / (float)(this.end - this.start))*100;
+		System.out.println(trafficDensity);
 	}
 	
 	private void calculateTrafficFlow(){

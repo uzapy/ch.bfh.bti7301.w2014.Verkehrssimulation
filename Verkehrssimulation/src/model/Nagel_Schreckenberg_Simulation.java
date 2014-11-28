@@ -51,9 +51,9 @@ public class Nagel_Schreckenberg_Simulation {
 		Segment notPassableSegment1 = new PassableSegment(20, 120, false, true);
 		Segment notPassableSegment2 = new PassableSegment(20, 120, false, false);
 		
-		Segment measureSegment0 = new MeasuringSegment(150, 180);
-		Segment measureSegment1 = new MeasuringSegment(150, 180);
-		Segment measureSegment2 = new MeasuringSegment(150, 180);
+		Segment measureSegment0 = new MeasuringSegment(150, 200);
+		Segment measureSegment1 = new MeasuringSegment(150, 200);
+		Segment measureSegment2 = new MeasuringSegment(150, 200);
 		
 		lane0.addSegment(velocitySegment0);
 		lane1.addSegment(velocitySegment1);
@@ -72,7 +72,11 @@ public class Nagel_Schreckenberg_Simulation {
 		for (Lane lane : this.track.getLanes()) {
 			for(Locator<Integer, Car> carLocator : lane) {
 				Car car = carLocator.element();
-				List<Segment> foundSegments = lane.getSegments(MeasuringSegment.class);
+				if(lane.isMeasurable(car.getPosition())){
+					lane.includeInMeasurement(car);
+				} else {
+					lane.excludeFromMeasurement(car);
+				}
 				moveCar(lane, car);				
 			}
 			

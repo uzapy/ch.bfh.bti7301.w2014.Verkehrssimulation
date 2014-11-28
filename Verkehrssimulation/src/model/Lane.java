@@ -97,7 +97,21 @@ public class Lane implements Iterable<Locator<Integer, Car>> {
 			return false;
 		}
 	}
+	
+	public void includeInMeasurement(Car car){
+		MeasuringSegment foundSegment = (MeasuringSegment) this.getSegmentAt(car.getPosition(), MeasuringSegment.class);
+		if (foundSegment != null){
+			foundSegment.register(car);
+		}
+	}
 
+	public void excludeFromMeasurement(Car car){
+		MeasuringSegment foundSegment = (MeasuringSegment) this.getSegmentAt(car.getPosition(), MeasuringSegment.class);
+		if (foundSegment != null){
+			foundSegment.deRegister(car);
+		}
+	}
+	
 	public int getLength() {
 		return length;
 	}
