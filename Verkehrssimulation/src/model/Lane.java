@@ -106,7 +106,7 @@ public class Lane implements Iterable<Locator<Integer, Car>> {
 	}
 
 	public void excludeFromMeasurement(Car car){
-		MeasuringSegment foundSegment = (MeasuringSegment) this.getSegmentAt(car.getPosition(), MeasuringSegment.class);
+		MeasuringSegment foundSegment = (MeasuringSegment) this.getSegmentAt(180, MeasuringSegment.class);
 		if (foundSegment != null){
 			foundSegment.deRegister(car);
 		}

@@ -38,10 +38,7 @@ public class MeasuringSegment implements Segment {
 	}
 	
 	public void deRegister(Car car){
-		if(carsOnSegment.contains(car)){
-			calculateTrafficDensity();
 			carsOnSegment.remove(car);	
-		}
 	}
 
 	public float getTrafficDensity() {
@@ -54,7 +51,7 @@ public class MeasuringSegment implements Segment {
 	
 	private void calculateTrafficDensity(){
 		trafficDensity = (float)(carsOnSegment.size() / (float)(this.end - this.start))*100;
-		System.out.println(trafficDensity);
+		System.out.println("Number of Cars: " + carsOnSegment.size() + " Density: " + trafficDensity);
 	}
 	
 	private void calculateTrafficFlow(){
