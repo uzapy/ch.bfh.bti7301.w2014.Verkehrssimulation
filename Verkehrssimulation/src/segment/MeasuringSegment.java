@@ -55,6 +55,12 @@ public class MeasuringSegment implements Segment {
 	}
 	
 	private void calculateTrafficFlow(){
+		int combinedSpeed = 0;
+		for(Car car : carsOnSegment){
+			combinedSpeed += car.getSpeed();
+		}
+		trafficFlow = combinedSpeed / (this.end + this.start);
+		
 		
 	}
 
