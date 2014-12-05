@@ -4,7 +4,6 @@
 package view.model;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
@@ -46,7 +45,6 @@ public class VelocitySegmentPanel extends SegmentPanel {
 		int yStringPosition = yPosition + (int)((float)2.75 * (float)MetricToPixel.SCALING_FACTOR);
 		
 		g.setColor(Color.BLACK);
-		g.setFont(new Font("Arial", Font.PLAIN, 2 * MetricToPixel.SCALING_FACTOR)); 
 		g.drawString(Integer.toString(maxVelocity), xStringPosition, yStringPosition);
 	}
 

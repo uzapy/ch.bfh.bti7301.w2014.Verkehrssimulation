@@ -4,7 +4,6 @@
 package view.model;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
@@ -47,7 +46,7 @@ public class LanePanel extends AbstractPanel<Lane>  {
 		g.drawImage(MAX, xPosition, yPosition, 4 * MetricToPixel.SCALING_FACTOR, 4 * MetricToPixel.SCALING_FACTOR, this);
 		
 		g.setColor(Color.BLACK);
-		g.setFont(new Font("Arial", Font.PLAIN, 2 * MetricToPixel.SCALING_FACTOR)); 
+//		g.setFont(new Font("Arial", Font.PLAIN, 2 * MetricToPixel.SCALING_FACTOR)); 
 		
 		int xStringPosition = xPosition + MetricToPixel.SCALING_FACTOR;
 		int yStringPosition = yPosition + (int)((float)2.75 * (float)MetricToPixel.SCALING_FACTOR);
