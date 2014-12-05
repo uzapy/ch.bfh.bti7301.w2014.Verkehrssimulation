@@ -4,6 +4,7 @@
 package view.model;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.util.LinkedList;
 import java.util.Optional;
@@ -72,7 +73,7 @@ public class TrackPanel extends JPanel {
 
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		
+		g.setFont(new Font("Arial", Font.PLAIN, 2 * MetricToPixel.SCALING_FACTOR)); 
 		g.translate(MetricToPixel.scale(ParameterPool.VIEW_OFFSET), 0);
 		
 		g.setColor(Color.BLACK);
@@ -118,8 +119,11 @@ public class TrackPanel extends JPanel {
 			xEnd = MetricToPixel.scale(i * markerInterval);
 			
 			g.drawLine(xStart, yStart, xEnd, yEnd);
-			g.drawString(Integer.toString(i * markerInterval),
-					MetricToPixel.scale(i * markerInterval) + 2, MetricToPixel.scale(trackOffset) - 2);
+			
+			int xStringPosition = MetricToPixel.scale(i * markerInterval) + 1;
+			int yStringPosition = MetricToPixel.scale(trackOffset) - 1;
+			
+			g.drawString(Integer.toString(i * markerInterval), xStringPosition, yStringPosition);
 		}
 	}
 
