@@ -4,7 +4,6 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import segment.MeasuringSegment;
 import segment.OpenToTrafficSegment;
@@ -53,10 +52,10 @@ public class Nagel_Schreckenberg_Simulation {
 		Segment notPassableSegment2 = new PassableSegment(20, 120, false, false);
 		
 		Segment measureSegment0 = new MeasuringSegment(150, 180);
-		Segment measureSegment1 = new MeasuringSegment(150, 200);
-		Segment measureSegment2 = new MeasuringSegment(150, 200);
+//		Segment measureSegment1 = new MeasuringSegment(150, 200);
+//		Segment measureSegment2 = new MeasuringSegment(150, 200);
 		
-		Segment notOpenToTrafficSegment1 = new OpenToTrafficSegment(200,300, false);
+		Segment notOpenToTrafficSegment1 = new OpenToTrafficSegment(300,500, false);
 		
 		lane0.addSegment(velocitySegment0);
 		lane1.addSegment(velocitySegment1);

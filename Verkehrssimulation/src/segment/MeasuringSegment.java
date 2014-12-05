@@ -2,6 +2,7 @@ package segment;
 
 import java.util.ArrayList;
 
+import util.MessagePool;
 import model.Car;
 
 public class MeasuringSegment implements Segment {
@@ -10,7 +11,7 @@ public class MeasuringSegment implements Segment {
 	private int start;
 	private int end;
 	private float trafficDensity;
-	private int trafficFlow;
+	private float trafficFlow;
 	ArrayList<Car> carsOnSegment = new ArrayList<Car>();
 	
 	public MeasuringSegment(int start, int end){
@@ -20,48 +21,40 @@ public class MeasuringSegment implements Segment {
 
 	@Override
 	public int start() {
-		// TODO Auto-generated method stub
 		return this.start;
 	}
 
 	@Override
 	public int end() {
-		// TODO Auto-generated method stub
 		return this.end;
 	}
 	
-	public void register(Car car){
-		if(!(carsOnSegment.contains(car))){
+	public void register(Car car) {
+		if (!(carsOnSegment.contains(car))) {
+			carsOnSegment.add(car);
 			calculateTrafficDensity();
-			carsOnSegment.add(car);	
-		}	
-	}
-	
-	public void deRegister(Car car){
-			carsOnSegment.remove(car);	
+			calculateTrafficFlow();
+			MessagePool.sendTrafficMeasurments(trafficDensity, trafficFlow);
+		}
 	}
 
-	public float getTrafficDensity() {
-		return trafficDensity;
-	}
-
-	public int getTrafficFlow() {
-		return trafficFlow;
-	}
-	
-	private void calculateTrafficDensity(){
-		trafficDensity = (float)(carsOnSegment.size() / (float)(this.end - this.start))*100;
-		System.out.println("Number of Cars: " + carsOnSegment.size() + " Density: " + trafficDensity);
+	public void deRegister(Car car) {
+		carsOnSegment.remove(car);
+		calculateTrafficDensity();
+		calculateTrafficFlow();
+		MessagePool.sendTrafficMeasurments(trafficDensity, trafficFlow);
 	}
 	
-	private void calculateTrafficFlow(){
+	private void calculateTrafficDensity() {
+		trafficDensity = (float) (carsOnSegment.size() / (float) (this.end - this.start)) * 100;
+	}
+	
+	private void calculateTrafficFlow() {
 		int combinedSpeed = 0;
-		for(Car car : carsOnSegment){
+		for (Car car : carsOnSegment) {
 			combinedSpeed += car.getSpeed();
 		}
-		trafficFlow = combinedSpeed / (this.end + this.start);
-		
-		
+		trafficFlow = (float) combinedSpeed / (float) (this.end + this.start);
 	}
 
 }

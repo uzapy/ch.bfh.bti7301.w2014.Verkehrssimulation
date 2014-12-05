@@ -43,7 +43,7 @@ public class LanePanel extends AbstractPanel<Lane>  {
 		
 		g.fillRect(xPosition, yPosition, length, width);
 		// TODO: add gschtrichleti linie
-		g.drawImage(MAX, xPosition, yPosition, 4 * MetricToPixel.SCALING_FACTOR, 4 * MetricToPixel.SCALING_FACTOR, this);
+		g.drawImage(MAX, xPosition, yPosition, MetricToPixel.getImageSize(), MetricToPixel.getImageSize(), this);
 		
 		g.setColor(Color.BLACK);
 //		g.setFont(new Font("Arial", Font.PLAIN, 2 * MetricToPixel.SCALING_FACTOR)); 

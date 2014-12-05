@@ -39,7 +39,7 @@ public class VelocitySegmentPanel extends SegmentPanel {
 		int xPosition = MetricToPixel.scale(this.segment.start());
 		int yPosition = MetricToPixel.scale(this.trackOffset + Lane.WIDTH * this.fastLaneOffset);
 		
-		g.drawImage(MAX, xPosition, yPosition, 4 * MetricToPixel.SCALING_FACTOR, 4 * MetricToPixel.SCALING_FACTOR, this);
+		g.drawImage(MAX, xPosition, yPosition, MetricToPixel.getImageSize(), MetricToPixel.getImageSize(), this);
 		
 		int xStringPosition = xPosition + MetricToPixel.SCALING_FACTOR;
 		int yStringPosition = yPosition + (int)((float)2.75 * (float)MetricToPixel.SCALING_FACTOR);

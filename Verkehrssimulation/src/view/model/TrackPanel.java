@@ -73,7 +73,7 @@ public class TrackPanel extends JPanel {
 
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		g.setFont(new Font("Arial", Font.PLAIN, 2 * MetricToPixel.SCALING_FACTOR)); 
+		g.setFont(new Font("Arial", Font.PLAIN, MetricToPixel.getFontSize())); 
 		g.translate(MetricToPixel.scale(ParameterPool.VIEW_OFFSET), 0);
 		
 		g.setColor(Color.BLACK);

@@ -18,6 +18,8 @@ import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import util.IMeasurementListener;
+import util.MessagePool;
 import util.MetricToPixel;
 import util.ParameterPool;
 
@@ -25,22 +27,58 @@ import util.ParameterPool;
  * @author bublm1
  */
 @SuppressWarnings("serial")
-public class ControlPanel extends JPanel implements ActionListener, ChangeListener {
+public class ControlPanel extends JPanel implements ActionListener, ChangeListener, IMeasurementListener {
 	
 	private Button buttonZoomIn = new Button("+");
 	private Button buttonZoomOut = new Button("-");
 	private Button buttonLeft = new Button("<");
 	private Button buttonRight = new Button(">");
 	private JSlider fpsSlider = new JSlider(15, 60, 37);
+	private Label trafficDensityLabel = new Label("Verkehrsdichte: 0");
+	private Label trafficFlowLabel = new Label("Verkehrsfluss: 0");
 	
 	/**
 	 * @author bublm1
 	 */
 	public ControlPanel() {
+		// Control-Layout
+		BorderLayout controlLayout = new BorderLayout();
+		this.setLayout(controlLayout);
+		
 		// Navigation Panel
 		JPanel navigationPanel = new JPanel();
 		BorderLayout navigationLayout = new BorderLayout();
 		navigationPanel.setLayout(navigationLayout);
+		createNavigationPanel(navigationPanel);
+		
+		// Parameter Panel
+		JPanel parameterPanel = new JPanel();
+		BoxLayout parameterLayout = new BoxLayout(parameterPanel, BoxLayout.X_AXIS);
+		parameterPanel.setLayout(parameterLayout);
+		createParameterPanel(parameterPanel);
+		
+		// Measurment Panel
+		JPanel measurmentPanel = new JPanel();
+		BoxLayout measurmentLayout = new BoxLayout(measurmentPanel, BoxLayout.Y_AXIS);
+		measurmentPanel.setLayout(measurmentLayout);
+		createMeasurmentPanel(measurmentPanel);
+		
+		// Button
+		Button button = new Button("Click me!");
+
+		this.add(navigationPanel, BorderLayout.WEST);
+		this.add(parameterPanel, BorderLayout.CENTER);
+		this.add(measurmentPanel, BorderLayout.EAST);
+		this.add(button, BorderLayout.SOUTH);
+		
+		MessagePool.addMeasurementsListener(this);
+	}
+
+	/**
+	 * @author bublm1
+	 * @param navigationPanel
+	 */
+	private void createNavigationPanel(JPanel navigationPanel) {
 		buttonZoomIn.addActionListener(this);
 		buttonRight.addActionListener(this);
 		buttonRight.setPreferredSize(new Dimension(30, 70));
@@ -54,12 +92,13 @@ public class ControlPanel extends JPanel implements ActionListener, ChangeListen
 		navigationPanel.add(buttonZoomOut, BorderLayout.SOUTH);
 		navigationPanel.add(buttonLeft, BorderLayout.WEST);
 		navigationPanel.add(new Label("NAV"), BorderLayout.CENTER);
-		
-		// Parameter Panel
-		JPanel parameterPanel = new JPanel();
-		BoxLayout parameterLayout = new BoxLayout(parameterPanel, BoxLayout.X_AXIS);
-		parameterPanel.setLayout(parameterLayout);
-		
+	}
+	
+	/**
+	 * @author bublm1
+	 * @param parameterPanel
+	 */
+	private void createParameterPanel(JPanel parameterPanel) {
 		Hashtable<Integer, JLabel> labelTable = new Hashtable<Integer, JLabel>();
 		labelTable.put(15, new JLabel("doppelt"));
 		labelTable.put(37, new JLabel("Geschwindigkeit"));
@@ -71,19 +110,17 @@ public class ControlPanel extends JPanel implements ActionListener, ChangeListen
 		fpsSlider.setPaintLabels(true);
 		
 		parameterPanel.add(fpsSlider);
-		
-		// Measurment Panel
-		
-		// Button
-		Button button = new Button("Click me!");
-		
-		// Bottom Border-Layout
-		BorderLayout controlLayout = new BorderLayout();
-		this.setLayout(controlLayout);
-
-		this.add(navigationPanel, BorderLayout.WEST);
-		this.add(parameterPanel, BorderLayout.CENTER);
-		this.add(button, BorderLayout.SOUTH);	
+	}
+	
+	/**
+	 * @author bublm1
+	 * @param measurmentPanel
+	 */
+	private void createMeasurmentPanel(JPanel measurmentPanel) {
+		trafficDensityLabel.setPreferredSize(new Dimension(200, 30));
+		trafficFlowLabel.setPreferredSize(new Dimension(200, 30));
+		measurmentPanel.add(trafficDensityLabel);
+		measurmentPanel.add(trafficFlowLabel);
 	}
 	
 	/* (non-Javadoc)
@@ -117,5 +154,14 @@ public class ControlPanel extends JPanel implements ActionListener, ChangeListen
 		if (sourceSlider == this.fpsSlider && !sourceSlider.getValueIsAdjusting()) {
 			ParameterPool.FRAMES_PER_SECOND = (int)sourceSlider.getValue();
 		}
+	}
+
+	/* (non-Javadoc)
+	 * @see util.IMeasurementListener#updateMeasurements(float, float)
+	 */
+	@Override
+	public void updateMeasurements(float trafficDensity, float trafficFlow) {
+		trafficDensityLabel.setText("Verkehrsdichte: " + trafficDensity);
+		trafficFlowLabel.setText("Verkehrsfluss: " + trafficFlow);
 	}
 }

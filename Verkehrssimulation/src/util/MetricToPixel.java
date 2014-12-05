@@ -26,6 +26,22 @@ public class MetricToPixel {
 	public static int scale(float distance) {
 		return (int) (distance * (float)MetricToPixel.SCALING_FACTOR);
 	}
+	
+	/**
+	 * @author bublm1
+	 * @return
+	 */
+	public static int getImageSize() {
+		return 4 * MetricToPixel.SCALING_FACTOR;
+	}
+	
+	/**
+	 * @author bublm1
+	 * @return
+	 */
+	public static int getFontSize() {
+		return 2 * MetricToPixel.SCALING_FACTOR;
+	}
 
 	/**
 	 * @author bublm1

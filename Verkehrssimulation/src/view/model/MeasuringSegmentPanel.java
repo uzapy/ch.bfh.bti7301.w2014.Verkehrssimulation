@@ -36,7 +36,7 @@ public class MeasuringSegmentPanel extends SegmentPanel {
 		int xPosition = MetricToPixel.scale(this.segment.start());
 		int yPosition = MetricToPixel.scale(this.trackOffset + Lane.WIDTH * this.fastLaneOffset);
 		
-		g.drawImage(MEASUREMENT, xPosition, yPosition, 4 * MetricToPixel.SCALING_FACTOR, 4 * MetricToPixel.SCALING_FACTOR, this);
+		g.drawImage(MEASUREMENT, xPosition, yPosition, MetricToPixel.getImageSize(), MetricToPixel.getImageSize(), this);
 	}
 
 	/* (non-Javadoc)
