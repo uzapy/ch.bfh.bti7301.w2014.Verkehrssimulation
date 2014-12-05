@@ -229,21 +229,28 @@ public class Nagel_Schreckenberg_Simulation {
 		boolean hasCars = lane.iterator().hasNext();
 
 		if (hasCars) {
-			Car closestAfter = lane.getClosestAfter(car);
+			Car closestAfter = lane.getClosestAfter(car);;
+			Car closestBefore;
+			int maxNextPosition;
+			int minNextPosition;
+			
 			if (closestAfter == null) {
-				closestAfter = lane.getFirstCar();
-			}
-
-			Car closestBefore = lane.getPreviousCar(closestAfter);
-			if (closestBefore == null) {
 				closestBefore = lane.getClosestBefore(car);
-				if (closestBefore == null) {
-					closestBefore = lane.getLastCar();
-				}
+			}else{
+				closestBefore = lane.getPreviousCar(closestAfter);
 			}
 
-			int maxNextPosition = closestAfter.getBackPosition() - securityDistance;
-			int minNextPosition = closestBefore.getPosition() + closestBefore.getSpeed() * 2 + this.speedDelta + securityDistance;
+			if(closestAfter != null){
+				maxNextPosition = closestAfter.getBackPosition() - securityDistance;	
+			} else {
+				maxNextPosition = lane.getLength();
+			}
+			if(closestBefore != null){
+				minNextPosition = closestBefore.getPosition() + closestBefore.getSpeed() * 2 + this.speedDelta + securityDistance;	
+			}else{
+				minNextPosition = car.getPosition();
+			}
+			
 			int currentCarTemporaryNextBackPosition = car.getBackPosition() + calculateNextSpeed(lane, car) - securityDistance;
 			int gapLength = maxNextPosition - minNextPosition;
 
@@ -298,10 +305,10 @@ public class Nagel_Schreckenberg_Simulation {
 			}
 		}
 		
-		if(!lane.isOpenToTraffic(car.getNextPosition())){
+		if(!(car.getLane().isOpenToTraffic(car.getPosition()))){
 			speed = 0;
 		}
-
+		
 		return speed;
 	}
 	
@@ -326,6 +333,7 @@ public class Nagel_Schreckenberg_Simulation {
 		} else if (availableSpace < speed) {
 			speed = availableSpace;
 		}
+		
 		return speed;
 	}
 
