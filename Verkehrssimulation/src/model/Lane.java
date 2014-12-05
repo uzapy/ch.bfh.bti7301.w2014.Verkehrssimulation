@@ -4,6 +4,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import segment.MeasuringSegment;
+import segment.OpenToTrafficSegment;
 import segment.PassableSegment;
 import segment.Segment;
 import segment.SegmentCollection;
@@ -65,6 +66,15 @@ public class Lane implements Iterable<Locator<Integer, Car>> {
 			return ((PassableSegment)foundSegment).isPassableRight();
 		} else {
 			return isPassableRight;			
+		}
+	}
+	
+	public boolean isOpenToTraffic(int position){
+		Segment foundSegment = this.getSegmentAt(position, OpenToTrafficSegment.class);
+		if(foundSegment != null){
+			return ((OpenToTrafficSegment)foundSegment).isOpenToTraffic();
+		} else {
+			return true;
 		}
 	}
 	
