@@ -43,11 +43,11 @@ public class PassableSegmentPanel extends SegmentPanel {
 		int yPosition = MetricToPixel.scale(this.trackOffset + Lane.WIDTH * this.fastLaneOffset);
 		
 		if (!isPassableLeft && !isPassableRight) {
-			g.drawImage(STRAIGHT, xPosition, yPosition + 5, 20, 20, this);
+			g.drawImage(STRAIGHT, xPosition, yPosition, 4 * MetricToPixel.SCALING_FACTOR, 4 * MetricToPixel.SCALING_FACTOR, this);
 		} else if (isPassableLeft) {
-			g.drawImage(STRAIGHT_LEFT, xPosition, yPosition + 5, 20, 20, this);
+			g.drawImage(STRAIGHT_LEFT, xPosition, yPosition, 4 * MetricToPixel.SCALING_FACTOR, 4 * MetricToPixel.SCALING_FACTOR, this);
 		} else if (isPassableRight) {
-			g.drawImage(STRAIGHT_RIGHT, xPosition, yPosition + 5, 20, 20, this);
+			g.drawImage(STRAIGHT_RIGHT, xPosition, yPosition, 4 * MetricToPixel.SCALING_FACTOR, 4 * MetricToPixel.SCALING_FACTOR, this);
 		}
 	}
 
