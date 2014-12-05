@@ -3,6 +3,7 @@
  */
 package view.model;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
@@ -51,4 +52,11 @@ public class PassableSegmentPanel extends SegmentPanel {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see view.model.SegmentPanel#getSegmentColor()
+	 */
+	@Override
+	protected Color getSegmentColor() {
+		return new Color(127, 255, 127, 50);
+	}
 }

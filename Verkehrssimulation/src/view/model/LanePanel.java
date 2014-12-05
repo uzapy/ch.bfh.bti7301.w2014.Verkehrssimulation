@@ -49,9 +49,9 @@ public class LanePanel extends AbstractPanel<Lane>  {
 		g.setColor(Color.BLACK);
 		g.setFont(new Font("Arial", Font.PLAIN, 2 * MetricToPixel.SCALING_FACTOR)); 
 		
-		g.drawString(Integer.toString(
-				lane.getMaxVelocity(0)),
-				xPosition + MetricToPixel.SCALING_FACTOR,
-				yPosition + (int)((float)2.75 * (float)MetricToPixel.SCALING_FACTOR));
+		int xStringPosition = xPosition + MetricToPixel.SCALING_FACTOR;
+		int yStringPosition = yPosition + (int)((float)2.75 * (float)MetricToPixel.SCALING_FACTOR);
+		
+		g.drawString(Integer.toString(lane.getMaxVelocity(0)), xStringPosition, yStringPosition);
 	}
 }

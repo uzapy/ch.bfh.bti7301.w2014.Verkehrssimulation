@@ -13,6 +13,8 @@ import javax.swing.JPanel;
 import model.Car;
 import model.Lane;
 import model.Track;
+import segment.MeasuringSegment;
+import segment.OpenToTrafficSegment;
 import segment.PassableSegment;
 import segment.Segment;
 import segment.VelocitySegment;
@@ -52,6 +54,14 @@ public class TrackPanel extends JPanel {
 			
 			for (Segment segment : lane.getSegments(PassableSegment.class)) {
 				this.segmentPanels.add(new PassableSegmentPanel(segment, fastLaneOffset, trackOffset));
+			}
+			
+			for (Segment segment : lane.getSegments(MeasuringSegment.class)) {
+				this.segmentPanels.add(new MeasuringSegmentPanel(segment, fastLaneOffset, trackOffset));
+			}
+			
+			for (Segment segment : lane.getSegments(OpenToTrafficSegment.class)) {
+				this.segmentPanels.add(new OpenToTrafficSegmentPanel(segment, fastLaneOffset, trackOffset));
 			}
 			
 			for (Locator<Integer, Car> carLocator : lane) {

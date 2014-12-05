@@ -86,6 +86,9 @@ public class SegmentCollection {
 	 */
 	@SuppressWarnings("rawtypes")
 	public List<Segment> getSegments(Class segmentClass) {
+		if (!this.segments.containsKey(segmentClass)) {
+			segments.put(segmentClass, new ArrayList<Segment>());
+		}
 		return this.segments.get(segmentClass);
 	}
 }

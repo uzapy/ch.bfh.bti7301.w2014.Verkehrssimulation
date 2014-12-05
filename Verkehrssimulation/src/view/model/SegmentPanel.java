@@ -31,7 +31,7 @@ public abstract class SegmentPanel extends AbstractPanel<Segment> {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		
-		g.setColor(new Color(255, 127, 127, 66));
+		g.setColor(getSegmentColor());
 		
 		int xPosition = MetricToPixel.scale(this.segment.start());
 		int yPosition = MetricToPixel.scale(this.trackOffset + Lane.WIDTH * this.fastLaneOffset);
@@ -40,4 +40,6 @@ public abstract class SegmentPanel extends AbstractPanel<Segment> {
 		
 		g.fillRect(xPosition, yPosition, length, width);
 	}
+
+	protected abstract Color getSegmentColor();
 }
