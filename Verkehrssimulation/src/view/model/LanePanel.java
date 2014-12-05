@@ -4,9 +4,12 @@
 package view.model;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 
 import model.Lane;
+import resources.Resources;
 import util.MetricToPixel;
 
 /**
@@ -15,6 +18,7 @@ import util.MetricToPixel;
 @SuppressWarnings("serial")
 public class LanePanel extends AbstractPanel<Lane>  {
 	
+	public static BufferedImage MAX = Resources.getImage("max");
 	private Lane lane = super.object;
 
 	/**
@@ -40,8 +44,14 @@ public class LanePanel extends AbstractPanel<Lane>  {
 		
 		g.fillRect(xPosition, yPosition, length, width);
 		// TODO: add gschtrichleti linie
-
-		g.setColor(Color.MAGENTA);
-		g.drawString(Integer.toString(lane.getMaxVelocity(0)), xPosition + 10, yPosition + 20);
+		g.drawImage(MAX, xPosition, yPosition, 4 * MetricToPixel.SCALING_FACTOR, 4 * MetricToPixel.SCALING_FACTOR, this);
+		
+		g.setColor(Color.BLACK);
+		g.setFont(new Font("Arial", Font.PLAIN, 2 * MetricToPixel.SCALING_FACTOR)); 
+		
+		g.drawString(Integer.toString(
+				lane.getMaxVelocity(0)),
+				xPosition + MetricToPixel.SCALING_FACTOR,
+				yPosition + (int)((float)2.75 * (float)MetricToPixel.SCALING_FACTOR));
 	}
 }
