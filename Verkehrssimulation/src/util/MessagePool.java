@@ -28,7 +28,7 @@ public class MessagePool extends Observable {
 	 * @author bublm1
 	 * @param controlPanel
 	 */
-	public static void addMeasurementsListener(IMeasurementListener measurementListener) {
+	public static void addMeasurementListener(IMeasurementListener measurementListener) {
 		measurmentListeners.add(measurementListener);
 	}
 

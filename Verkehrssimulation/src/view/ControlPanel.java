@@ -71,7 +71,7 @@ public class ControlPanel extends JPanel implements ActionListener, ChangeListen
 		this.add(measurmentPanel, BorderLayout.EAST);
 		this.add(button, BorderLayout.SOUTH);
 		
-		MessagePool.addMeasurementsListener(this);
+		MessagePool.addMeasurementListener(this);
 	}
 
 	/**
