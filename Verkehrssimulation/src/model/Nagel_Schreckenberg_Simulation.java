@@ -3,8 +3,6 @@
  */
 package model;
 
-import java.util.ArrayList;
-
 import segment.MeasuringSegment;
 import segment.OpenToTrafficSegment;
 import segment.PassableSegment;
@@ -21,7 +19,6 @@ public class Nagel_Schreckenberg_Simulation {
 	private Track track;
 	private int speedDelta = 3; 				// Standardbeschleunigung in Meter pro Sekunde
 	private int securityDistance = 1;			// Sicherheitsabstand
-	ArrayList<Car> carList = new ArrayList<Car>();
 
 	/**
 	 * @author bublm1
@@ -51,7 +48,7 @@ public class Nagel_Schreckenberg_Simulation {
 		Segment notPassableSegment1 = new PassableSegment(20, 120, false, true);
 		Segment notPassableSegment2 = new PassableSegment(20, 120, false, false);
 		
-		Segment measureSegment0 = new MeasuringSegment(150, 180);
+		Segment measureSegment0 = new MeasuringSegment(130, 190);
 //		Segment measureSegment1 = new MeasuringSegment(150, 200);
 //		Segment measureSegment2 = new MeasuringSegment(150, 200);
 		
@@ -86,7 +83,7 @@ public class Nagel_Schreckenberg_Simulation {
 			
 			// Neues Zufälliges Auto hinzufügen, wenn es Platz hat.
 			if(lane.getFirstCar() == null || (lane.getFirstCar() != null && lane.getFirstCar().getBackPosition() > 10)){
-				Car randomCar = RandomPool.getNewCar(this.track, lane);
+				Car randomCar = RandomPool.getNewCar(lane);
 				randomCar.getLane().addCar(randomCar);
 				randomCar.setNext(randomCar.getSpeed(), false, false);
 				randomCar.setMoved(true);

@@ -8,7 +8,6 @@ import java.util.Random;
 
 import model.Car;
 import model.Lane;
-import model.Track;
 
 /**
  * @author bublm1
@@ -35,14 +34,24 @@ public class RandomPool {
 		return r.nextDouble();
 	}
 
-	public static Car getNewCar(Track track, Lane lane){
+	public static Car getNewCar(Lane lane){
 		int speed = getNewCarSpeed(lane.getMaxVelocity(0));
-		double trödelFactor = r.nextDouble() * (0.8 - 0.2) + 0.2;
+		double trödelFactor = getNewTrödelFactor();
 		int length = getNewCarLength();
-		id++;
-		return new Car(id, speed, trödelFactor, 0, length, lane);
-	}
 
+		return new Car(id++, speed, trödelFactor, 0, length, lane);
+	}
+	
+	public static int getNewCarSpeed(int maxVelocity) {
+		int fastest = maxVelocity;
+		int slowest = 3;
+		return r.nextInt(fastest - slowest) + slowest;
+	}
+	
+	public static double getNewTrödelFactor() {
+		return r.nextDouble() * (0.8 - 0.2) + 0.2;
+	}
+	
 	/**
 	 * @author bublm1
 	 * @return
@@ -52,10 +61,12 @@ public class RandomPool {
 		int longest = 6;
 		return r.nextInt(longest - shortest) + shortest;
 	}
-	
-	public static int getNewCarSpeed(int maxVelocity) {
-		int fastest = maxVelocity;
-		int slowest = 3;
-		return r.nextInt(fastest - slowest) + slowest;
+
+	/**
+	 * @author bublm1
+	 * @return
+	 */
+	public static double getNextGaussian() {
+		return r.nextGaussian();
 	}
 }

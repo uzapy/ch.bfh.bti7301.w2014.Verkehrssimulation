@@ -34,8 +34,8 @@ public class ControlPanel extends JPanel implements ActionListener, ChangeListen
 	private Button buttonLeft = new Button("<");
 	private Button buttonRight = new Button(">");
 	private JSlider fpsSlider = new JSlider(15, 60, 37);
-	private Label trafficDensityLabel = new Label("Verkehrsdichte: 0");
-	private Label trafficFlowLabel = new Label("Verkehrsfluss: 0");
+	private Label trafficDensityLabel = new Label("Verkehrsdichte: 0.0");
+	private Label trafficFlowLabel = new Label("Verkehrsfluss: 0.0");
 	
 	/**
 	 * @author bublm1
