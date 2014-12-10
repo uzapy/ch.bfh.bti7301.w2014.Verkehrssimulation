@@ -19,6 +19,8 @@ import util.MetricToPixel;
 public class OpenToTrafficSegmentPanel extends SegmentPanel {
 	
 	public static BufferedImage MAX = Resources.getImage("max");
+//	public static BufferedImage LEFT = Resources.getImage("left");
+//	public static BufferedImage RIGHT = Resources.getImage("right");
 
 	/**
 	 * @author bublm1
