@@ -1,5 +1,7 @@
 package model;
 
+import java.util.LinkedList;
+
 import skiplist.Locator;
 
 public class Car {
@@ -16,9 +18,10 @@ public class Car {
 	private Lane nextLane;
 	private boolean blinkLeft;
 	private boolean blinkRight;
-	private Locator<Integer, Car> locator;
 	private boolean isMoved;
 	private boolean isToBeDeleted;
+	private Locator<Integer, Car> locator;
+	private LinkedList<Car> memory = new LinkedList<Car>();
 
 	public Car(int id,int speed, double trödelFactor, int position, int length, Lane lane) {
 		this.id = id;
@@ -146,7 +149,7 @@ public class Car {
 		this.nextSpeed = nextSpeed;
 		this.blinkRight = blinkRight;
 		this.blinkLeft = blinkLeft;
-		
+
 		if (blinkRight) {
 			nextLane = lane.getRightLane();
 		} else if (blinkLeft) {
@@ -154,11 +157,24 @@ public class Car {
 		} else {
 			nextLane = lane;
 		}
-		if(position + nextSpeed > nextLane.getLength()){
+		if (position + nextSpeed > nextLane.getLength()) {
 			this.isToBeDeleted = true;
+		} else {
+			nextPosition = (position + nextSpeed);
 		}
-		else{
-			nextPosition = (position + nextSpeed);			
+	}
+
+	/**
+	 * @author bublm1
+	 */
+	public void saveState() {
+		Car previousState = new Car(this.id, this.speed, this.trödelFactor, this.position, this.length, this.lane);
+		previousState.setBlinkLeft(this.blinkLeft);
+		previousState.setBlinkRight(this.blinkRight);
+		
+		this.memory.add(previousState);
+		if (this.memory.size() > 5) {
+			this.memory.removeFirst();
 		}
 	}
 }
