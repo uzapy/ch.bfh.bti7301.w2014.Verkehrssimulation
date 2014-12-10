@@ -223,6 +223,10 @@ public class Nagel_Schreckenberg_Simulation {
 	 */
 	private boolean IsEnoughSpaceBetweenBeforeAndAfter(Lane lane, Car car) {
 		boolean hasCars = lane.iterator().hasNext();
+		
+		if(!(lane.isOpenToTraffic(car.getPosition()))){
+			return false;
+		}
 
 		if (hasCars) {
 			Car closestAfter = lane.getClosestAfter(car);;
