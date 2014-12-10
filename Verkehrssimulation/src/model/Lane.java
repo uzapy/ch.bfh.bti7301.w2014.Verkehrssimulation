@@ -147,11 +147,11 @@ public class Lane implements Iterable<Locator<Integer, Car>> {
 	}
 	
 	public Car getClosestBefore(Car car) {
-		Locator<Integer,Car> foundCar = this.lane.find(car.getPosition());
-		if(foundCar != null){
+		Locator<Integer, Car> foundCar = this.lane.find(car.getPosition());
+		if (foundCar != null) {
 			return foundCar.element();
-		}else{
-			return getElementIfPresent(this.lane.closestBefore(car.getLocator().key()));	
+		} else {
+			return getElementIfPresent(this.lane.closestBefore(car.getLocator().key()));
 		}
 	}
 

@@ -177,4 +177,12 @@ public class Car {
 			this.memory.removeFirst();
 		}
 	}
+
+	/**
+	 * @author bublm1
+	 * @return
+	 */
+	public boolean hasChangedLanesBefore() {
+		return this.memory.size() > 0 && (this.memory.getLast().isBlinkLeft() || this.memory.getLast().isBlinkRight());
+	}
 }
