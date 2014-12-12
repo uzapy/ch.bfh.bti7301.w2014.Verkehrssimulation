@@ -51,7 +51,6 @@ public class SegmentCollection {
 			}
 		}
 		return foundSegment;
-		//return this.segments.stream().filter(s -> s.getClass() == segmentClass && s.start() <= position && s.end() >= position).findFirst();
 	}
 
 	/**
@@ -69,7 +68,7 @@ public class SegmentCollection {
 		}
 		MySkipList<Integer, Segment> segmentList = segmentsPool.get(segment.getClass());
 		Locator<Integer, Segment> result = segmentList.closestBefore(segment.end());
-		if (result != null && result.element().end() >= segment.start()) {
+		if (result != null && result.element().end() > segment.start()) {
 			throw new RuntimeException("segments overlap!");
 		} else {
 			result = segmentList.find(segment.end());

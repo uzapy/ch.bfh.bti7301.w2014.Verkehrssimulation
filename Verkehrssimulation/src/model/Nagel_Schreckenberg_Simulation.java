@@ -3,9 +3,7 @@
  */
 package model;
 
-import segment.MeasuringSegment;
 import segment.OpenToTrafficSegment;
-import segment.PassableSegment;
 import segment.Segment;
 import segment.VelocitySegment;
 import skiplist.Locator;
@@ -24,9 +22,9 @@ public class Nagel_Schreckenberg_Simulation {
 	 * @author bublm1
 	 */
 	public Nagel_Schreckenberg_Simulation() {
-		Lane lane0 = new Lane(28, 500, 0);
+		Lane lane0 = new Lane(33, 500, 0);
 		Lane lane1 = new Lane(33, 500, 1);
-		Lane lane2 = new Lane(36, 500, 2);
+		Lane lane2 = new Lane(33, 500, 2);
 		// Lane lane3 = new Lane(20, 500, 3);
 
 		lane0.setAdjacentLanes(lane1, null);
@@ -40,33 +38,41 @@ public class Nagel_Schreckenberg_Simulation {
 		this.track.addLane(lane2);
 		// this.track.addLane(lane3);
 
-		Segment velocitySegment0 = new VelocitySegment(200, 300, 10);
-		Segment velocitySegment1 = new VelocitySegment(200, 300, 10);
-		Segment velocitySegment2 = new VelocitySegment(200, 300, 10);
+		Segment velocitySegment0 = new VelocitySegment(100, 200, 22);
+		Segment velocitySegment1 = new VelocitySegment(100, 200, 22);
+		Segment velocitySegment2 = new VelocitySegment(100, 200, 22);
 
-		Segment notPassableSegment0 = new PassableSegment(20, 120, true, false);
-		Segment notPassableSegment1 = new PassableSegment(20, 120, false, true);
-		Segment notPassableSegment2 = new PassableSegment(20, 120, false, false);
+		Segment velocitySegment3 = new VelocitySegment(200, 500, 17);
+		Segment velocitySegment4 = new VelocitySegment(200, 500, 17);
+		Segment velocitySegment5 = new VelocitySegment(200, 500, 17);
 
-		Segment measureSegment0 = new MeasuringSegment(130, 190);
-		// Segment measureSegment1 = new MeasuringSegment(150, 200);
-		// Segment measureSegment2 = new MeasuringSegment(150, 200);
+//		Segment notPassableSegment0 = new PassableSegment(20, 120, true, false);
+//		Segment notPassableSegment1 = new PassableSegment(20, 120, false, true);
+//		Segment notPassableSegment2 = new PassableSegment(20, 120, false, false);
 
-		Segment notOpenToTrafficSegment1 = new OpenToTrafficSegment(100, 400, false);
+//		Segment measureSegment0 = new MeasuringSegment(130, 190);
 
-//		lane0.addSegment(velocitySegment0);
-//		lane1.addSegment(velocitySegment1);
-//		lane2.addSegment(velocitySegment2);
+		Segment notOpenToTrafficSegment0 = new OpenToTrafficSegment(300, 500, false);
+		Segment notOpenToTrafficSegment1 = new OpenToTrafficSegment(200, 500, false);
+
+		lane0.addSegment(velocitySegment0);
+		lane1.addSegment(velocitySegment1);
+		lane2.addSegment(velocitySegment2);
+
+		lane0.addSegment(velocitySegment3);
+		lane1.addSegment(velocitySegment4);
+		lane2.addSegment(velocitySegment5);
 
 //		lane0.addSegment(notPassableSegment0);
 //		lane1.addSegment(notPassableSegment1);
 //		lane2.addSegment(notPassableSegment2);
 
-		lane0.addSegment(measureSegment0);
-		lane1.addSegment(measureSegment0);
-		lane2.addSegment(measureSegment0);
+//		lane0.addSegment(measureSegment0);
+//		lane1.addSegment(measureSegment0);
+//		lane2.addSegment(measureSegment0);
 
-		lane1.addSegment(notOpenToTrafficSegment1);
+		lane1.addSegment(notOpenToTrafficSegment0);
+		lane2.addSegment(notOpenToTrafficSegment1);
 	}
 
 	public void performStep() {
@@ -104,16 +110,15 @@ public class Nagel_Schreckenberg_Simulation {
 					nextCar = car.getLane().getFirstCar();
 				}
 
-				int possibleSpeedOnRightLane = calculateNextSpeed(lane.getRightLane(), car);
-
 				// Will ich überholen?
 				boolean isPassableLeft = lane.isPassableLeft(car.getPosition());
 				boolean isFasterThanNextCar = car.getSpeed() > nextCar.getSpeed();
 				boolean isNextCarClose = nextCar.getBackPosition() - car.getPosition() < lane.getMaxVelocity(car.getPosition());
 				boolean hasChangedLanesBefore = car.hasChangedLanesBefore();
 				boolean hasToChangeLane = !lane.isOpenToTraffic(car.getPosition());
-				// boolean isNextSpeedSmaller = car.getSpeed() >
-				// car.getNextSpeed();
+				boolean isGoingToChangeLane = false;
+				
+				// boolean isNextSpeedSmaller = car.getSpeed() > car.getNextSpeed();
 				if ((isPassableLeft) && ((isFasterThanNextCar && isNextCarClose && !hasChangedLanesBefore) || hasToChangeLane)) {
 					// Kann ich überholen?
 					boolean canChangeToLeftLane = IsEnoughSpaceBetweenBeforeAndAfter(lane.getLeftLane(), car);
@@ -121,22 +126,25 @@ public class Nagel_Schreckenberg_Simulation {
 					if (canChangeToLeftLane && speedOnLeftLane > 0) {
 						// Überholen
 						car.setNext(speedOnLeftLane, false, true);
-					} else {
-						// Nein, trödeln.
-						car.setNext(calculateTrödel(car), false, false);
+						isGoingToChangeLane = true;
 					}
-				} else if ((lane.isPassableRight(car.getPosition())) && ((car.getSpeed() <= possibleSpeedOnRightLane && !hasChangedLanesBefore) || hasToChangeLane)) {
+				}
+				
+				boolean isPassableRight = lane.isPassableRight(car.getPosition());
+				boolean canKeepCurentSpeed = car.getSpeed() <= calculateNextSpeed(lane.getRightLane(), car);
+				
+				if ((isPassableRight && ((canKeepCurentSpeed && !hasChangedLanesBefore) || hasToChangeLane)) && !isGoingToChangeLane) {
 					// Kann ich zurück auf die slow lane?
 					boolean canChangeToRightLane = IsEnoughSpaceBetweenBeforeAndAfter(lane.getRightLane(), car);
 					int speedOnRightLane = calculateNextSpeed(lane.getRightLane(), car);
 					if (canChangeToRightLane && speedOnRightLane > 0) {
 						// Zurück auf die rechte Spur
 						car.setNext(speedOnRightLane, true, false);
-					} else {
-						// Nein, trödeln.
-						car.setNext(calculateTrödel(car), false, false);
+						isGoingToChangeLane = true;
 					}
-				} else {
+				} 
+				
+				if (!isGoingToChangeLane) {
 					// Nein, trödeln.
 					car.setNext(calculateTrödel(car), false, false);
 				}

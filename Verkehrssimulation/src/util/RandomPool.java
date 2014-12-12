@@ -49,7 +49,7 @@ public class RandomPool {
 	}
 	
 	public static double getNewTrödelFactor() {
-		return r.nextDouble() * (0.8 - 0.2) + 0.2;
+		return r.nextDouble() * (0.5 - 0.2) + 0.2;
 	}
 	
 	/**
