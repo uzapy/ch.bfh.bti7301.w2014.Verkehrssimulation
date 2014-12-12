@@ -42,6 +42,15 @@ public class MetricToPixel {
 	public static int getFontSize() {
 		return 2 * MetricToPixel.SCALING_FACTOR;
 	}
+	
+	/**
+	 * @author bublm1
+	 * @return
+	 */
+	public static int getTurnSignalSize() {
+		double turnSignalSize = (double) MetricToPixel.SCALING_FACTOR / 3;
+		return (int) Math.ceil(turnSignalSize);
+	}
 
 	/**
 	 * @author bublm1

@@ -58,6 +58,21 @@ public class CarPanel extends AbstractPanel<Car> {
 		g.drawString(Integer.toString(this.car.getNextSpeed()),
 				MetricToPixel.scale(this.xSimPosition),
 				MetricToPixel.scale(trackOffset) + MetricToPixel.scale(this.ySimPosition + Car.WIDTH));
+		
+		if (car.isBlinkLeft() || car.isBlinkRight()) {
+			g.setColor(Color.ORANGE);
+			int turnSignalSize = MetricToPixel.getTurnSignalSize();
+			int xFrontPosition = xPosition + MetricToPixel.scale(car.getLength()) - turnSignalSize;
+			int yRightPosition = yPosition + MetricToPixel.scale(Car.WIDTH) - turnSignalSize;
+			
+			if (car.isBlinkLeft()) {
+				g.fillRect(xPosition, yPosition, turnSignalSize, turnSignalSize);
+				g.fillRect(xFrontPosition, yPosition, turnSignalSize, turnSignalSize);
+			} else if (car.isBlinkRight()) {
+				g.fillRect(xPosition, yRightPosition, turnSignalSize, turnSignalSize);
+				g.fillRect(xFrontPosition, yRightPosition, turnSignalSize, turnSignalSize);
+			}
+		}
 	}
 
 	/**
@@ -85,7 +100,7 @@ public class CarPanel extends AbstractPanel<Car> {
 		}
 	}
 	
-	public int getLaneOffset(int fastLaneIndex) {
+	private int getLaneOffset(int fastLaneIndex) {
 		return numberOfLanes - fastLaneIndex;
 	}
 
