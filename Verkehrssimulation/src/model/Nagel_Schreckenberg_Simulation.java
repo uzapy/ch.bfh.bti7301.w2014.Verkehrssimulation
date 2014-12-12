@@ -3,6 +3,7 @@
  */
 package model;
 
+import segment.MeasuringSegment;
 import segment.OpenToTrafficSegment;
 import segment.Segment;
 import segment.VelocitySegment;
@@ -50,7 +51,7 @@ public class Nagel_Schreckenberg_Simulation {
 //		Segment notPassableSegment1 = new PassableSegment(20, 120, false, true);
 //		Segment notPassableSegment2 = new PassableSegment(20, 120, false, false);
 
-//		Segment measureSegment0 = new MeasuringSegment(130, 190);
+		Segment measureSegment0 = new MeasuringSegment(50, 400);
 
 		Segment notOpenToTrafficSegment0 = new OpenToTrafficSegment(300, 500, false);
 		Segment notOpenToTrafficSegment1 = new OpenToTrafficSegment(200, 500, false);
@@ -67,9 +68,9 @@ public class Nagel_Schreckenberg_Simulation {
 //		lane1.addSegment(notPassableSegment1);
 //		lane2.addSegment(notPassableSegment2);
 
-//		lane0.addSegment(measureSegment0);
-//		lane1.addSegment(measureSegment0);
-//		lane2.addSegment(measureSegment0);
+		lane0.addSegment(measureSegment0);
+		lane1.addSegment(measureSegment0);
+		lane2.addSegment(measureSegment0);
 
 		lane1.addSegment(notOpenToTrafficSegment0);
 		lane2.addSegment(notOpenToTrafficSegment1);
