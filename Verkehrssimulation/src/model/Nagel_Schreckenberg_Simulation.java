@@ -324,7 +324,7 @@ public class Nagel_Schreckenberg_Simulation {
 			if((car.getPosition() - lane.beginningOfIsOpenToTrafficSegment(car.getPosition())) > 50){
 				speed = 0;
 			}else{
-				speed = speed / 2;				
+				speed = (int) (speed * 0.7);				
 			}
 		}
 
