@@ -66,7 +66,7 @@ public class Nagel_Schreckenberg_Simulation {
 		lane1.addSegment(measureSegment0);
 		lane2.addSegment(measureSegment0);
 
-		lane0.addSegment(notOpenToTrafficSegment1);
+		lane1.addSegment(notOpenToTrafficSegment1);
 	}
 
 	public void performStep() {
@@ -84,7 +84,7 @@ public class Nagel_Schreckenberg_Simulation {
 			}
 
 			// Neues Zufälliges Auto hinzufügen, wenn es Platz hat.
-			if (lane.getFirstCar() == null || (lane.getFirstCar() != null && lane.getFirstCar().getBackPosition() > 10)) {
+			if (lane.getFirstCar() == null || (lane.getFirstCar() != null && lane.getFirstCar().getBackPosition() > 20)) {
 				Car randomCar = RandomPool.getNewCar(lane);
 				randomCar.getLane().addCar(randomCar);
 				randomCar.setNext(randomCar.getSpeed(), false, false);
@@ -111,9 +111,10 @@ public class Nagel_Schreckenberg_Simulation {
 				boolean isFasterThanNextCar = car.getSpeed() > nextCar.getSpeed();
 				boolean isNextCarClose = nextCar.getBackPosition() - car.getPosition() < lane.getMaxVelocity(car.getPosition());
 				boolean hasChangedLanesBefore = car.hasChangedLanesBefore();
+				boolean hasToChangeLane = !lane.isOpenToTraffic(car.getPosition());
 				// boolean isNextSpeedSmaller = car.getSpeed() >
 				// car.getNextSpeed();
-				if (isPassableLeft && isFasterThanNextCar && isNextCarClose && !hasChangedLanesBefore ) {
+				if ((isPassableLeft) && ((isFasterThanNextCar && isNextCarClose && !hasChangedLanesBefore) || hasToChangeLane)) {
 					// Kann ich überholen?
 					boolean canChangeToLeftLane = IsEnoughSpaceBetweenBeforeAndAfter(lane.getLeftLane(), car);
 					int speedOnLeftLane = calculateNextSpeed(lane.getLeftLane(), car);
@@ -124,7 +125,7 @@ public class Nagel_Schreckenberg_Simulation {
 						// Nein, trödeln.
 						car.setNext(calculateTrödel(car), false, false);
 					}
-				} else if (lane.isPassableRight(car.getPosition()) && car.getSpeed() <= possibleSpeedOnRightLane && !hasChangedLanesBefore) {
+				} else if ((lane.isPassableRight(car.getPosition())) && ((car.getSpeed() <= possibleSpeedOnRightLane && !hasChangedLanesBefore) || hasToChangeLane)) {
 					// Kann ich zurück auf die slow lane?
 					boolean canChangeToRightLane = IsEnoughSpaceBetweenBeforeAndAfter(lane.getRightLane(), car);
 					int speedOnRightLane = calculateNextSpeed(lane.getRightLane(), car);
