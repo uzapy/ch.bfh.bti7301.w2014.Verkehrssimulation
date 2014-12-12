@@ -52,21 +52,21 @@ public class Nagel_Schreckenberg_Simulation {
 		// Segment measureSegment1 = new MeasuringSegment(150, 200);
 		// Segment measureSegment2 = new MeasuringSegment(150, 200);
 
-		Segment notOpenToTrafficSegment1 = new OpenToTrafficSegment(300, 400, false);
+		Segment notOpenToTrafficSegment1 = new OpenToTrafficSegment(100, 400, false);
 
-		lane0.addSegment(velocitySegment0);
-		lane1.addSegment(velocitySegment1);
-		lane2.addSegment(velocitySegment2);
+//		lane0.addSegment(velocitySegment0);
+//		lane1.addSegment(velocitySegment1);
+//		lane2.addSegment(velocitySegment2);
 
-		lane0.addSegment(notPassableSegment0);
-		lane1.addSegment(notPassableSegment1);
-		lane2.addSegment(notPassableSegment2);
+//		lane0.addSegment(notPassableSegment0);
+//		lane1.addSegment(notPassableSegment1);
+//		lane2.addSegment(notPassableSegment2);
 
 		lane0.addSegment(measureSegment0);
 		lane1.addSegment(measureSegment0);
 		lane2.addSegment(measureSegment0);
 
-		lane2.addSegment(notOpenToTrafficSegment1);
+		lane0.addSegment(notOpenToTrafficSegment1);
 	}
 
 	public void performStep() {
@@ -256,7 +256,11 @@ public class Nagel_Schreckenberg_Simulation {
 				maxNextPosition = lane.getLength();
 			}
 			if (closestBefore != null) {
-				minNextPosition = closestBefore.getPosition() + closestBefore.getSpeed() * 2 + this.speedDelta + securityDistance;
+				minNextPosition = closestBefore.getPosition() + closestBefore.getSpeed() + this.speedDelta + securityDistance;
+				//Wenn auf nicht einer Einfahrspur wird mehr Rücksicht genommen auf andere Verkersteilnehmer 
+				if(!car.getLane().isOpenToTraffic(car.getPosition())){
+					minNextPosition += closestBefore.getSpeed();
+				} 
 			} else {
 				minNextPosition = car.getPosition();
 			}
@@ -308,7 +312,7 @@ public class Nagel_Schreckenberg_Simulation {
 		if (lane.getLeftLane() != null) {
 			Car leftCar = lane.getLeftLane().getClosestAfter(car);
 			// Es darf rechts überholt werden, wenn die Geschwindigkeit von car und leftCar kleiner gleich speedDelta ist.
-			if (leftCar != null && !(car.getSpeed() <= speedDelta && leftCar.getSpeed() <= speedDelta)) {
+			if (leftCar != null && !(car.getSpeed() <= speedDelta && leftCar.getSpeed() <= speedDelta) && lane.isOpenToTraffic(car.getPosition())) {
 				int speedDelta = (leftCar.getPosition() + leftCar.getSpeed()) - (car.getPosition() + speed);
 				if (speedDelta < 0) {
 					speed += speedDelta;
