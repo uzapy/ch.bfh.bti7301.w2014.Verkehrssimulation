@@ -78,6 +78,15 @@ public class Lane implements Iterable<Locator<Integer, Car>> {
 		}
 	}
 	
+	public int beginningOfIsOpenToTrafficSegment(int position){
+		Segment foundSegment = this.getSegmentAt(position, OpenToTrafficSegment.class);
+		if(foundSegment != null){
+			return ((OpenToTrafficSegment)foundSegment).start();
+		} else {
+			return 0;
+		}
+	}
+	
 	public Lane getLeftLane() {
 		return leftLane;
 	}
