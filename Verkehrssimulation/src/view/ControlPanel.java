@@ -22,6 +22,7 @@ import util.IMeasurementListener;
 import util.MessagePool;
 import util.MetricToPixel;
 import util.ParameterPool;
+import util.TrackPreset;
 
 /**
  * @author bublm1
@@ -29,6 +30,8 @@ import util.ParameterPool;
 @SuppressWarnings("serial")
 public class ControlPanel extends JPanel implements ActionListener, ChangeListener, IMeasurementListener {
 	
+	private Button buttonDefaultPreset = new Button("Default");
+	private Button buttonBottleneckPreset = new Button("Spurverengung");
 	private Button buttonZoomIn = new Button("+");
 	private Button buttonZoomOut = new Button("-");
 	private Button buttonLeft = new Button("<");
@@ -45,6 +48,12 @@ public class ControlPanel extends JPanel implements ActionListener, ChangeListen
 		// Control-Layout
 		BorderLayout controlLayout = new BorderLayout();
 		this.setLayout(controlLayout);
+		
+		// Preset Panel
+		JPanel presetPanel = new JPanel();
+		BoxLayout presetLayout = new BoxLayout(presetPanel, BoxLayout.X_AXIS);
+		presetPanel.setLayout(presetLayout);
+		createPresetPanel(presetPanel);
 		
 		// Navigation Panel
 		JPanel navigationPanel = new JPanel();
@@ -67,12 +76,25 @@ public class ControlPanel extends JPanel implements ActionListener, ChangeListen
 		// Button
 		Button button = new Button("Click me!");
 
+		this.add(presetPanel, BorderLayout.NORTH);
 		this.add(navigationPanel, BorderLayout.WEST);
 		this.add(parameterPanel, BorderLayout.CENTER);
 		this.add(measurmentPanel, BorderLayout.EAST);
 		this.add(button, BorderLayout.SOUTH);
 		
 		MessagePool.addMeasurementListener(this);
+	}
+
+	/**
+	 * @author bublm1
+	 * @param presetPanel
+	 */
+	private void createPresetPanel(JPanel presetPanel) {
+		buttonDefaultPreset.addActionListener(this);
+		buttonBottleneckPreset.addActionListener(this);
+		
+		presetPanel.add(buttonDefaultPreset);
+		presetPanel.add(buttonBottleneckPreset);
 	}
 
 	/**
@@ -142,14 +164,20 @@ public class ControlPanel extends JPanel implements ActionListener, ChangeListen
 	 */
 	@Override
 	public void actionPerformed(ActionEvent ae) {
-		if (ae.getSource() == this.buttonZoomIn) {
+		Object source = ae.getSource();
+		
+		if (source == this.buttonZoomIn) {
 			MetricToPixel.zoomIn();
-		} else if (ae.getSource() == this.buttonRight) {
+		} else if (source == this.buttonRight) {
 			ParameterPool.moveTrackRight();
-		} else if (ae.getSource() == this.buttonZoomOut) {
+		} else if (source == this.buttonZoomOut) {
 			MetricToPixel.zoomOut();
-		} else if (ae.getSource() == this.buttonLeft) {
+		} else if (source == this.buttonLeft) {
 			ParameterPool.moveTrackLeft();
+		} else if (source == this.buttonDefaultPreset) {
+			ParameterPool.TRACK_PRESET = TrackPreset.Default;
+		} else if (source == this.buttonBottleneckPreset) {
+			ParameterPool.TRACK_PRESET = TrackPreset.Bottleneck;
 		}
 		
 		// do the Button-Magic
@@ -169,7 +197,6 @@ public class ControlPanel extends JPanel implements ActionListener, ChangeListen
 			ParameterPool.FRAMES_PER_SECOND = 75 - (int)sourceSlider.getValue();
 		} else if (sourceSlider == this.spawnSlider && ! sourceSlider.getValueIsAdjusting()) {
 			ParameterPool.SPAWN_RATE = (double)sourceSlider.getValue() / 100;
-			System.out.println(ParameterPool.SPAWN_RATE);
 		}
 	}
 

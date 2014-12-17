@@ -42,6 +42,18 @@ public class TrackPanel extends JPanel {
 	 */
 	public TrackPanel(Track track) {
 		super();
+		this.setTrack(track);
+	}
+	
+	/**
+	 * @author bublm1
+	 * @param track2
+	 */
+	public void setTrack(Track track) {
+		this.lanePanels.clear();
+		this.segmentPanels.clear();
+		this.carPanels.clear();
+		
 		this.track = track;
 
 		for (Lane lane : this.track.getLanes()) {

@@ -3,12 +3,10 @@
  */
 package model;
 
-import segment.MeasuringSegment;
-import segment.OpenToTrafficSegment;
-import segment.Segment;
-import segment.VelocitySegment;
 import skiplist.Locator;
+import util.PresetPool;
 import util.RandomPool;
+import util.TrackPreset;
 
 /**
  * @author burkt4
@@ -16,64 +14,23 @@ import util.RandomPool;
 public class Nagel_Schreckenberg_Simulation {
 
 	private Track track;
-	private int speedDelta = 3; // Standardbeschleunigung in Meter pro Sekunde
-	private int securityDistance = 1; // Sicherheitsabstand
+	private int speedDelta = 3;			// Standardbeschleunigung in Meter pro Sekunde
+	private int securityDistance = 1;	// Sicherheitsabstand
 
 	/**
 	 * @author bublm1
+	 * @param trackPreset 
 	 */
-	public Nagel_Schreckenberg_Simulation() {
-		Lane lane0 = new Lane(33, 500, 0);
-		Lane lane1 = new Lane(33, 500, 1);
-		Lane lane2 = new Lane(33, 500, 2);
-		// Lane lane3 = new Lane(20, 500, 3);
-
-		lane0.setAdjacentLanes(lane1, null);
-		lane1.setAdjacentLanes(lane2, lane0);
-		lane2.setAdjacentLanes(null, lane1);
-		// lane3.setAdjacentLanes(null, lane2);
-
-		this.track = new Track();
-		this.track.addLane(lane0);
-		this.track.addLane(lane1);
-		this.track.addLane(lane2);
-		// this.track.addLane(lane3);
-
-		Segment velocitySegment0 = new VelocitySegment(100, 200, 22);
-		Segment velocitySegment1 = new VelocitySegment(100, 200, 22);
-		Segment velocitySegment2 = new VelocitySegment(100, 200, 22);
-
-		Segment velocitySegment3 = new VelocitySegment(200, 500, 17);
-		Segment velocitySegment4 = new VelocitySegment(200, 500, 17);
-		Segment velocitySegment5 = new VelocitySegment(200, 500, 17);
-
-//		Segment notPassableSegment0 = new PassableSegment(20, 120, true, false);
-//		Segment notPassableSegment1 = new PassableSegment(20, 120, false, true);
-//		Segment notPassableSegment2 = new PassableSegment(20, 120, false, false);
-
-		Segment measureSegment0 = new MeasuringSegment(50, 400);
-
-		Segment notOpenToTrafficSegment0 = new OpenToTrafficSegment(300, 500, false);
-		Segment notOpenToTrafficSegment1 = new OpenToTrafficSegment(200, 500, false);
-
-		lane0.addSegment(velocitySegment0);
-		lane1.addSegment(velocitySegment1);
-		lane2.addSegment(velocitySegment2);
-
-		lane0.addSegment(velocitySegment3);
-		lane1.addSegment(velocitySegment4);
-		lane2.addSegment(velocitySegment5);
-
-//		lane0.addSegment(notPassableSegment0);
-//		lane1.addSegment(notPassableSegment1);
-//		lane2.addSegment(notPassableSegment2);
-
-		lane0.addSegment(measureSegment0);
-		lane1.addSegment(measureSegment0);
-		lane2.addSegment(measureSegment0);
-
-		lane1.addSegment(notOpenToTrafficSegment0);
-		lane2.addSegment(notOpenToTrafficSegment1);
+	public Nagel_Schreckenberg_Simulation(TrackPreset trackPreset) {
+		switch (trackPreset) {
+		case Bottleneck:
+			this.track = PresetPool.getBottleneck();
+			break;
+		case Default:
+		default:
+			this.track = PresetPool.getDefault();			
+			break;
+		}
 	}
 
 	public void performStep() {
@@ -90,7 +47,7 @@ public class Nagel_Schreckenberg_Simulation {
 				moveCar(lane, car);
 			}
 
-			// Neues Zufälliges Auto hinzufügen, wenn es Platz hat.
+			// Zufällig neues Zufälliges Auto hinzufügen, wenn es Platz hat.
 			if (RandomPool.isSpawning()) {
 				if (lane.getFirstCar() == null || (lane.getFirstCar() != null && lane.getFirstCar().getBackPosition() > 20)) {
 					Car randomCar = RandomPool.getNewCar(lane);

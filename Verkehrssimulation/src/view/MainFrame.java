@@ -10,6 +10,7 @@ import model.Track;
 import timer.IImpulsable;
 import timer.Impulse;
 import util.ParameterPool;
+import util.TrackPreset;
 import view.model.TrackPanel;
 
 /**
@@ -22,17 +23,15 @@ public class MainFrame extends JFrame implements IImpulsable {
 	private TrackPanel trackPanel;
 	private ControlPanel controlPanel;
 	private int simStep = ParameterPool.FRAMES_PER_SECOND;
+	private TrackPreset currentPreset = ParameterPool.TRACK_PRESET;
 	
 	public MainFrame(String title) {
 		super(title);
 		
 		new Impulse(this, this.simStep);
-		this.simulation = new Nagel_Schreckenberg_Simulation();
-		Track track = this.simulation.getTrack();
-		
-		this.trackPanel = new TrackPanel(track);
-		this.controlPanel = new ControlPanel();	
-		
+		createSimulation(currentPreset);
+
+		this.controlPanel = new ControlPanel();
 		// Layout manager
 		this.setLayout(new BorderLayout());
 		// Add Components to main Container		
@@ -41,11 +40,28 @@ public class MainFrame extends JFrame implements IImpulsable {
 		container.add(this.controlPanel, BorderLayout.SOUTH);
 	}
 
+	/**
+	 * @author bublm1
+	 */
+	public void createSimulation(TrackPreset trackPreset) {
+		this.simulation = new Nagel_Schreckenberg_Simulation(trackPreset);
+		if (this.trackPanel == null) {
+			this.trackPanel = new TrackPanel(this.simulation.getTrack());
+		} else {
+			this.trackPanel.setTrack(this.simulation.getTrack());			
+		}
+	}
+
 	/* (non-Javadoc)
 	 * @see timer.IImpulsable#pulse()
 	 */
 	@Override
 	public void pulse() {
+		if (this.currentPreset != ParameterPool.TRACK_PRESET) {
+			this.currentPreset = ParameterPool.TRACK_PRESET;
+			createSimulation(this.currentPreset);
+		}
+		
 		if (this.simStep >= ParameterPool.FRAMES_PER_SECOND) {
 			this.simulation.performStep();
 			this.trackPanel.updateTrack();
