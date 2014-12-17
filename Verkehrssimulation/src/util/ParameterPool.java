@@ -13,6 +13,7 @@ public class ParameterPool {
 //	private int speedDelta = 3; 				// Standardbeschleunigung in Meter pro Sekunde
 //	private int securityDistance = 1;			// Sicherheitsabstand
 //  Trödel Factor
+	public static double SPAWN_RATE = 1;
 	public static int VIEW_OFFSET = 0;
 
 	/**

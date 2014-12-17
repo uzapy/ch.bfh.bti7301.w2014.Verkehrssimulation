@@ -34,6 +34,7 @@ public class ControlPanel extends JPanel implements ActionListener, ChangeListen
 	private Button buttonLeft = new Button("<");
 	private Button buttonRight = new Button(">");
 	private JSlider fpsSlider = new JSlider(15, 60, 37);
+	private JSlider spawnSlider = new JSlider(0, 100, 100);
 	private Label trafficDensityLabel = new Label("Verkehrsdichte: 0.0");
 	private Label trafficFlowLabel = new Label("Verkehrsfluss: 0.0");
 	
@@ -99,17 +100,30 @@ public class ControlPanel extends JPanel implements ActionListener, ChangeListen
 	 * @param parameterPanel
 	 */
 	private void createParameterPanel(JPanel parameterPanel) {
-		Hashtable<Integer, JLabel> labelTable = new Hashtable<Integer, JLabel>();
-		labelTable.put(15, new JLabel("doppelt"));
-		labelTable.put(37, new JLabel("Geschwindigkeit"));
-		labelTable.put(60, new JLabel("halb"));
+		Hashtable<Integer, JLabel> fpsLabelTable = new Hashtable<Integer, JLabel>();
+		fpsLabelTable.put(15, new JLabel("halb"));
+		fpsLabelTable.put(37, new JLabel("Geschwindigkeit"));
+		fpsLabelTable.put(60, new JLabel("doppelt"));
 		
 		fpsSlider.setPreferredSize(new Dimension(300, 40));
 		fpsSlider.addChangeListener(this);
-		fpsSlider.setLabelTable(labelTable);
+		fpsSlider.setLabelTable(fpsLabelTable);
 		fpsSlider.setPaintLabels(true);
 		
 		parameterPanel.add(fpsSlider);
+		
+		Hashtable<Integer, JLabel> spawnLabelTable = new Hashtable<Integer, JLabel>();
+		spawnLabelTable.put(0, new JLabel("0.0"));
+		spawnLabelTable.put(50, new JLabel("Auto-Rate"));
+		spawnLabelTable.put(100, new JLabel("1.0"));
+		
+		spawnSlider.setPreferredSize(new Dimension(290, 40));
+		spawnSlider.addChangeListener(this);
+		spawnSlider.setLabelTable(spawnLabelTable);
+		spawnSlider.setPaintLabels(true);
+		spawnSlider.setValue((int)ParameterPool.SPAWN_RATE * 100);
+		
+		parameterPanel.add(spawnSlider);
 	}
 	
 	/**
@@ -152,7 +166,10 @@ public class ControlPanel extends JPanel implements ActionListener, ChangeListen
 	public void stateChanged(ChangeEvent ce) {
 		JSlider sourceSlider = (JSlider)ce.getSource();
 		if (sourceSlider == this.fpsSlider && !sourceSlider.getValueIsAdjusting()) {
-			ParameterPool.FRAMES_PER_SECOND = (int)sourceSlider.getValue();
+			ParameterPool.FRAMES_PER_SECOND = 75 - (int)sourceSlider.getValue();
+		} else if (sourceSlider == this.spawnSlider && ! sourceSlider.getValueIsAdjusting()) {
+			ParameterPool.SPAWN_RATE = (double)sourceSlider.getValue() / 100;
+			System.out.println(ParameterPool.SPAWN_RATE);
 		}
 	}
 
