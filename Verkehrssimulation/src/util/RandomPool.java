@@ -69,4 +69,12 @@ public class RandomPool {
 	public static double getNextGaussian() {
 		return r.nextGaussian();
 	}
+
+	/**
+	 * @author bublm1
+	 * @return
+	 */
+	public static boolean isSpawning() {
+		return r.nextDouble() <= ParameterPool.SPAWN_RATE;
+	}
 }

@@ -91,12 +91,14 @@ public class Nagel_Schreckenberg_Simulation {
 			}
 
 			// Neues Zufälliges Auto hinzufügen, wenn es Platz hat.
-			if (lane.getFirstCar() == null || (lane.getFirstCar() != null && lane.getFirstCar().getBackPosition() > 20)) {
-				Car randomCar = RandomPool.getNewCar(lane);
-				randomCar.getLane().addCar(randomCar);
-				randomCar.setNext(randomCar.getSpeed(), false, false);
-				randomCar.setMoved(true);
-				this.track.addToNewCars(randomCar);
+			if (RandomPool.isSpawning()) {
+				if (lane.getFirstCar() == null || (lane.getFirstCar() != null && lane.getFirstCar().getBackPosition() > 20)) {
+					Car randomCar = RandomPool.getNewCar(lane);
+					randomCar.getLane().addCar(randomCar);
+					randomCar.setNext(randomCar.getSpeed(), false, false);
+					randomCar.setMoved(true);
+					this.track.addToNewCars(randomCar);
+				}				
 			}
 		}
 
