@@ -155,6 +155,19 @@ public class Lane implements Iterable<Locator<Integer, Car>> {
 		return getElementIfPresent(this.lane.closestAfter(car.getLocator().key()));
 	}
 	
+	public Car getClosestAfter(int position) {
+		return getElementIfPresent(this.lane.closestAfter(position));
+	}
+	
+	public Car getClosestBefore(int position) {
+		Locator<Integer, Car> foundCar = this.lane.find(position);
+		if (foundCar != null) {
+			return foundCar.element();
+		} else {
+			return getElementIfPresent(this.lane.closestBefore(position));
+		}
+	}
+	
 	public Car getClosestBefore(Car car) {
 		Locator<Integer, Car> foundCar = this.lane.find(car.getPosition());
 		if (foundCar != null) {
@@ -215,6 +228,15 @@ public class Lane implements Iterable<Locator<Integer, Car>> {
 		if (locator != null) {
 			return locator.element();
 		} else {
+			return null;
+		}
+	}
+	
+	private Car getElementIfPresent(int position){
+		Locator<Integer,Car> foundCar = this.lane.find(position);
+		if(foundCar != null){
+			return foundCar.element();
+		} else{
 			return null;
 		}
 	}

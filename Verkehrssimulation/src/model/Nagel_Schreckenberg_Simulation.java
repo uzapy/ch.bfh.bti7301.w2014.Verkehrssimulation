@@ -3,9 +3,12 @@
  */
 package model;
 
+import java.util.List;
+
 import segment.MeasuringSegment;
 import segment.OpenToTrafficSegment;
 import segment.Segment;
+import segment.SpawnSegment;
 import segment.VelocitySegment;
 import skiplist.Locator;
 import util.RandomPool;
@@ -55,6 +58,8 @@ public class Nagel_Schreckenberg_Simulation {
 
 		Segment notOpenToTrafficSegment0 = new OpenToTrafficSegment(300, 500, false);
 		Segment notOpenToTrafficSegment1 = new OpenToTrafficSegment(200, 500, false);
+		
+		Segment spawnSegment0 = new SpawnSegment(50,100); 
 
 		lane0.addSegment(velocitySegment0);
 		lane1.addSegment(velocitySegment1);
@@ -74,6 +79,8 @@ public class Nagel_Schreckenberg_Simulation {
 
 		lane1.addSegment(notOpenToTrafficSegment0);
 		lane2.addSegment(notOpenToTrafficSegment1);
+		
+		lane0.addSegment(spawnSegment0);
 	}
 
 	public void performStep() {
@@ -89,7 +96,29 @@ public class Nagel_Schreckenberg_Simulation {
 
 				moveCar(lane, car);
 			}
-
+			List<Segment> spawnSegments = lane.getSegments(SpawnSegment.class);
+			if(!spawnSegments.isEmpty()){
+				for(Segment segment : spawnSegments){
+					Car randomCar = RandomPool.getNewCar(lane);
+					randomCar.setPosition(segment.start());
+					Car afterRandomCar = lane.getClosestAfter(randomCar.getPosition());
+					Car beforeRandomCar = lane.getClosestBefore(randomCar.getPosition());
+										
+					if(afterRandomCar != null && beforeRandomCar != null){
+						if(((afterRandomCar.getBackPosition() - randomCar.getPosition()) > 5) && ((randomCar.getBackPosition() - beforeRandomCar.getBackPosition()) > 5)){
+							randomCar.getLane().addCar(randomCar);
+							randomCar.setNext(randomCar.getSpeed(), false, false);
+							randomCar.setMoved(true);
+							this.track.addToNewCars(randomCar);	
+						}
+					}else {
+						randomCar.getLane().addCar(randomCar);
+						randomCar.setNext(randomCar.getSpeed(), false, false);
+						randomCar.setMoved(true);
+						this.track.addToNewCars(randomCar);						
+					}
+				}
+			}
 			// Neues Zufälliges Auto hinzufügen, wenn es Platz hat.
 			if (lane.getFirstCar() == null || (lane.getFirstCar() != null && lane.getFirstCar().getBackPosition() > 20)) {
 				Car randomCar = RandomPool.getNewCar(lane);
