@@ -96,29 +96,6 @@ public class Nagel_Schreckenberg_Simulation {
 
 				moveCar(lane, car);
 			}
-			List<Segment> spawnSegments = lane.getSegments(SpawnSegment.class);
-			if(!spawnSegments.isEmpty()){
-				for(Segment segment : spawnSegments){
-					Car randomCar = RandomPool.getNewCar(lane);
-					randomCar.setPosition(segment.start());
-					Car afterRandomCar = lane.getClosestAfter(randomCar.getPosition());
-					Car beforeRandomCar = lane.getClosestBefore(randomCar.getPosition());
-										
-					if(afterRandomCar != null && beforeRandomCar != null){
-						if(((afterRandomCar.getBackPosition() - randomCar.getPosition()) > 5) && ((randomCar.getBackPosition() - beforeRandomCar.getBackPosition()) > 5)){
-							randomCar.getLane().addCar(randomCar);
-							randomCar.setNext(randomCar.getSpeed(), false, false);
-							randomCar.setMoved(true);
-							this.track.addToNewCars(randomCar);	
-						}
-					}else {
-						randomCar.getLane().addCar(randomCar);
-						randomCar.setNext(randomCar.getSpeed(), false, false);
-						randomCar.setMoved(true);
-						this.track.addToNewCars(randomCar);						
-					}
-				}
-			}
 			// Neues Zufälliges Auto hinzufügen, wenn es Platz hat.
 			if (RandomPool.isSpawning()) {
 				if (lane.getFirstCar() == null || (lane.getFirstCar() != null && lane.getFirstCar().getBackPosition() > 20)) {
@@ -127,8 +104,32 @@ public class Nagel_Schreckenberg_Simulation {
 					randomCar.setNext(randomCar.getSpeed(), false, false);
 					randomCar.setMoved(true);
 					this.track.addToNewCars(randomCar);
-				}				
+				}
+				List<Segment> spawnSegments = lane.getSegments(SpawnSegment.class);
+				if(!spawnSegments.isEmpty()){
+					for(Segment segment : spawnSegments){
+						Car randomCar = RandomPool.getNewCar(lane);
+						randomCar.setPosition(segment.start());
+						Car afterRandomCar = lane.getClosestAfter(randomCar.getPosition());
+						Car beforeRandomCar = lane.getClosestBefore(randomCar.getPosition());
+											
+						if(afterRandomCar != null && beforeRandomCar != null){
+							if(((afterRandomCar.getBackPosition() - randomCar.getPosition()) > 10) && ((randomCar.getBackPosition() - beforeRandomCar.getBackPosition()) > 10)){
+								randomCar.getLane().addCar(randomCar);
+								randomCar.setNext(randomCar.getSpeed(), false, false);
+								randomCar.setMoved(true);
+								this.track.addToNewCars(randomCar);	
+							}
+						}else {
+							randomCar.getLane().addCar(randomCar);
+							randomCar.setNext(randomCar.getSpeed(), false, false);
+							randomCar.setMoved(true);
+							this.track.addToNewCars(randomCar);						
+						}
+					}
+				}
 			}
+			
 		}
 
 		for (Lane lane : this.track.getLanes()) {
