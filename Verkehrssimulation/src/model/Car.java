@@ -5,7 +5,6 @@ import java.util.List;
 
 import segment.DoomSegment;
 import segment.Segment;
-import segment.SpawnSegment;
 import skiplist.Locator;
 
 public class Car {

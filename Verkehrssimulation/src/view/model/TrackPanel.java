@@ -14,10 +14,12 @@ import javax.swing.JPanel;
 import model.Car;
 import model.Lane;
 import model.Track;
+import segment.DoomSegment;
 import segment.MeasuringSegment;
 import segment.OpenToTrafficSegment;
 import segment.PassableSegment;
 import segment.Segment;
+import segment.SpawnSegment;
 import segment.VelocitySegment;
 import skiplist.Locator;
 import util.MetricToPixel;
@@ -75,6 +77,14 @@ public class TrackPanel extends JPanel {
 			
 			for (Segment segment : lane.getSegments(OpenToTrafficSegment.class)) {
 				this.segmentPanels.add(new OpenToTrafficSegmentPanel(segment, fastLaneOffset, trackOffset));
+			}
+			
+			for (Segment segment : lane.getSegments(SpawnSegment.class)) {
+				this.segmentPanels.add(new SpawnSegmentPanel(segment, fastLaneOffset, trackOffset));
+			}
+			
+			for (Segment segment : lane.getSegments(DoomSegment.class)) {
+				this.segmentPanels.add(new DoomSegmentPanel(segment, fastLaneOffset, trackOffset));
 			}
 			
 			for (Locator<Integer, Car> carLocator : lane) {
