@@ -163,7 +163,7 @@ public class Car {
 		List<Segment> doomSegments = lane.getSegments(DoomSegment.class);
 		if(!doomSegments.isEmpty()){
 			for(Segment segment : doomSegments){
-				if(position >= segment.start() && position <= segment.end()){
+				if(getBackPosition() >= segment.end() - lane.getMaxVelocity(position) && position <= segment.end()){
 					this.isToBeDeleted = true;
 				}
 			}

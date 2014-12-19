@@ -79,7 +79,7 @@ public class Nagel_Schreckenberg_Simulation {
 				if(!spawnSegments.isEmpty()){
 					for(Segment segment : spawnSegments){
 						Car randomCar = RandomPool.getNewCar(lane);
-						randomCar.setPosition(segment.start());
+						randomCar.setPosition(segment.start() + randomCar.getLength());
 						Car afterRandomCar = lane.getClosestAfter(randomCar.getPosition());
 						Car beforeRandomCar = lane.getClosestBefore(randomCar.getPosition());
 											
@@ -331,7 +331,7 @@ public class Nagel_Schreckenberg_Simulation {
 			}
 		}
 
-		if (!lane.isOpenToTraffic(car.getPosition())) {
+		if (!lane.isOpenToTraffic(car.getPosition()) && !lane.isDoomSegment(car.getPosition())) {
 			if((car.getPosition() - lane.beginningOfIsOpenToTrafficSegment(car.getPosition())) > 50){
 				speed = 0;
 			}else{

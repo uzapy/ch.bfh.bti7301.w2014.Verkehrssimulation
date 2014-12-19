@@ -3,6 +3,7 @@ package model;
 import java.util.Iterator;
 import java.util.List;
 
+import segment.DoomSegment;
 import segment.MeasuringSegment;
 import segment.OpenToTrafficSegment;
 import segment.PassableSegment;
@@ -232,20 +233,20 @@ public class Lane implements Iterable<Locator<Integer, Car>> {
 		}
 	}
 	
-	private Car getElementIfPresent(int position){
-		Locator<Integer,Car> foundCar = this.lane.find(position);
-		if(foundCar != null){
-			return foundCar.element();
-		} else{
-			return null;
-		}
-	}
-	
 	/* (non-Javadoc)
 	 * @see java.lang.Iterable#iterator()
 	 */
 	@Override
 	public Iterator<Locator<Integer, Car>> iterator() {
 		return this.lane.sortedLocators();
+	}
+
+	/**
+	 * @author bublm1
+	 * @param position
+	 * @return
+	 */
+	public boolean isDoomSegment(int position) {
+		return getSegmentAt(position, DoomSegment.class) != null;
 	}
 }
