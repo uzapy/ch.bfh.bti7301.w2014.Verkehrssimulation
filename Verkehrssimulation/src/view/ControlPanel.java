@@ -35,6 +35,7 @@ public class ControlPanel extends JPanel implements ActionListener, ChangeListen
 	private Button buttonBottleneck = new Button("Spurverengung");
 	private Button buttonSpeedLimit = new Button("Geschwindigkeitsbegrenzung");
 	private Button buttonBanOnPassing = new Button("Überhoverbot");
+	private Button buttonOnAndExitRamp = new Button("Ein- und Ausfahrt");
 	private Button buttonExperimental = new Button("Experimentell");
 	
 	private Button buttonZoomIn = new Button("+");
@@ -102,6 +103,7 @@ public class ControlPanel extends JPanel implements ActionListener, ChangeListen
 		buttonBottleneck.addActionListener(this);
 		buttonSpeedLimit.addActionListener(this);
 		buttonBanOnPassing.addActionListener(this);
+		buttonOnAndExitRamp.addActionListener(this);;
 		buttonExperimental.addActionListener(this);
 		
 		presetPanel.add(buttonDefault);
@@ -109,6 +111,7 @@ public class ControlPanel extends JPanel implements ActionListener, ChangeListen
 		presetPanel.add(buttonBottleneck);
 		presetPanel.add(buttonSpeedLimit);
 		presetPanel.add(buttonBanOnPassing);
+		presetPanel.add(buttonOnAndExitRamp);
 		presetPanel.add(buttonExperimental);
 	}
 
@@ -199,6 +202,8 @@ public class ControlPanel extends JPanel implements ActionListener, ChangeListen
 			ParameterPool.TRACK_PRESET = TrackPreset.SpeedLimit;
 		} else if (source == this.buttonBanOnPassing) {
 			ParameterPool.TRACK_PRESET = TrackPreset.BanOnPassing;
+		} else if (source == this.buttonOnAndExitRamp) {
+			ParameterPool.TRACK_PRESET = TrackPreset.OnAndExitRamp;
 		} else if (source == this.buttonExperimental) {
 			ParameterPool.TRACK_PRESET = TrackPreset.Experimental;
 		}

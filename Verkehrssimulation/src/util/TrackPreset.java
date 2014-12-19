@@ -12,5 +12,6 @@ public enum TrackPreset {
 	Bottleneck,
 	SpeedLimit,
 	BanOnPassing,
+	OnAndExitRamp,
 	Experimental
 }

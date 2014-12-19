@@ -42,6 +42,9 @@ public class Nagel_Schreckenberg_Simulation {
 		case Experimental:
 			this.track = PresetPool.getExperimental();
 			break;
+		case OnAndExitRamp:
+			this.track = PresetPool.getOnAndExitRamp();
+			break;
 		case Default:
 		default:
 			this.track = PresetPool.getDefault();			

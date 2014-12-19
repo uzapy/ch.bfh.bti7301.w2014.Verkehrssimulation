@@ -215,6 +215,53 @@ public class PresetPool {
 	 * @author bublm1
 	 * @return
 	 */
+	public static Track getOnAndExitRamp() {
+		Lane lane0 = new Lane(33, 500, 0);
+		Lane lane1 = new Lane(33, 500, 1);
+		Lane lane2 = new Lane(33, 500, 2);
+
+		lane0.setAdjacentLanes(lane1, null);
+		lane1.setAdjacentLanes(lane2, lane0);
+		lane2.setAdjacentLanes(null, lane1);
+
+		Segment doomSegment0 = new DoomSegment(50,150);
+		Segment spawnSegment0 = new SpawnSegment(200,300);
+		
+		Segment notPassableSegment0 = new PassableSegment(50, 150, false, false);
+		Segment notPassableSegment1 = new PassableSegment(200, 300, true, false);
+		
+		Segment notOpenToTrafficSegment0 = new OpenToTrafficSegment(0, 50, false);
+		Segment notOpenToTrafficSegment1 = new OpenToTrafficSegment(100, 200, false);
+		Segment notOpenToTrafficSegment2 = new OpenToTrafficSegment(300, 500, false);
+		
+		Segment measureSegment0 = new MeasuringSegment(50, 450);
+		
+		lane0.addSegment(doomSegment0);
+		lane0.addSegment(spawnSegment0);
+		
+		lane0.addSegment(notPassableSegment0);
+		lane1.addSegment(notPassableSegment1);
+		
+		lane0.addSegment(notOpenToTrafficSegment0);
+		lane0.addSegment(notOpenToTrafficSegment1);
+		lane0.addSegment(notOpenToTrafficSegment2);
+
+		lane0.addSegment(measureSegment0);
+		lane1.addSegment(measureSegment0);
+		lane2.addSegment(measureSegment0);
+		
+		Track track = new Track();
+		track.addLane(lane0);
+		track.addLane(lane1);
+		track.addLane(lane2);
+		
+		return track;
+	}
+
+	/**
+	 * @author bublm1
+	 * @return
+	 */
 	public static Track getExperimental() {
 		Lane lane0 = new Lane(33, 500, 0);
 		Lane lane1 = new Lane(33, 500, 1);
