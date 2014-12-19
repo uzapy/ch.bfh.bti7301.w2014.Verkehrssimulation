@@ -6,7 +6,6 @@ import java.awt.Container;
 import javax.swing.JFrame;
 
 import model.Nagel_Schreckenberg_Simulation;
-import model.Track;
 import timer.IImpulsable;
 import timer.Impulse;
 import util.ParameterPool;

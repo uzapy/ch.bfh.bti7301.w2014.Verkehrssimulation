@@ -30,14 +30,21 @@ import util.TrackPreset;
 @SuppressWarnings("serial")
 public class ControlPanel extends JPanel implements ActionListener, ChangeListener, IMeasurementListener {
 	
-	private Button buttonDefaultPreset = new Button("Default");
-	private Button buttonBottleneckPreset = new Button("Spurverengung");
+	private Button buttonDefault = new Button("Standard");
+	private Button buttonRoadWorks = new Button("Baustelle");
+	private Button buttonBottleneck = new Button("Spurverengung");
+	private Button buttonSpeedLimit = new Button("Geschwindigkeitsbegrenzung");
+	private Button buttonBanOnPassing = new Button("Überhoverbot");
+	private Button buttonExperimental = new Button("Experimentell");
+	
 	private Button buttonZoomIn = new Button("+");
 	private Button buttonZoomOut = new Button("-");
 	private Button buttonLeft = new Button("<");
 	private Button buttonRight = new Button(">");
+	
 	private JSlider fpsSlider = new JSlider(15, 60, 37);
 	private JSlider spawnSlider = new JSlider(0, 100, 100);
+	
 	private Label trafficDensityLabel = new Label("Verkehrsdichte: 0.0");
 	private Label trafficFlowLabel = new Label("Verkehrsfluss: 0.0");
 	
@@ -90,11 +97,19 @@ public class ControlPanel extends JPanel implements ActionListener, ChangeListen
 	 * @param presetPanel
 	 */
 	private void createPresetPanel(JPanel presetPanel) {
-		buttonDefaultPreset.addActionListener(this);
-		buttonBottleneckPreset.addActionListener(this);
+		buttonDefault.addActionListener(this);
+		buttonRoadWorks.addActionListener(this);
+		buttonBottleneck.addActionListener(this);
+		buttonSpeedLimit.addActionListener(this);
+		buttonBanOnPassing.addActionListener(this);
+		buttonExperimental.addActionListener(this);
 		
-		presetPanel.add(buttonDefaultPreset);
-		presetPanel.add(buttonBottleneckPreset);
+		presetPanel.add(buttonDefault);
+		presetPanel.add(buttonRoadWorks);
+		presetPanel.add(buttonBottleneck);
+		presetPanel.add(buttonSpeedLimit);
+		presetPanel.add(buttonBanOnPassing);
+		presetPanel.add(buttonExperimental);
 	}
 
 	/**
@@ -174,10 +189,18 @@ public class ControlPanel extends JPanel implements ActionListener, ChangeListen
 			MetricToPixel.zoomOut();
 		} else if (source == this.buttonLeft) {
 			ParameterPool.moveTrackLeft();
-		} else if (source == this.buttonDefaultPreset) {
+		} else if (source == this.buttonDefault) {
 			ParameterPool.TRACK_PRESET = TrackPreset.Default;
-		} else if (source == this.buttonBottleneckPreset) {
+		} else if (source == this.buttonRoadWorks) {
+			ParameterPool.TRACK_PRESET = TrackPreset.RoadWorks;
+		} else if (source == this.buttonBottleneck) {
 			ParameterPool.TRACK_PRESET = TrackPreset.Bottleneck;
+		} else if (source == this.buttonSpeedLimit) {
+			ParameterPool.TRACK_PRESET = TrackPreset.SpeedLimit;
+		} else if (source == this.buttonBanOnPassing) {
+			ParameterPool.TRACK_PRESET = TrackPreset.BanOnPassing;
+		} else if (source == this.buttonExperimental) {
+			ParameterPool.TRACK_PRESET = TrackPreset.Experimental;
 		}
 		
 		// do the Button-Magic

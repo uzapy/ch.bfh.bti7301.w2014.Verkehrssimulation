@@ -8,7 +8,9 @@ package util;
  */
 public enum TrackPreset {
 	Default,
+	RoadWorks,
 	Bottleneck,
 	SpeedLimit,
-	BanOnPassing
+	BanOnPassing,
+	Experimental
 }

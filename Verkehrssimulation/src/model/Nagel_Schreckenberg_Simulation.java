@@ -27,8 +27,20 @@ public class Nagel_Schreckenberg_Simulation {
 	 */
 	public Nagel_Schreckenberg_Simulation(TrackPreset trackPreset) {
 		switch (trackPreset) {
+		case RoadWorks:
+			this.track = PresetPool.getRoadWorks();
+			break;
 		case Bottleneck:
 			this.track = PresetPool.getBottleneck();
+			break;
+		case SpeedLimit:
+			this.track = PresetPool.getSpeedLimit();
+			break;
+		case BanOnPassing:
+			this.track = PresetPool.getBanOnPassing();
+			break;
+		case Experimental:
+			this.track = PresetPool.getExperimental();
 			break;
 		case Default:
 		default:
