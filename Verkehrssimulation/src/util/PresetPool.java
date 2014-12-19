@@ -5,6 +5,7 @@ package util;
 
 import model.Lane;
 import model.Track;
+import segment.DoomSegment;
 import segment.MeasuringSegment;
 import segment.OpenToTrafficSegment;
 import segment.PassableSegment;
@@ -224,8 +225,10 @@ public class PresetPool {
 		lane2.setAdjacentLanes(null, lane1);
 		
 		Segment spawnSegment0 = new SpawnSegment(50,100);
+		Segment doomSegment0 = new DoomSegment(100,150);
 		
 		lane0.addSegment(spawnSegment0);
+		lane2.addSegment(doomSegment0);
 		
 		Track track = new Track();
 		track.addLane(lane0);
