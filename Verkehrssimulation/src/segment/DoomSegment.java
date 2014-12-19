@@ -1,11 +1,11 @@
 package segment;
 
-public class SpawnSegment implements Segment {
+public class DoomSegment implements Segment {
 	
 	private int start;
 	private int end;
 	
-	public SpawnSegment(int start, int end){
+	public DoomSegment(int start, int end){
 		this.start = start;
 		this.end = end;
 	}

@@ -1,7 +1,11 @@
 package model;
 
 import java.util.LinkedList;
+import java.util.List;
 
+import segment.DoomSegment;
+import segment.Segment;
+import segment.SpawnSegment;
 import skiplist.Locator;
 
 public class Car {
@@ -156,6 +160,14 @@ public class Car {
 			nextLane = lane.getLeftLane();
 		} else {
 			nextLane = lane;
+		}
+		List<Segment> doomSegments = lane.getSegments(DoomSegment.class);
+		if(!doomSegments.isEmpty()){
+			for(Segment segment : doomSegments){
+				if(position >= segment.start() && position <= segment.end()){
+					this.isToBeDeleted = true;
+				}
+			}
 		}
 		if (position + nextSpeed > nextLane.getLength()) {
 			this.isToBeDeleted = true;
