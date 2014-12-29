@@ -322,17 +322,24 @@ public class Nagel_Schreckenberg_Simulation {
 		Car nextCar = lane.getClosestAfter(car);
 		if (nextCar != null) {
 			int availableSpace = nextCar.getBackPosition() - securityDistance - car.getPosition(); // Sicherheitsabstand
-			speed = setSpeedAccordingToAvaliableSpace(speed, availableSpace);
+			
+			// Set speed according to available space
+			if (availableSpace < 0) {
+				speed = 0;
+			} else if (availableSpace < speed) {
+				speed = availableSpace;
+			}
 		}
 
 		// Rechts überholen
 		if (lane.getLeftLane() != null) {
 			Car leftCar = lane.getLeftLane().getClosestAfter(car);
 			// Es darf rechts überholt werden, wenn die Geschwindigkeit von car und leftCar kleiner gleich speedDelta ist.
-			if (leftCar != null && !(car.getSpeed() <= speedDelta && leftCar.getSpeed() <= speedDelta) && lane.isOpenToTraffic(car.getPosition())) {
-				int speedDelta = (leftCar.getPosition() + leftCar.getSpeed()) - (car.getPosition() + speed);
-				if (speedDelta < 0) {
-					speed += speedDelta;
+			boolean areBothCarsFast = car.getSpeed() >= speedDelta && leftCar != null && leftCar.getSpeed() >= speedDelta;
+			if (leftCar != null && areBothCarsFast) { // && lane.isOpenToTraffic(car.getPosition())
+				int nextPositionDifference = (leftCar.getPosition() + leftCar.getSpeed()) - (car.getPosition() + speed);
+				if (nextPositionDifference < 0) {
+					speed += nextPositionDifference;
 				}
 			}
 		}
@@ -355,22 +362,6 @@ public class Nagel_Schreckenberg_Simulation {
 		} else {
 			return car.getNextSpeed();
 		}
-	}
-
-	/**
-	 * @author bublm1
-	 * @param speed
-	 * @param availableSpace
-	 * @return
-	 */
-	private int setSpeedAccordingToAvaliableSpace(int speed, int availableSpace) {
-		if (availableSpace < 0) {
-			speed = 0;
-		} else if (availableSpace < speed) {
-			speed = availableSpace;
-		}
-
-		return speed;
 	}
 
 	/**
