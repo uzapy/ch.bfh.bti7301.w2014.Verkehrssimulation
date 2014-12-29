@@ -160,6 +160,7 @@ public class Car {
 		} else {
 			nextLane = lane;
 		}
+		
 		List<Segment> doomSegments = lane.getSegments(DoomSegment.class);
 		if(!doomSegments.isEmpty()){
 			for(Segment segment : doomSegments){
@@ -168,6 +169,7 @@ public class Car {
 				}
 			}
 		}
+		
 		if (position + nextSpeed > nextLane.getLength()) {
 			this.isToBeDeleted = true;
 		} else {

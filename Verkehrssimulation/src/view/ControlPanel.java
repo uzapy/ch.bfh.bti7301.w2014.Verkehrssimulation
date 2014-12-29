@@ -103,7 +103,7 @@ public class ControlPanel extends JPanel implements ActionListener, ChangeListen
 		buttonBottleneck.addActionListener(this);
 		buttonSpeedLimit.addActionListener(this);
 		buttonBanOnPassing.addActionListener(this);
-		buttonOnAndExitRamp.addActionListener(this);;
+		buttonOnAndExitRamp.addActionListener(this);
 		buttonExperimental.addActionListener(this);
 		
 		presetPanel.add(buttonDefault);
@@ -132,7 +132,7 @@ public class ControlPanel extends JPanel implements ActionListener, ChangeListen
 		navigationPanel.add(buttonRight, BorderLayout.EAST);
 		navigationPanel.add(buttonZoomOut, BorderLayout.SOUTH);
 		navigationPanel.add(buttonLeft, BorderLayout.WEST);
-		navigationPanel.add(new Label("NAV"), BorderLayout.CENTER);
+		navigationPanel.add(new JLabel("NAV"), BorderLayout.CENTER);
 	}
 	
 	/**

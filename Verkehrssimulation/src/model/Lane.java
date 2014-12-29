@@ -186,10 +186,6 @@ public class Lane implements Iterable<Locator<Integer, Car>> {
 		return getElementIfPresent(this.lane.max());
 	}
 	
-	public boolean containsKey(Car car) {
-		return (this.lane.find(car.getLocator().key()) != null);
-	}
-	
 	/**
 	 * @author burkt4
 	 * @param car
