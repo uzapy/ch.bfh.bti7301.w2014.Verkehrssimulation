@@ -271,12 +271,13 @@ public class Nagel_Schreckenberg_Simulation {
 			} else {
 				maxNextPosition = lane.getLength();
 			}
+			
 			if (closestBefore != null) {
 				minNextPosition = closestBefore.getPosition() + closestBefore.getSpeed() + this.speedDelta + securityDistance;
-				//Wenn auf nicht einer Einfahrspur wird mehr Rücksicht genommen auf andere Verkersteilnehmer 
-				if(!car.getLane().isOpenToTraffic(car.getPosition())){
+				// Wenn auf nicht einer Einfahrspur wird mehr Rücksicht genommen auf andere Verkersteilnehmer
+				if (car.getLane().isOpenToTraffic(car.getPosition())) {
 					minNextPosition += closestBefore.getSpeed();
-				} 
+				}
 			} else {
 				minNextPosition = car.getPosition();
 			}
