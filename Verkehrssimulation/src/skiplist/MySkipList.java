@@ -218,10 +218,6 @@ public class MySkipList<K extends Comparable<? super K>, E> implements OrderedDi
 		size--;
 	}
 
-
-	/**
-	 * 
-	 */
 	private void shrink() {
 		// System.out.println("shrink called");
 		while (height>2 && topLeft.below.next==topRight.below){
