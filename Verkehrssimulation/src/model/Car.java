@@ -161,6 +161,7 @@ public class Car {
 			nextLane = lane;
 		}
 		
+		// TODO: Nach Nagel_Schreckenberg verschieben
 		List<Segment> doomSegments = lane.getSegments(DoomSegment.class);
 		if(!doomSegments.isEmpty()){
 			for(Segment segment : doomSegments){

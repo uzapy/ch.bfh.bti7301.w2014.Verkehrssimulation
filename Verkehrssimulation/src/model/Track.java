@@ -12,24 +12,24 @@ public class Track {
 	
 	private ArrayList<Car> oldCars;
 	private ArrayList<Car> newCars;
-	private ArrayList<Lane> Lanes;
+	private ArrayList<Lane> lanes;
 		
 	public Track(){
-		this.Lanes = new ArrayList<Lane>();	
+		this.lanes = new ArrayList<Lane>();	
 		this.newCars = new ArrayList<Car>();
 		this.oldCars = new ArrayList<Car>();
 	}
 	
 	public void addLane(Lane lane){
-		this.Lanes.add(lane);
+		this.lanes.add(lane);
 	}
 	
 	public Lane getLane(int Lane){
-		return this.Lanes.get(Lane);
+		return this.lanes.get(Lane);
 	}
 	
 	public ArrayList<Lane> getLanes() {
-		return this.Lanes;
+		return this.lanes;
 	}
 	
 	public ArrayList<Car> getOldCars() {

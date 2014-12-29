@@ -16,7 +16,8 @@ import util.TrackPreset;
  * @author burkt4
  */
 public class Nagel_Schreckenberg_Simulation {
-
+	// TODO: umbenennen nach Simulation.java?
+	
 	private Track track;
 	private int speedDelta = 3;			// Standardbeschleunigung in Meter pro Sekunde
 	private int securityDistance = 1;	// Sicherheitsabstand
@@ -84,8 +85,8 @@ public class Nagel_Schreckenberg_Simulation {
 						
 						Car randomCar = RandomPool.getNewCar(lane);
 						randomCar.setPosition(segment.start() + randomCar.getLength());
-						Car afterRandomCar = lane.getClosestAfter(randomCar.getPosition());
-						Car beforeRandomCar = lane.getClosestBefore(randomCar.getPosition());
+						Car afterRandomCar = lane.getClosestAfter(randomCar);
+						Car beforeRandomCar = lane.getClosestBefore(randomCar);
 
 						if (afterRandomCar != null && beforeRandomCar != null) {
 							if (((afterRandomCar.getBackPosition() - randomCar.getPosition()) > 10)
@@ -128,7 +129,7 @@ public class Nagel_Schreckenberg_Simulation {
 				// boolean isNextSpeedSmaller = car.getSpeed() > car.getNextSpeed();
 				if ((isPassableLeft) && ((isFasterThanNextCar && isNextCarClose && !hasChangedLanesBefore) || hasToChangeLane)) {
 					// Kann ich überholen?
-					boolean canChangeToLeftLane = IsEnoughSpaceBetweenBeforeAndAfter(lane.getLeftLane(), car);
+					boolean canChangeToLeftLane = isEnoughSpaceBetweenBeforeAndAfter(lane.getLeftLane(), car);
 					int speedOnLeftLane = calculateNextSpeed(lane.getLeftLane(), car);
 					if (canChangeToLeftLane && speedOnLeftLane > 0) {
 						// Überholen
@@ -142,7 +143,7 @@ public class Nagel_Schreckenberg_Simulation {
 				
 				if ((isPassableRight && ((canKeepCurentSpeed && !hasChangedLanesBefore) || hasToChangeLane)) && !isGoingToChangeLane) {
 					// Kann ich zurück auf die slow lane?
-					boolean canChangeToRightLane = IsEnoughSpaceBetweenBeforeAndAfter(lane.getRightLane(), car);
+					boolean canChangeToRightLane = isEnoughSpaceBetweenBeforeAndAfter(lane.getRightLane(), car);
 					int speedOnRightLane = calculateNextSpeed(lane.getRightLane(), car);
 					if (canChangeToRightLane && speedOnRightLane > 0) {
 						// Zurück auf die rechte Spur
@@ -246,7 +247,7 @@ public class Nagel_Schreckenberg_Simulation {
 	 * @param car
 	 * @return
 	 */
-	private boolean IsEnoughSpaceBetweenBeforeAndAfter(Lane lane, Car car) {
+	private boolean isEnoughSpaceBetweenBeforeAndAfter(Lane lane, Car car) {
 		boolean hasCars = lane.iterator().hasNext();
 
 		if (!(lane.isOpenToTraffic(car.getPosition()))) {
