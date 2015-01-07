@@ -11,14 +11,14 @@ public class Car {
 
 	public static final int WIDTH = 2;	// Breite eines Autos in Meter
 	private int id;
-	private double trödelFactor;
+	private double trödelFactor;		// Trödel-Faktor zwischen 0.2 und 0.5
 	private int position;	 			// Position in Meter
 	private int nextPosition;			// Zukünftige Position in Meter
 	private int speed; 					// Gesschwindigkeit in Meter pro Sekunde
 	private int nextSpeed;				// Zukünftige Geschwindigkeit in Meter pro Sekunde
 	private int length;					// Länge des Autos in Meter
-	private Lane lane;
-	private Lane nextLane;
+	private Lane lane;					// Aktuell befahrene Spur
+	private Lane nextLane;				// Zukünftig befahrene Spur
 	private boolean blinkLeft;
 	private boolean blinkRight;
 	private boolean isMoved;
@@ -70,16 +70,16 @@ public class Car {
 		return this.position - this.length;
 	}
 	
+	public int getNextBackPosition() {
+		return this.nextPosition - this.length;
+	}
+	
 	public int getNextPosition() {
 		return nextPosition;
 	}
 	
 	public void setNextPosition(int nextPosition) {
 		this.nextPosition = nextPosition;
-	}
-	
-	public int getNextBackPosition() {
-		return this.nextPosition - this.length;
 	}
 	
 	public int getSpeed() {
@@ -162,10 +162,11 @@ public class Car {
 		}
 		
 		// TODO: Nach Nagel_Schreckenberg verschieben
+		// Falls sich das Auto auf eine Ausfahrtsstrecke (DoomSegment) auffährt, soll es im nächsten Schritt gelöscht werden.
 		List<Segment> doomSegments = lane.getSegments(DoomSegment.class);
-		if(!doomSegments.isEmpty()){
-			for(Segment segment : doomSegments){
-				if(getBackPosition() >= segment.end() - lane.getMaxVelocity(position) && position <= segment.end()){
+		if (!doomSegments.isEmpty()) {
+			for (Segment segment : doomSegments) {
+				if (getBackPosition() >= segment.end() - lane.getMaxVelocity(position) && position <= segment.end()) {
 					this.isToBeDeleted = true;
 				}
 			}

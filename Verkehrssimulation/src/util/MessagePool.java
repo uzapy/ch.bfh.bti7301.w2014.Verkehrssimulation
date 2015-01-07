@@ -5,12 +5,11 @@ package util;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
 
 /**
  * @author bublm1
  */
-public class MessagePool extends Observable {
+public class MessagePool {
 	
 	private static List<IMeasurementListener> measurmentListeners = new ArrayList<IMeasurementListener>();
 
