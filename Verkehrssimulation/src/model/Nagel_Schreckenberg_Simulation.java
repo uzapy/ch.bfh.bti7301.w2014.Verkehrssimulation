@@ -85,8 +85,8 @@ public class Nagel_Schreckenberg_Simulation {
 						
 						Car randomCar = RandomPool.getNewCar(lane);
 						randomCar.setPosition(segment.start() + randomCar.getLength());
-						Car afterRandomCar = lane.getClosestAfter(randomCar);
-						Car beforeRandomCar = lane.getClosestBefore(randomCar);
+						Car afterRandomCar = lane.getClosestAfter(randomCar.getPosition());
+						Car beforeRandomCar = lane.getClosestBefore(randomCar.getPosition());
 
 						if (afterRandomCar != null && beforeRandomCar != null) {
 							if (((afterRandomCar.getBackPosition() - randomCar.getPosition()) > 10)
