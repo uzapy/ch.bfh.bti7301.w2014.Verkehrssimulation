@@ -9,9 +9,6 @@ import util.MetricToPixel;
 import util.ParameterPool;
 import util.RandomPool;
 
-/**
- * @author bublm1
- */
 @SuppressWarnings("serial")
 public class CarPanel extends AbstractPanel<Car> {
 
@@ -22,6 +19,7 @@ public class CarPanel extends AbstractPanel<Car> {
 	private Color color;
 
 	/**
+	 * Zeichnet ein Auto
 	 * @author bublm1
 	 * @param car
 	 */
@@ -34,9 +32,6 @@ public class CarPanel extends AbstractPanel<Car> {
 		this.color = RandomPool.getNewColor();
 	}
 
-	/**
-	 * @author bublm1
-	 */
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 
@@ -47,18 +42,22 @@ public class CarPanel extends AbstractPanel<Car> {
 		int length = MetricToPixel.scale(car.getLength());
 		int width = MetricToPixel.scale(Car.WIDTH);
 		
+		// Auto als Rechteck
 		g.fillRect(xPosition, yPosition, length, width);
 		
+		// ID des Autos
 //		g.setColor(Color.MAGENTA);
 //		g.drawString(Integer.toString(this.car.getId()),
 //				MetricToPixel.scale(this.xSimPosition + this.car.getLength()),
 //				MetricToPixel.scale(trackOffset) + MetricToPixel.scale(this.ySimPosition + Car.WIDTH));
 		
+		// Geschwindigkeit
 		g.setColor(Color.CYAN);
 		g.drawString(Integer.toString(this.car.getNextSpeed()),
 				MetricToPixel.scale(this.xSimPosition),
 				MetricToPixel.scale(trackOffset) + MetricToPixel.scale(this.ySimPosition + Car.WIDTH));
 		
+		// Bliner des Autos
 		if (car.isBlinkingLeft() || car.isBlinkingRight()) {
 			g.setColor(Color.ORANGE);
 			int turnSignalSize = MetricToPixel.getTurnSignalSize();
@@ -76,8 +75,9 @@ public class CarPanel extends AbstractPanel<Car> {
 	}
 
 	/**
-	 * @author bublm1
-	 * @param simulationStep
+	 * Zeichnet einen Zwischenschritt
+	 * @author bublm1, burkt4
+	 * @param simulationStep Nummer des Zwischenschritts
 	 */
 	public void performSimStep(int simStep) {
 		
@@ -86,6 +86,7 @@ public class CarPanel extends AbstractPanel<Car> {
 
 		this.ySimPosition = getLaneOffset(car.getLane().getFastLaneIndex()) * Lane.WIDTH  + (Lane.WIDTH - Car.WIDTH) / 2;
 		
+		// Falls das Auto die Spur wechselt
 		if (getLaneOffset(this.car.getNextLane().getFastLaneIndex()) !=
 			getLaneOffset(this.car.getLane().getFastLaneIndex())) {
 			

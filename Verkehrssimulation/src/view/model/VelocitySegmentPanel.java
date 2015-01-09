@@ -1,6 +1,3 @@
-/**
- * 
- */
 package view.model;
 
 import java.awt.Color;
@@ -13,18 +10,15 @@ import segment.Segment;
 import segment.VelocitySegment;
 import util.MetricToPixel;
 
-/**
- * @author bublm1
- */
 @SuppressWarnings("serial")
 public class VelocitySegmentPanel extends SegmentPanel {
 	
 	public static BufferedImage MAX = Resources.getImage("max");
 	
 	/**
+	 * Zeichnet ein Segment mit einer Geschwindigkeitsbegrenzung
 	 * @author bublm1
 	 * @param segment
-	 * @param numberOfLanes
 	 * @param fastLaneOffset
 	 * @param trackOffset
 	 */
@@ -39,6 +33,7 @@ public class VelocitySegmentPanel extends SegmentPanel {
 		int xPosition = MetricToPixel.scale(this.segment.start());
 		int yPosition = MetricToPixel.scale(this.trackOffset + Lane.WIDTH * this.fastLaneOffset);
 		
+		// Zeichnet ein Verkehrsschild mit der Höchstgeschwindigkeit
 		g.drawImage(MAX, xPosition, yPosition, MetricToPixel.getImageSize(), MetricToPixel.getImageSize(), this);
 		
 		int xStringPosition = xPosition + MetricToPixel.SCALING_FACTOR;

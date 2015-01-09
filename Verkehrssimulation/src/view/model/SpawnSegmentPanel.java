@@ -1,6 +1,3 @@
-/**
- * 
- */
 package view.model;
 
 import java.awt.Color;
@@ -12,15 +9,13 @@ import resources.Resources;
 import segment.Segment;
 import util.MetricToPixel;
 
-/**
- * @author bublm1
- */
 @SuppressWarnings("serial")
 public class SpawnSegmentPanel extends SegmentPanel {
 
 	public static BufferedImage ON_RAMP = Resources.getImage("on-ramp");
 
 	/**
+	 * Zeichnet ein Einfahrts-Segment
 	 * @author bublm1
 	 * @param segment
 	 * @param fastLaneOffset
@@ -36,6 +31,7 @@ public class SpawnSegmentPanel extends SegmentPanel {
 		int xPosition = MetricToPixel.scale(this.segment.start());
 		int yPosition = MetricToPixel.scale(this.trackOffset + Lane.WIDTH * this.fastLaneOffset);
 		
+		// Zeichnet ein Einfahrts-Schild
 		g.drawImage(ON_RAMP, xPosition, yPosition, MetricToPixel.getImageSize(), MetricToPixel.getImageSize(), this);
 	}
 

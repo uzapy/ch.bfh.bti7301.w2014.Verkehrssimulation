@@ -1,6 +1,3 @@
-/**
- * 
- */
 package view.model;
 
 import java.awt.Color;
@@ -12,16 +9,14 @@ import resources.Resources;
 import segment.Segment;
 import util.MetricToPixel;
 
-/**
- * @author bublm1
- */
 @SuppressWarnings("serial")
 public class MeasuringSegmentPanel extends SegmentPanel {
 
 	public static BufferedImage MEASUREMENT = Resources.getImage("measurement");
 	
 	/**
-	 * @author bublm1
+	 * Zeichnet ein Messsegment
+	 * @author stahr2
 	 * @param segment
 	 * @param fastLaneOffset
 	 * @param trackOffset
@@ -36,6 +31,7 @@ public class MeasuringSegmentPanel extends SegmentPanel {
 		int xPosition = MetricToPixel.scale(this.segment.start());
 		int yPosition = MetricToPixel.scale(this.trackOffset + Lane.WIDTH * this.fastLaneOffset);
 		
+		// Zeichnet ein Kamera-Symbol
 		g.drawImage(MEASUREMENT, xPosition, yPosition, MetricToPixel.getImageSize(), MetricToPixel.getImageSize(), this);
 	}
 

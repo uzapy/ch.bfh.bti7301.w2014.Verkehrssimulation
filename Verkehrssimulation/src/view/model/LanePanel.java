@@ -1,6 +1,3 @@
-/**
- * 
- */
 package view.model;
 
 import java.awt.Color;
@@ -11,9 +8,6 @@ import model.Lane;
 import resources.Resources;
 import util.MetricToPixel;
 
-/**
- * @author bublm1
- */
 @SuppressWarnings("serial")
 public class LanePanel extends AbstractPanel<Lane>  {
 	
@@ -21,6 +15,7 @@ public class LanePanel extends AbstractPanel<Lane>  {
 	private Lane lane = super.object;
 
 	/**
+	 * Zeichent eine Fahrspur
 	 * @author bublm1
 	 * @param lane
 	 */
@@ -31,6 +26,7 @@ public class LanePanel extends AbstractPanel<Lane>  {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		
+		// Farbe der Spur berechenen
 		float invertedFastlaneIndex = 1.0F / (lane.getFastLaneIndex() + 1);
 		float grayComponent = invertedFastlaneIndex;
 		
@@ -41,12 +37,15 @@ public class LanePanel extends AbstractPanel<Lane>  {
 		int length = MetricToPixel.scale(lane.getLength());
 		int width = MetricToPixel.scale(Lane.WIDTH);
 		
+		// Spur als langes Rechteck
 		g.fillRect(xPosition, yPosition, length, width);
+		
 		// TODO: add gschtrichleti linie
+		
+		// Zeichnet ein Verkehrsschild mit der Höchstgeschwindigkeit
 		g.drawImage(MAX, xPosition, yPosition, MetricToPixel.getImageSize(), MetricToPixel.getImageSize(), this);
 		
 		g.setColor(Color.BLACK);
-//		g.setFont(new Font("Arial", Font.PLAIN, 2 * MetricToPixel.SCALING_FACTOR)); 
 		
 		int xStringPosition = xPosition + MetricToPixel.SCALING_FACTOR;
 		int yStringPosition = yPosition + (int)((float)2.75 * (float)MetricToPixel.SCALING_FACTOR);

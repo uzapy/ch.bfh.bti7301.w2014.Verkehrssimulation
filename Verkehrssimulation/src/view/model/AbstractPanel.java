@@ -1,13 +1,7 @@
-/**
- * 
- */
 package view.model;
 
 import javax.swing.JPanel;
 
-/**
- * @author bublm1
- */
 @SuppressWarnings("serial")
 public abstract class AbstractPanel<T> extends JPanel {
 
@@ -16,6 +10,7 @@ public abstract class AbstractPanel<T> extends JPanel {
 	protected int fastLaneOffset; 
 	
 	/**
+	 * Grundlegende Struktur der anzuzeigenden Objekte
 	 * @author bublm1
 	 * @param car
 	 * @param fastLaneOffset
