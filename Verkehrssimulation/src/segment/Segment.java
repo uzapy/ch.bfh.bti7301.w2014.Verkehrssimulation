@@ -4,6 +4,7 @@
 package segment;
 
 /**
+ * Interface für ein Segment - dieses enthält in jedem Fall eine Anfangs- und Endposition
  * @author bublm1
  */
 public interface Segment {

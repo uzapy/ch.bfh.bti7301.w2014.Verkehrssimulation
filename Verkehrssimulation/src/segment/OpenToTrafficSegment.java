@@ -4,8 +4,10 @@
 package segment;
 
 /**
+ * Segment um eine Strasse zu sperren
  * @author burkt4
  */
+
 public class OpenToTrafficSegment implements Segment {
 
 	private int start;

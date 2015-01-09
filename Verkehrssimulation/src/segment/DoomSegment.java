@@ -1,5 +1,10 @@
 package segment;
 
+/**
+ * Repräsentiert eine Ausfahrt
+ * @author stahr2
+ */
+
 public class DoomSegment implements Segment {
 	
 	private int start;

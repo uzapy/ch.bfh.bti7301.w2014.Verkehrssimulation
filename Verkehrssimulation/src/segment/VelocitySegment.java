@@ -4,8 +4,10 @@
 package segment;
 
 /**
- * @author bublm1
+ * Repräsentiert ein Segment um die Maximalgeschwindigkeit zu beschränken
+ * @author stahr2
  */
+
 public class VelocitySegment implements Segment {
 	
 	private int start;
@@ -14,10 +16,9 @@ public class VelocitySegment implements Segment {
 
 	/**
 	 * @author bublm1
-	 * @param i
-	 * @param j
-	 * @param maxvelocity2
-	 * @param k
+	 * @param start			Anfang des Segmentes
+	 * @param end			Ende des Segmentes	
+	 * @param maxvelocity	Maximalgeschwindigkeit auf diesem Segment
 	 */
 	public VelocitySegment(int start, int end, int maxVelocity) {
 		this.start = start;

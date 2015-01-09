@@ -11,6 +11,7 @@ import skiplist.Locator;
 import skiplist.MySkipList;
 
 /**
+ * Kollektion aller Segmente
  * @author bublm1
  */
 public class SegmentCollection {
@@ -29,7 +30,7 @@ public class SegmentCollection {
 	 * @author bublm1,burkt4, stahr2
 	 * @param position
 	 * @param segmentType
-	 * @return
+	 * @return Liste aller Segmente des Typs segmentType
 	 */
 	public Segment get(int position, @SuppressWarnings("rawtypes") Class segmentClass) {
 		
@@ -54,6 +55,7 @@ public class SegmentCollection {
 	}
 
 	/**
+	 * Fügt ein neues Segment in die Segmentkollektion ein
 	 * @author bublm1,burkt4
 	 * @param segment
 	 */
@@ -81,7 +83,7 @@ public class SegmentCollection {
 
 	/**
 	 * @author bublm1
-	 * @return
+	 * @return Eine Liste aller Segmente des Typs segmentClass
 	 */
 	@SuppressWarnings("rawtypes")
 	public List<Segment> getSegments(Class segmentClass) {

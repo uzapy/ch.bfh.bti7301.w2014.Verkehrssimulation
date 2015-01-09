@@ -1,5 +1,10 @@
 package segment;
 
+/**
+ * Repräsentiert eine Einfahrt
+ * @author stahr2
+ */
+
 public class SpawnSegment implements Segment {
 	
 	private int start;
