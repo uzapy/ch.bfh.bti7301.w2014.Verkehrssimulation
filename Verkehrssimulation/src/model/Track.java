@@ -3,17 +3,19 @@ package model;
 import java.util.ArrayList;
 
 /**
- * @author stahr2
- * 
  * Repräsentiert die Strecke
- *
+ * @author stahr2
  */
 public class Track {
 	
-	private ArrayList<Car> oldCars;
-	private ArrayList<Car> newCars;
-	private ArrayList<Lane> lanes;
-		
+	private ArrayList<Car> oldCars;	// Autos die im nächsten Schritt gelöscht werden
+	private ArrayList<Car> newCars; // Autos die im nächsten Schritt in eine Spur fahren
+	private ArrayList<Lane> lanes;	// Kollektion aller Autobahn-Spuren
+
+	/**
+	 * Autobahn mit mehreren Spuren
+	 * @author bublm1
+	 */
 	public Track(){
 		this.lanes = new ArrayList<Lane>();	
 		this.newCars = new ArrayList<Car>();
@@ -32,24 +34,24 @@ public class Track {
 		return this.lanes;
 	}
 	
-	public ArrayList<Car> getOldCars() {
-		return oldCars;
-	}
-	
 	public void addToOldCars(Car oldCar){
 		this.oldCars.add(oldCar);
 	}
 	
-	public ArrayList<Car> getNewCars() {
-		return newCars;
+	public ArrayList<Car> getOldCars() {
+		return oldCars;
+	}
+	
+	public void clearOldCars(){
+		this.oldCars.clear();
 	}
 	
 	public void addToNewCars(Car newCar){
 		this.newCars.add(newCar);		
 	}
 	
-	public void clearOldCars(){
-		this.oldCars.clear();
+	public ArrayList<Car> getNewCars() {
+		return newCars;
 	}
 	
 	public void clearNewCars(){

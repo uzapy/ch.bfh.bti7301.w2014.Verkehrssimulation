@@ -1,6 +1,3 @@
-/**
- * 
- */
 package model;
 
 import java.util.List;
@@ -13,12 +10,13 @@ import util.RandomPool;
 import util.TrackPreset;
 
 /**
+ * Die Simulation
  * @author burkt4
  */
 public class Nagel_Schreckenberg_Simulation {
 	// TODO: umbenennen nach Simulation.java?
 	
-	private Track track;
+	private Track track;				// 
 	private int speedDelta = 3;			// Standardbeschleunigung in Meter pro Sekunde
 	private int securityDistance = 1;	// Sicherheitsabstand
 

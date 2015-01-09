@@ -7,6 +7,10 @@ import segment.DoomSegment;
 import segment.Segment;
 import skiplist.Locator;
 
+/**
+ * Repräsentiert ein Auto
+ * @author bublm1
+ */
 public class Car {
 
 	public static final int WIDTH = 2;	// Breite eines Autos in Meter

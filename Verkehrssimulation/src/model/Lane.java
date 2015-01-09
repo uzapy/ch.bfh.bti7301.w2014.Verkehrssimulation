@@ -14,8 +14,8 @@ import skiplist.Locator;
 import skiplist.MySkipList;
 
 /**
- * @author stahr2
  * Repräsentiert die Fahrspur
+ * @author stahr2
  */
 public class Lane implements Iterable<Locator<Integer, Car>> {
 	public static final int WIDTH = 4;		// Breite der Fahrspur in Metern
