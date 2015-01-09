@@ -368,8 +368,10 @@ public class MySkipList<K extends Comparable<? super K>, E> implements OrderedDi
 			
 		};
 	}
-/*
+/*	Funktion um den Schlüssel eines Skiplistelementes anzupassen, ohne dieses neu in die Liste hinzuzufügen
  * @author	burkt4
+ * @param	locator		Locator des Elementes, welches man Updaten muss
+ * @param	newKey		Neuer Schlüssel des Elementes
  */
 	public void updateKey(Locator<K, E> locator, K newKey){
 		SLNode n = (SLNode) locator;

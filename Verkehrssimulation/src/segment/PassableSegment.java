@@ -2,7 +2,7 @@ package segment;
 
 /**
  * Segment, um eine Strasse nicht für ein Überholmanöver zuzulassen
- * @author stahr2, burkt4
+ * @author stahr2, burkt4, bublm1
  */
 
 public class PassableSegment implements Segment {
