@@ -1,6 +1,3 @@
-/**
- * 
- */
 package view;
 
 import java.awt.BorderLayout;
@@ -25,6 +22,7 @@ import util.ParameterPool;
 import util.TrackPreset;
 
 /**
+ * Visuelle Repräsentation der Steuertafel
  * @author bublm1
  */
 @SuppressWarnings("serial")
@@ -50,6 +48,7 @@ public class ControlPanel extends JPanel implements ActionListener, ChangeListen
 	private Label trafficFlowLabel = new Label("Verkehrsfluss: 0.0");
 	
 	/**
+	 * Die Steuertafel erstellen
 	 * @author bublm1
 	 */
 	public ControlPanel() {
@@ -94,6 +93,7 @@ public class ControlPanel extends JPanel implements ActionListener, ChangeListen
 	}
 
 	/**
+	 * Knöpfe für die Situations-Vorlagen
 	 * @author bublm1
 	 * @param presetPanel
 	 */
@@ -116,6 +116,7 @@ public class ControlPanel extends JPanel implements ActionListener, ChangeListen
 	}
 
 	/**
+	 * Navigation: Zoom und Links und Rechts
 	 * @author bublm1
 	 * @param navigationPanel
 	 */
@@ -136,6 +137,7 @@ public class ControlPanel extends JPanel implements ActionListener, ChangeListen
 	}
 	
 	/**
+	 * Scheiberegler mit Bezeichnungen
 	 * @author bublm1
 	 * @param parameterPanel
 	 */
@@ -167,6 +169,7 @@ public class ControlPanel extends JPanel implements ActionListener, ChangeListen
 	}
 	
 	/**
+	 * Anzeige der Messungen
 	 * @author bublm1
 	 * @param measurmentPanel
 	 */
