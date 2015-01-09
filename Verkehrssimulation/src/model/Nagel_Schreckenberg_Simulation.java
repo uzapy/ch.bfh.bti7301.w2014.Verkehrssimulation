@@ -16,13 +16,14 @@ import util.TrackPreset;
 public class Nagel_Schreckenberg_Simulation {
 	// TODO: umbenennen nach Simulation.java?
 	
-	private Track track;				// 
+	private Track track;				// Die Autobahn mit mehreren Spuren
 	private int speedDelta = 3;			// Standardbeschleunigung in Meter pro Sekunde
 	private int securityDistance = 1;	// Sicherheitsabstand
 
 	/**
+	 * Die Simulation initialisiert mit einem Autobahn-Vorlage
 	 * @author bublm1
-	 * @param trackPreset 
+	 * @param trackPreset	Situations-Vorlage
 	 */
 	public Nagel_Schreckenberg_Simulation(TrackPreset trackPreset) {
 		switch (trackPreset) {
@@ -51,21 +52,27 @@ public class Nagel_Schreckenberg_Simulation {
 		}
 	}
 
+	/**
+	 * Bewegt die Autos um einen Schritt und berechnet den zukünftigen Zustand aller Autos (Position, Spur und Geschwindigkeit)
+	 * @author bublm1, burkt4, stahr2
+	 */
 	public void performStep() {
 		for (Lane lane : this.track.getLanes()) {
 			for (Locator<Integer, Car> carLocator : lane) {
 				Car car = carLocator.element();
 
+				// Autos auf Mess-Segment in die Messung hinzufügen und Autos ausserhalb des Mess-Segments von der Messung ausschliessen
 				if (lane.isMeasurable(car.getPosition())) {
 					lane.includeInMeasurement(car);
 				} else {
 					lane.excludeFromMeasurement(car);
 				}
 
+				// Auto bewegen
 				moveCar(lane, car);
 			}
 
-			// Zufällig neues Zufälliges Auto hinzufügen, wenn es Platz hat.
+			// Zufällig neues zufälliges Auto hinzufügen, wenn es Platz hat.
 			if (RandomPool.isSpawning()) {
 				boolean isFirstCarFarEnough = lane.getFirstCar() != null && lane.getFirstCar().getBackPosition() > 20;
 				boolean isLaneOpenToTraffic = lane.isOpenToTraffic(0);
@@ -77,6 +84,7 @@ public class Nagel_Schreckenberg_Simulation {
 					this.track.addToNewCars(randomCar);
 				}
 				
+				// Neue zufällige Autos auch auf SpawnSegments hunzufügen, wenn es Platz hat
 				List<Segment> spawnSegments = lane.getSegments(SpawnSegment.class);
 				if (!spawnSegments.isEmpty()) {
 					for (Segment segment : spawnSegments) {
@@ -109,10 +117,11 @@ public class Nagel_Schreckenberg_Simulation {
 			for (Locator<Integer, Car> carLocator : lane) {
 				Car car = carLocator.element();
 				car.setMoved(false);
+				// Potentiellen nächsten Zustand berechnen
 				car.setNext(calculateNextSpeed(car.getLane(), car), false, false);
 
 				Car nextCar = car.getLane().getNextCar(car);
-				if (nextCar == null) {
+				if (nextCar == null) { // TODO: weg mit diesen If
 					nextCar = car.getLane().getFirstCar();
 				}
 
@@ -124,7 +133,6 @@ public class Nagel_Schreckenberg_Simulation {
 				boolean hasToChangeLane = !lane.isOpenToTraffic(car.getPosition());
 				boolean isGoingToChangeLane = false;
 				
-				// boolean isNextSpeedSmaller = car.getSpeed() > car.getNextSpeed();
 				if ((isPassableLeft) && ((isFasterThanNextCar && isNextCarClose && !hasChangedLanesBefore) || hasToChangeLane)) {
 					// Kann ich überholen?
 					boolean canChangeToLeftLane = isEnoughSpaceBetweenBeforeAndAfter(lane.getLeftLane(), car);
@@ -157,13 +165,20 @@ public class Nagel_Schreckenberg_Simulation {
 			}
 		}
 
+		// Überholkonflikte auflösen
 		clearConflicts();
 
 	}
 
+	/**
+	 * Überholkonflikte auflösen. Z.B.: Ein auto auf der linken Spur und ein Auto auf der rechten Spur wollen beid auf die mittlere Spur wechseln.
+	 * Dieser Konflikt wird so gelöst, dass nur ein Auto die Spur wechseln darf. Das andere Auto muss auf seiner aktuellen Spur weiterfahren.
+	 * @author burkt4, stahr2
+	 */
 	private void clearConflicts() {
+		// Von der obersten zur untersten Lane
 		for (Lane lane : this.track.getLanes()) {
-
+			// Vom Vordersten Auto zum hintersten
 			Car car = lane.getLastCar();
 			while (car != null) {
 
@@ -174,14 +189,15 @@ public class Nagel_Schreckenberg_Simulation {
 					if (leftlane != null) {
 
 						Car blinkingRightCar = leftlane.getLastCar();
-
+						// durch alle Autos auf der LeftLane iterieren
 						while (blinkingRightCar != null) {
-
+							// Nur nach rechts blinkenede Autos berücksichtigen
 							if (blinkingRightCar.isBlinkingRight() && blinkingRightCar.getId() != car.getId()) {
-
+								// Falls die zwei Autos nach einem Spurwechsel kollidieren würden
 								if (blinkingRightCar.getNextBackPosition() <= car.getNextPosition()
 										&& blinkingRightCar.getNextPosition() >= car.getNextBackPosition()) {
 									int blinkingRightcarspeed = calculateNextSpeed(blinkingRightCar.getLane(), blinkingRightCar);
+									// Das Auto auf der linken Spur vom Überholen hindern
 									blinkingRightCar.setNext(blinkingRightcarspeed, false, false);
 								}
 							}
@@ -192,14 +208,15 @@ public class Nagel_Schreckenberg_Simulation {
 					if (rightLane != null) {
 
 						Car blinkingLeftCar = rightLane.getLastCar();
-
+						// durch alle Autos auf der RightLane iterieren
 						while (blinkingLeftCar != null) {
-
+							// Nur nach links blinkenede Autos berücksichtigen
 							if (blinkingLeftCar.isBlinkingLeft() && blinkingLeftCar.getId() != car.getId()) {
-
+								// Falls die zwei Autos nach einem Spurwechsel kollidieren würden
 								if (blinkingLeftCar.getNextBackPosition() <= car.getNextPosition()
 										&& blinkingLeftCar.getNextPosition() >= car.getNextBackPosition()) {
 									int blinkingLeftcarspeed = calculateNextSpeed(blinkingLeftCar.getLane(), blinkingLeftCar);
+									// Das Auto auf der rechten Spur vom Überholen hindern
 									blinkingLeftCar.setNext(blinkingLeftcarspeed, false, false);
 								}
 							}
@@ -213,7 +230,14 @@ public class Nagel_Schreckenberg_Simulation {
 		}
 	}
 
+	/**
+	 * Bewegt das auto auf der Spur um einen Schritt
+	 * @author bublm1, burkt4, stahr2
+	 * @param lane
+	 * @param car	
+	 */
 	private void moveCar(Lane lane, Car car) {
+		// Das Auto löschen, wenn es die Strecke verlassen hat
 		if (car.isToBeDeleted()) {
 			lane.removeCar(car);
 			this.track.addToOldCars(car);
@@ -225,6 +249,7 @@ public class Nagel_Schreckenberg_Simulation {
 				car.setPosition(car.getNextPosition());
 				car.setLane(car.getNextLane());
 
+				// Falls die Spur gewechselt wurde, das Auto entfernt und auf der neuen Spur hinzugefügt. Ansinsten Soft-Update
 				if ((lane.getFastLaneIndex() != car.getNextLane().getFastLaneIndex())) {
 					lane.removeCar(car);
 					car.getLane().addCar(car);
@@ -240,22 +265,26 @@ public class Nagel_Schreckenberg_Simulation {
 	}
 
 	/**
-	 * @author bublm1
-	 * @param leftLane
+	 * Prüfen ob nach einem Spurwchsel genügend Platz auf der neuen Spur ist
+	 * @author bublm1, burkt4, stahr2
+	 * @param lane
 	 * @param car
-	 * @return
+	 * @return true wenn es genügent platz hat
 	 */
 	private boolean isEnoughSpaceBetweenBeforeAndAfter(Lane lane, Car car) {
 		boolean hasCars = lane.iterator().hasNext();
 
+		// Ist die Spur befahrbar?
 		if (!(lane.isOpenToTraffic(car.getPosition()))) {
 			return false;
 		}
 
 		if (hasCars) {
+			// Das Auto das sich unmittelbar vor dem aktuellen befindet.
 			Car closestAfter = lane.getClosestAfter(car);
-			
+			// Das Auto das sich unmittelbar hinter dem aktuellen befindet.
 			Car closestBefore;
+			
 			int maxNextPosition;
 			int minNextPosition;
 
@@ -271,6 +300,7 @@ public class Nagel_Schreckenberg_Simulation {
 				maxNextPosition = lane.getLength();
 			}
 			
+			// Potentielle Position des hinteren Autos berechnen
 			if (closestBefore != null) {
 				minNextPosition = closestBefore.getPosition() + closestBefore.getSpeed() + this.speedDelta + securityDistance;
 				// Wenn auf nicht einer Einfahrspur wird mehr Rücksicht genommen auf andere Verkersteilnehmer
@@ -281,7 +311,9 @@ public class Nagel_Schreckenberg_Simulation {
 				minNextPosition = car.getPosition();
 			}
 
+			// Potentielle (Heck-)Position des vorderen Autos berechnen
 			int currentCarTemporaryNextBackPosition = car.getBackPosition() + calculateNextSpeed(lane, car);
+			
 			int gapLength = maxNextPosition - minNextPosition;
 
 			if (gapLength > car.getLength() && minNextPosition < currentCarTemporaryNextBackPosition) {
@@ -296,17 +328,20 @@ public class Nagel_Schreckenberg_Simulation {
 	}
 
 	/**
-	 * @author burkt4
-	 * @param leftLane
+	 * Berechnet die Geschwindigkeit des Autos im nächsten Schritt auf der angegebenen Spur
+	 * @author bublm1, burkt4, stahr2
+	 * @param lane
 	 * @param car
-	 * @return
+	 * @return Nächste Geschwindigkeit des Autos in m/s auf der angegebenen Spur
 	 */
 	private int calculateNextSpeed(Lane lane, Car car) {
 		if (lane == null) {
 			return 0;
 		}
+		
 		int speed = car.getSpeed();
-		// Beschleunigen
+		
+		// Beschleunigen (bis zur Höchstgeschwindigkeit)
 		if (car.getSpeed() < lane.getMaxVelocity(car.getPosition())) {
 			if (car.getSpeed() + this.speedDelta > lane.getMaxVelocity(car.getPosition())) {
 				speed = lane.getMaxVelocity(car.getPosition());
@@ -317,12 +352,11 @@ public class Nagel_Schreckenberg_Simulation {
 			speed = lane.getMaxVelocity(car.getPosition());
 		}
 
-		// nächstes Auto
+		// Geschwindigkeit den Platzverhältnissen anpassen
 		Car nextCar = lane.getClosestAfter(car);
 		if (nextCar != null) {
 			int availableSpace = nextCar.getBackPosition() - securityDistance - car.getPosition(); // Sicherheitsabstand
 			
-			// Set speed according to available space
 			if (availableSpace < 0) {
 				speed = 0;
 			} else if (availableSpace < speed) {
@@ -330,12 +364,13 @@ public class Nagel_Schreckenberg_Simulation {
 			}
 		}
 
-		// Rechts überholen
+		// Das Auto soll verkehrsteilnehmer nicht rechts überholen.
 		if (lane.getLeftLane() != null) {
 			Car leftCar = lane.getLeftLane().getClosestAfter(car);
 			// Es darf rechts überholt werden, wenn die Geschwindigkeit von car und leftCar kleiner gleich speedDelta ist.
 			boolean areBothCarsFast = car.getSpeed() >= speedDelta && leftCar != null && leftCar.getSpeed() >= speedDelta;
-			if (leftCar != null && areBothCarsFast) { // && lane.isOpenToTraffic(car.getPosition())
+			if (leftCar != null && areBothCarsFast) {
+				// Geschwindigkeit verkleinern, dass das linke Auto das rechte nicht überholt
 				int nextPositionDifference = (leftCar.getPosition() + leftCar.getSpeed()) - (car.getPosition() + speed);
 				if (nextPositionDifference < 0) {
 					speed += nextPositionDifference;
@@ -343,6 +378,7 @@ public class Nagel_Schreckenberg_Simulation {
 			}
 		}
 
+		// Geschwindigkeit verkleinern, wenn das Auto sich auf einer Spur befindet, dass zukünftig nicht mehr befahrbar ist (Fahrverbot)
 		if (!lane.isOpenToTraffic(car.getPosition()) && !lane.isDoomSegment(car.getPosition())) {
 			if ((car.getPosition() - lane.beginningOfIsOpenToTrafficSegment(car.getPosition())) > 50) {
 				speed = 0;
@@ -354,8 +390,13 @@ public class Nagel_Schreckenberg_Simulation {
 		return speed;
 	}
 
+	/**
+	 * Die Geschwindigkeit eines Autos verringern ohne Grund, mit der Wahrschenlchekeit p
+	 * @author bublm1, burkt4, stahr2
+	 * @param car
+	 * @return
+	 */
 	private int calculateTrödel(Car car) {
-		// Trödeln
 		if (RandomPool.nextDouble() <= car.getTrödelFactor()) {
 			return (car.getNextSpeed() > this.speedDelta) ? car.getNextSpeed() - this.speedDelta : 0;
 		} else {
@@ -363,10 +404,6 @@ public class Nagel_Schreckenberg_Simulation {
 		}
 	}
 
-	/**
-	 * @author bublm1
-	 * @return
-	 */
 	public Track getTrack() {
 		return this.track;
 	}

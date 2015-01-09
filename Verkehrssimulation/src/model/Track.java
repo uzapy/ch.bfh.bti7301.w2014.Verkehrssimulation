@@ -3,7 +3,7 @@ package model;
 import java.util.ArrayList;
 
 /**
- * Repräsentiert die Strecke
+ * Repräsentiert die Autobahn mit mehreren Spuren
  * @author stahr2
  */
 public class Track {
