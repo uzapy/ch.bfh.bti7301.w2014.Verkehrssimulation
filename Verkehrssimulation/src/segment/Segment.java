@@ -1,6 +1,3 @@
-/**
- * 
- */
 package segment;
 
 /**
@@ -10,14 +7,16 @@ package segment;
 public interface Segment {
 
 	/**
+	 * Start-Position des Segments
 	 * @author bublm1
-	 * @return
+	 * @return Start-Position
 	 */
 	public abstract int start();
 
 	/**
+	 * End-Position des Seghments
 	 * @author bublm1
-	 * @return
+	 * @return End-Position
 	 */
 	public abstract int end();
 

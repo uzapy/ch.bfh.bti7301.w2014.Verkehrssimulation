@@ -9,7 +9,6 @@ import model.Car;
  * Verkehrsfluss und Verkehrsdichte mit einbezogen
  * @author stahr2
  */
-
 public class MeasuringSegment implements Segment {
 	
 	
@@ -17,7 +16,7 @@ public class MeasuringSegment implements Segment {
 	private int end;
 	private float trafficDensity;
 	private float trafficFlow;
-	ArrayList<Car> carsOnSegment = new ArrayList<Car>(); //Autos, welche sich auf dem Messegment befinden
+	ArrayList<Car> carsOnSegment = new ArrayList<Car>(); // Autos, welche sich auf dem Messegment befinden
 	
 	public MeasuringSegment(int start, int end){
 		this.start = start;
@@ -39,7 +38,6 @@ public class MeasuringSegment implements Segment {
 	 * @author stahr2
 	 * @param car
 	 */
-	
 	public void register(Car car) {
 		if (!(carsOnSegment.contains(car))) {
 			carsOnSegment.add(car);
@@ -64,7 +62,6 @@ public class MeasuringSegment implements Segment {
 	 * Verkehrsdichte berechnen
 	 * @author stahr2
 	 */
-	
 	private void calculateTrafficDensity() {
 		trafficDensity = (float) (carsOnSegment.size() / (float) (this.end - this.start)) * 100;
 	}
@@ -73,7 +70,6 @@ public class MeasuringSegment implements Segment {
 	 * Verkehrsfluss berechnen
 	 * @author stahr2
 	 */
-	
 	private void calculateTrafficFlow() {
 		trafficFlow = (float) carsOnSegment.stream().mapToInt(c -> c.getSpeed()).sum() / (float) (this.end + this.start);
 	}

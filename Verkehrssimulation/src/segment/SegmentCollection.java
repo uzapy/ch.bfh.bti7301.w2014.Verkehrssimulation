@@ -12,7 +12,7 @@ import skiplist.MySkipList;
 
 /**
  * Kollektion aller Segmente
- * @author bublm1
+ * @author burkt4
  */
 public class SegmentCollection {
 	
@@ -22,15 +22,21 @@ public class SegmentCollection {
 	private HashMap<Class, List<Segment>> segments = new HashMap<Class, List<Segment>>();
 	private int length;
 	
+	/**
+	 * Kollektion aller Segmente auf einer Spur
+	 * @author bublm1
+	 * @param length
+	 */
 	public SegmentCollection(int length){
 		this.length = length;
 	}
 	
 	/**
-	 * @author bublm1,burkt4, stahr2
-	 * @param position
-	 * @param segmentType
-	 * @return Liste aller Segmente des Typs segmentType
+	 * Streckensegement einer bestimmten Klasse an einem Strecken-Position abfragen
+	 * @author burkt4, stahr2
+	 * @param position		Punkt auf der Strecke
+	 * @param segmentType	Segment-Typ
+	 * @return				Das Segment wenn eines an dieser Position existiert; ansonsten null
 	 */
 	public Segment get(int position, @SuppressWarnings("rawtypes") Class segmentClass) {
 		
@@ -82,8 +88,10 @@ public class SegmentCollection {
 	}
 
 	/**
+	 * Alle Segmente einer bestimmten Klasse auf der Strecke abfragen
 	 * @author bublm1
-	 * @return Eine Liste aller Segmente des Typs segmentClass
+	 * @param segmentClass	Segment-Typ
+	 * @return				Eine Liste aller Segmente des Typs segmentClass
 	 */
 	@SuppressWarnings("rawtypes")
 	public List<Segment> getSegments(Class segmentClass) {
