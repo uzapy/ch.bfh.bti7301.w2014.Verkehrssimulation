@@ -368,11 +368,13 @@ public class MySkipList<K extends Comparable<? super K>, E> implements OrderedDi
 			
 		};
 	}
-/*	Funktion um den Schlüssel eines Skiplistelementes anzupassen, ohne dieses neu in die Liste hinzuzufügen
- * @author	burkt4
- * @param	locator		Locator des Elementes, welches man Updaten muss
- * @param	newKey		Neuer Schlüssel des Elementes
- */
+	
+	/**
+	 * Funktion um den Schlüssel eines Skiplistelementes anzupassen, ohne dieses neu in die Liste hinzuzufügen
+	 * @author	burkt4
+	 * @param	locator		Locator des Elementes, welches man Updaten muss
+	 * @param	newKey		Neuer Schlüssel des Elementes
+	 */
 	public void updateKey(Locator<K, E> locator, K newKey){
 		SLNode n = (SLNode) locator;
 		if (newKey.compareTo(minKey)<=0) throw new RuntimeException("key not bigger than minKey!");
@@ -412,38 +414,5 @@ public class MySkipList<K extends Comparable<? super K>, E> implements OrderedDi
 		System.out.println("--------end-------");
 		
 	}
-
-
-//	/**
-//	 * @param args
-//	 */
-//	public static void main(String[] args) {
-//		MySkipList<Integer, String> sl = new MySkipList<>(Integer.MIN_VALUE,Integer.MAX_VALUE);
-//		Random rand = new Random(266743);
-//		int n  = 1000;
-//		Locator<Integer,String>[] locs = new Locator[n];
-//		long time1 = System.currentTimeMillis();
-//		for (int i=0;i<n;i++) {
-//			locs[i]=sl.insert(rand.nextInt(n),""+i); 
-//		}
-////		for (int i=0;i<n;i++) {
-////			sl.remove(locs[i]); 
-////		}
-//		Locator<Integer,String>[] ll = sl.findAll(33);
-//		for (int i=0;i<ll.length;i++)System.out.println(ll[i].key());
-//		long time2 = System.currentTimeMillis();
-//		System.out.println("elapsed time: "+(time2-time1)/1000.0+" s");
-//		System.out.println("height of index: "+sl.height);
-////		Iterator<Locator<Integer,String>> it = sl.sortedLocators();
-////		while (it.hasNext()){
-////			Locator<Integer, String> loc = it.next();
-////			System.out.println(loc.key()+" element: "+loc.element());
-////		}
-//		sl.print();
-////		sl.remove(locs[15]);
-////		sl.print();
-////		Locator<Integer,String> loc = sl.closestBefore(83);
-////		if (loc!= null)System.out.println(loc.key()+":"+loc.element());
-//	}
 
 }
