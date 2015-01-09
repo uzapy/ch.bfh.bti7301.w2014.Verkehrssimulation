@@ -8,6 +8,7 @@ public class MainRunnable implements Runnable {
 
 	@Override
 	public void run() {
+		// Bildschirm-Breite des Computers auslesen
 		int width = GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[0].getDisplayMode().getWidth();
 		
     	MainFrame mainFrame = new MainFrame("Verkehrssimulation");

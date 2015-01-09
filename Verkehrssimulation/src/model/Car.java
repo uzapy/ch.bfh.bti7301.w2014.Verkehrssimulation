@@ -10,7 +10,7 @@ import skiplist.Locator;
 public class Car {
 
 	public static final int WIDTH = 2;	// Breite eines Autos in Meter
-	private int id;
+	private int id;						// Identifikationsnummer
 	private double trödelFactor;		// Trödel-Faktor zwischen 0.2 und 0.5
 	private int position;	 			// Position in Meter
 	private int nextPosition;			// Zukünftige Position in Meter
@@ -19,13 +19,22 @@ public class Car {
 	private int length;					// Länge des Autos in Meter
 	private Lane lane;					// Aktuell befahrene Spur
 	private Lane nextLane;				// Zukünftig befahrene Spur
-	private boolean blinkLeft;
-	private boolean blinkRight;
-	private boolean isMoved;
-	private boolean isToBeDeleted;
-	private Locator<Integer, Car> locator;
-	private LinkedList<Car> memory = new LinkedList<Car>();
+	private boolean blinkLeft;			// Linker Blinker
+	private boolean blinkRight;			// Rechter Blinker
+	private boolean isMoved;			// Wurde das Auto im aktuellen Schritt bewegt?
+	private boolean isToBeDeleted;		// Markiert zum löschen (Ausfahrt)
+	private Locator<Integer, Car> locator; // Locator des Autos in der Skip-List
+	private LinkedList<Car> memory = new LinkedList<Car>(); // Kollektion von bisherigen Zuständen des Autos
 
+	/**
+	 * @author bublm1
+	 * @param id			Identifikationsnummer
+	 * @param speed			Gesschwindigkeit in Meter pro Sekunde
+	 * @param trödelFactor	Trödel-Faktor zwischen 0.2 und 0.5
+	 * @param position		Position in Meter
+	 * @param length		Länge des Autos in Meter
+	 * @param lane			Aktuell befahrene Spur
+	 */
 	public Car(int id,int speed, double trödelFactor, int position, int length, Lane lane) {
 		this.id = id;
 		this.trödelFactor = trödelFactor;
@@ -34,44 +43,25 @@ public class Car {
 		this.length = length;
 		this.lane = lane;
 		this.nextLane = lane;
+		
 		this.isMoved = true;
 		this.isToBeDeleted = false;
 	}
-
-	public boolean isMoved() {
-		return isMoved;
-	}
-
-	public void setMoved(boolean isMoved) {
-		this.isMoved = isMoved;
-	}
 	
-	public boolean isToBeDeleted() {
-		return isToBeDeleted;
-	}
-
 	public int getId() {
 		return id;
 	}
-
+	
 	public double getTrödelFactor() {
 		return trödelFactor;
 	}
-
+	
 	public int getPosition() {
 		return position;
 	}
-
+	
 	public void setPosition(int position) {
 		this.position = position;
-	}
-	
-	public int getBackPosition() {
-		return this.position - this.length;
-	}
-	
-	public int getNextBackPosition() {
-		return this.nextPosition - this.length;
 	}
 	
 	public int getNextPosition() {
@@ -82,10 +72,18 @@ public class Car {
 		this.nextPosition = nextPosition;
 	}
 	
+	public int getBackPosition() {
+		return this.position - this.length;
+	}
+	
+	public int getNextBackPosition() {
+		return this.nextPosition - this.length;
+	}
+	
 	public int getSpeed() {
 		return speed;
 	}
-
+	
 	public void setSpeed(int speed) {
 		this.speed = speed;
 	}
@@ -96,6 +94,10 @@ public class Car {
 	
 	public void setNextSpeed(int nextSpeed) {
 		this.nextSpeed = nextSpeed;
+	}
+
+	public int getLength() {
+		return this.length;
 	}
 	
 	public Lane getLane() {
@@ -113,10 +115,6 @@ public class Car {
 	public void setNextLane(Lane lane) {
 		this.nextLane = lane;
 	}
-
-	public int getLength() {
-		return this.length;
-	}
 	
 	public boolean isBlinkLeft() {
 		return blinkLeft;
@@ -133,26 +131,40 @@ public class Car {
 	public void setBlinkRight(boolean blinkRight) {
 		this.blinkRight = blinkRight;
 	}
+
+	public boolean isMoved() {
+		return isMoved;
+	}
+
+	public void setMoved(boolean isMoved) {
+		this.isMoved = isMoved;
+	}
 	
-	public void setLocator(Locator<Integer, Car> locator) {
-		this.locator = locator;
+	public boolean isToBeDeleted() {
+		return isToBeDeleted;
 	}
 	
 	public Locator<Integer, Car> getLocator() {
 		return this.locator;
 	}
+	
+	public void setLocator(Locator<Integer, Car> locator) {
+		this.locator = locator;
+	}
 
 	/**
-	 * @author bublm1
-	 * @param nextSpeed
-	 * @param blinkRight
-	 * @param blinkLeft
+	 * Definiert den nächsten Schritt des Autos
+	 * @author stahr2
+	 * @param nextSpeed		Zukünftige Geschwindigkeit in Meter pro Sekunde
+	 * @param blinkRight	Rechter Blinker
+	 * @param blinkLeft		Linker Blinker
 	 */
 	public void setNext(int nextSpeed, boolean blinkRight, boolean blinkLeft) {
 		this.nextSpeed = nextSpeed;
 		this.blinkRight = blinkRight;
 		this.blinkLeft = blinkLeft;
 
+		// Zukünftig befahrene Spur setzen abhängig des gesetzten Blinkers
 		if (blinkRight) {
 			nextLane = lane.getRightLane();
 		} else if (blinkLeft) {
@@ -166,12 +178,15 @@ public class Car {
 		List<Segment> doomSegments = lane.getSegments(DoomSegment.class);
 		if (!doomSegments.isEmpty()) {
 			for (Segment segment : doomSegments) {
-				if (getBackPosition() >= segment.end() - lane.getMaxVelocity(position) && position <= segment.end()) {
+				boolean isBackPositionNearSegmentEnd = getBackPosition() >= segment.end() - lane.getMaxVelocity(position);
+				boolean isPositionSmallerThanSegmentEnd = position <= segment.end();
+				if (isBackPositionNearSegmentEnd && isPositionSmallerThanSegmentEnd) {
 					this.isToBeDeleted = true;
 				}
 			}
 		}
 		
+		// Auto im nächsten Schritt löschen, wenn es am Ende der Strecke ist. Ansonsten nächste Position berechnen.
 		if (position + nextSpeed > nextLane.getLength()) {
 			this.isToBeDeleted = true;
 		} else {
@@ -180,6 +195,7 @@ public class Car {
 	}
 
 	/**
+	 * Bisherigen Zustand des Autos speichern
 	 * @author bublm1
 	 */
 	public void saveState() {
@@ -187,15 +203,18 @@ public class Car {
 		previousState.setBlinkLeft(this.blinkLeft);
 		previousState.setBlinkRight(this.blinkRight);
 		
+		// Zustand speichern
 		this.memory.add(previousState);
+		// Ältesten Zustand löschen
 		if (this.memory.size() > 5) {
 			this.memory.removeFirst();
 		}
 	}
 
 	/**
+	 * Hat das Auto im letzten Schritt die Spur gewechselt
 	 * @author bublm1
-	 * @return
+	 * @return true wenn das Auto im letzten Schritt die Spur gewechselt hat
 	 */
 	public boolean hasChangedLanesBefore() {
 		return this.memory.size() > 0 && (this.memory.getLast().isBlinkLeft() || this.memory.getLast().isBlinkRight());
