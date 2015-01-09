@@ -19,8 +19,8 @@ public class Car {
 	private int length;					// Länge des Autos in Meter
 	private Lane lane;					// Aktuell befahrene Spur
 	private Lane nextLane;				// Zukünftig befahrene Spur
-	private boolean blinkLeft;			// Linker Blinker
-	private boolean blinkRight;			// Rechter Blinker
+	private boolean isBlinkingLeft;		// Linker Blinker
+	private boolean isBlinkingRight;	// Rechter Blinker
 	private boolean isMoved;			// Wurde das Auto im aktuellen Schritt bewegt?
 	private boolean isToBeDeleted;		// Markiert zum löschen (Ausfahrt)
 	private Locator<Integer, Car> locator; // Locator des Autos in der Skip-List
@@ -116,20 +116,20 @@ public class Car {
 		this.nextLane = lane;
 	}
 	
-	public boolean isBlinkLeft() {
-		return blinkLeft;
+	public boolean isBlinkingLeft() {
+		return isBlinkingLeft;
 	}
 
-	public void setBlinkLeft(boolean blinkLeft) {
-		this.blinkLeft = blinkLeft;
+	public void setBlinkingLeft(boolean blinkingLeft) {
+		this.isBlinkingLeft = blinkingLeft;
 	}
 
-	public boolean isBlinkRight() {
-		return blinkRight;
+	public boolean isBlinkingRight() {
+		return isBlinkingRight;
 	}
 
-	public void setBlinkRight(boolean blinkRight) {
-		this.blinkRight = blinkRight;
+	public void setBlinkingRight(boolean blinkingRight) {
+		this.isBlinkingRight = blinkingRight;
 	}
 
 	public boolean isMoved() {
@@ -155,19 +155,19 @@ public class Car {
 	/**
 	 * Definiert den nächsten Schritt des Autos
 	 * @author stahr2
-	 * @param nextSpeed		Zukünftige Geschwindigkeit in Meter pro Sekunde
-	 * @param blinkRight	Rechter Blinker
-	 * @param blinkLeft		Linker Blinker
+	 * @param nextSpeed			Zukünftige Geschwindigkeit in Meter pro Sekunde
+	 * @param isBlinkingRight	Rechter Blinker
+	 * @param isBlinkingLeft	Linker Blinker
 	 */
-	public void setNext(int nextSpeed, boolean blinkRight, boolean blinkLeft) {
+	public void setNext(int nextSpeed, boolean isBlinkingRight, boolean isBlinkingLeft) {
 		this.nextSpeed = nextSpeed;
-		this.blinkRight = blinkRight;
-		this.blinkLeft = blinkLeft;
+		this.isBlinkingRight = isBlinkingRight;
+		this.isBlinkingLeft = isBlinkingLeft;
 
 		// Zukünftig befahrene Spur setzen abhängig des gesetzten Blinkers
-		if (blinkRight) {
+		if (isBlinkingRight) {
 			nextLane = lane.getRightLane();
-		} else if (blinkLeft) {
+		} else if (isBlinkingLeft) {
 			nextLane = lane.getLeftLane();
 		} else {
 			nextLane = lane;
@@ -200,8 +200,8 @@ public class Car {
 	 */
 	public void saveState() {
 		Car previousState = new Car(this.id, this.speed, this.trödelFactor, this.position, this.length, this.lane);
-		previousState.setBlinkLeft(this.blinkLeft);
-		previousState.setBlinkRight(this.blinkRight);
+		previousState.setBlinkingLeft(this.isBlinkingLeft);
+		previousState.setBlinkingRight(this.isBlinkingRight);
 		
 		// Zustand speichern
 		this.memory.add(previousState);
@@ -217,6 +217,6 @@ public class Car {
 	 * @return true wenn das Auto im letzten Schritt die Spur gewechselt hat
 	 */
 	public boolean hasChangedLanesBefore() {
-		return this.memory.size() > 0 && (this.memory.getLast().isBlinkLeft() || this.memory.getLast().isBlinkRight());
+		return this.memory.size() > 0 && (this.memory.getLast().isBlinkingLeft() || this.memory.getLast().isBlinkingRight());
 	}
 }

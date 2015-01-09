@@ -59,16 +59,16 @@ public class CarPanel extends AbstractPanel<Car> {
 				MetricToPixel.scale(this.xSimPosition),
 				MetricToPixel.scale(trackOffset) + MetricToPixel.scale(this.ySimPosition + Car.WIDTH));
 		
-		if (car.isBlinkLeft() || car.isBlinkRight()) {
+		if (car.isBlinkingLeft() || car.isBlinkingRight()) {
 			g.setColor(Color.ORANGE);
 			int turnSignalSize = MetricToPixel.getTurnSignalSize();
 			int xFrontPosition = xPosition + MetricToPixel.scale(car.getLength()) - turnSignalSize;
 			int yRightPosition = yPosition + MetricToPixel.scale(Car.WIDTH) - turnSignalSize;
 			
-			if (car.isBlinkLeft()) {
+			if (car.isBlinkingLeft()) {
 				g.fillRect(xPosition, yPosition, turnSignalSize, turnSignalSize);
 				g.fillRect(xFrontPosition, yPosition, turnSignalSize, turnSignalSize);
-			} else if (car.isBlinkRight()) {
+			} else if (car.isBlinkingRight()) {
 				g.fillRect(xPosition, yRightPosition, turnSignalSize, turnSignalSize);
 				g.fillRect(xFrontPosition, yRightPosition, turnSignalSize, turnSignalSize);
 			}

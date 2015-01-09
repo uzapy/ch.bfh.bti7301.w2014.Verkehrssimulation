@@ -169,7 +169,7 @@ public class Nagel_Schreckenberg_Simulation {
 			Car car = lane.getLastCar();
 			while (car != null) {
 
-				if (car.isBlinkLeft() || car.isBlinkRight()) {
+				if (car.isBlinkingLeft() || car.isBlinkingRight()) {
 					Lane leftlane = car.getNextLane().getLeftLane();
 					Lane rightLane = car.getNextLane().getRightLane();
 
@@ -179,7 +179,7 @@ public class Nagel_Schreckenberg_Simulation {
 
 						while (blinkingRightCar != null) {
 
-							if (blinkingRightCar.isBlinkRight() && blinkingRightCar.getId() != car.getId()) {
+							if (blinkingRightCar.isBlinkingRight() && blinkingRightCar.getId() != car.getId()) {
 
 								if (blinkingRightCar.getNextBackPosition() <= car.getNextPosition()
 										&& blinkingRightCar.getNextPosition() >= car.getNextBackPosition()) {
@@ -197,7 +197,7 @@ public class Nagel_Schreckenberg_Simulation {
 
 						while (blinkingLeftCar != null) {
 
-							if (blinkingLeftCar.isBlinkLeft() && blinkingLeftCar.getId() != car.getId()) {
+							if (blinkingLeftCar.isBlinkingLeft() && blinkingLeftCar.getId() != car.getId()) {
 
 								if (blinkingLeftCar.getNextBackPosition() <= car.getNextPosition()
 										&& blinkingLeftCar.getNextPosition() >= car.getNextBackPosition()) {
@@ -234,8 +234,8 @@ public class Nagel_Schreckenberg_Simulation {
 					lane.updateCarPosition(car);
 				}
 
-				car.setBlinkLeft(false);
-				car.setBlinkRight(false);
+				car.setBlinkingLeft(false);
+				car.setBlinkingRight(false);
 				car.setMoved(true);
 			}
 		}
