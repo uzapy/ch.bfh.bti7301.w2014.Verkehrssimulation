@@ -1,6 +1,3 @@
-/**
- * 
- */
 package view.model;
 
 import java.awt.Color;
@@ -12,16 +9,14 @@ import resources.Resources;
 import segment.Segment;
 import util.MetricToPixel;
 
-/**
- * @author bublm1
- */
 @SuppressWarnings("serial")
 public class DoomSegmentPanel extends SegmentPanel {
 
 	public static BufferedImage EXIT = Resources.getImage("exit");
 
 	/**
-	 * @author bublm1
+	 * Zeichent eine Ausfahrt
+	 * @author bublm1, stahr2
 	 * @param segment
 	 * @param fastLaneOffset
 	 * @param trackOffset

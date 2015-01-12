@@ -1,6 +1,3 @@
-/**
- * 
- */
 package view.model;
 
 import java.awt.Color;
@@ -12,18 +9,14 @@ import resources.Resources;
 import segment.Segment;
 import util.MetricToPixel;
 
-/**
- * @author bublm1
- */
 @SuppressWarnings("serial")
 public class OpenToTrafficSegmentPanel extends SegmentPanel {
 	
 	public static BufferedImage MAX = Resources.getImage("max");
-//	public static BufferedImage LEFT = Resources.getImage("left");
-//	public static BufferedImage RIGHT = Resources.getImage("right");
 
 	/**
-	 * @author bublm1
+	 * Zeichent ein Fahrverbots-Segment
+	 * @author burkt4
 	 * @param segment
 	 * @param fastLaneOffset
 	 * @param trackOffset
@@ -38,6 +31,7 @@ public class OpenToTrafficSegmentPanel extends SegmentPanel {
 		int xPosition = MetricToPixel.scale(this.segment.start() + 50);
 		int yPosition = MetricToPixel.scale(this.trackOffset + Lane.WIDTH * this.fastLaneOffset);
 		
+		// Zeichnet ein Fahrverbotsschild
 		g.drawImage(MAX, xPosition, yPosition, MetricToPixel.getImageSize(), MetricToPixel.getImageSize(), this);
 	}
 

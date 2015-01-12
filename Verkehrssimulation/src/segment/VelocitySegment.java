@@ -7,7 +7,6 @@ package segment;
  * Repräsentiert ein Segment um die Maximalgeschwindigkeit zu beschränken
  * @author stahr2
  */
-
 public class VelocitySegment implements Segment {
 	
 	private int start;
@@ -26,26 +25,16 @@ public class VelocitySegment implements Segment {
 		this.maxVelocity = maxVelocity;
 	}
 	
-	/* (non-Javadoc)
-	 * @see model.Segment#start()
-	 */
 	@Override
 	public int start() {
 		return this.start;
 	}
-	
-	/* (non-Javadoc)
-	 * @see model.Segment#end()
-	 */
+
 	@Override
 	public int end() {
 		return this.end;
 	}
 
-	/**
-	 * @author bublm1
-	 * @return
-	 */
 	public int getMaxVelocity() {
 		return maxVelocity;
 	}

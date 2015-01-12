@@ -1,6 +1,3 @@
-/**
- * 
- */
 package util;
 
 import model.Lane;
@@ -14,13 +11,15 @@ import segment.SpawnSegment;
 import segment.VelocitySegment;
 
 /**
+ * Alle Strecken-konfigurationen
  * @author bublm1
  */
 public class PresetPool {
 
 	/**
-	 * @author bublm1
-	 * @return
+	 * Standard: Dreispurige Autobahn ohne Hindernisse
+	 * @author bublm1, burkt4, stahr2
+	 * @return Autobahn
 	 */
 	public static Track getDefault() {
 		Lane lane0 = new Lane(33, 500, 0);
@@ -46,8 +45,10 @@ public class PresetPool {
 	}
 
 	/**
-	 * @author bublm1
-	 * @return
+	 * Baustelle: Zunächst wird die Geschwindigkeit auf 22 m/s reduziert. Anschliessend wird die dritte (oberste) Spur geschlossen.
+	 * Autos auf der obersten Spur müssen sich auf die mittlere Spur einspuren. Nach 150m werden alle 3 spuren wieder freigegeben.
+	 * @author bublm1, burkt4, stahr2
+	 * @return Autobahn
 	 */
 	public static Track getRoadWorks() {
 		Lane lane0 = new Lane(33, 500, 0);
@@ -85,8 +86,11 @@ public class PresetPool {
 	}
 
 	/**
-	 * @author bublm1
-	 * @return
+	 * Spurverengung: Zunächst wird die Geschwindigkeit auf 22 m/s dann noch auf 17 m/s reduziert.
+	 * Anschliessend wird die dritte (oberste) und schliesslich die mittlere Spur geschlossen.
+	 * Alle Autos müssen auf eine Spur wechseln.
+	 * @author bublm1, burkt4, stahr2
+	 * @return Autobahn
 	 */
 	public static Track getBottleneck() {
 		Lane lane0 = new Lane(33, 500, 0);
@@ -134,8 +138,10 @@ public class PresetPool {
 	}
 
 	/**
-	 * @author bublm1
-	 * @return
+	 * Geschwindigkeitsbegrenzung: Zunächst wird die Geschwindigkeit auf 22 m/s dann noch auf 17 m/s reduziert.
+	 * Nach 400m wird die Begrenzung wieder aufgehoben.
+	 * @author bublm1, burkt4, stahr2
+	 * @return Autobahn
 	 */
 	public static Track getSpeedLimit() {
 		Lane lane0 = new Lane(33, 500, 0);
@@ -177,8 +183,9 @@ public class PresetPool {
 	}
 
 	/**
-	 * @author bublm1
-	 * @return
+	 * Überholverbot: Auf einem 300m langen Teilstück ist Spurwechselverbot für alle Autos
+	 * @author bublm1, burkt4, stahr2
+	 * @return Autobahn
 	 */
 	public static Track getBanOnPassing() {
 		Lane lane0 = new Lane(33, 500, 0);
@@ -212,6 +219,7 @@ public class PresetPool {
 	}
 
 	/**
+	 * Ein- und Ausfahrt: Zweispurige Autobahn mit einer Ausfahrt und darauffolgender Auffahrtsspur
 	 * @author bublm1
 	 * @return
 	 */

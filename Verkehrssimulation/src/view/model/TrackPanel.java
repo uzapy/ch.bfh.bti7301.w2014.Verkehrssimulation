@@ -1,6 +1,3 @@
-/**
- * 
- */
 package view.model;
 
 import java.awt.Color;
@@ -25,20 +22,18 @@ import skiplist.Locator;
 import util.MetricToPixel;
 import util.ParameterPool;
 
-/**
- * @author burkt4
- */
 @SuppressWarnings("serial")
 public class TrackPanel extends JPanel {
-	private Track track;
-	private LinkedList<LanePanel> lanePanels = new LinkedList<LanePanel>();
-	private LinkedList<SegmentPanel> segmentPanels = new LinkedList<SegmentPanel>();
-	private LinkedList<CarPanel> carPanels = new LinkedList<CarPanel>();
+	private Track track;																// Die Autobahn
+	private LinkedList<LanePanel> lanePanels = new LinkedList<LanePanel>();				// Alle Spuren
+	private LinkedList<SegmentPanel> segmentPanels = new LinkedList<SegmentPanel>();	// Alle Segmente
+	private LinkedList<CarPanel> carPanels = new LinkedList<CarPanel>();				// Alle Autos
 	
-	private int trackOffset = 2;
-	private int markerInterval = 50;
+	private int trackOffset = 2;		// Dicke von den schwarzen Begrenzungsstreifen (oben und unten)	
+	private int markerInterval = 50;	// Abstand der gelben Distanz-Markierungen
 
 	/**
+	 * Visuelle Repräsentation der Autobahn
 	 * @author burkt4
 	 * @param track
 	 */
@@ -48,8 +43,9 @@ public class TrackPanel extends JPanel {
 	}
 	
 	/**
-	 * @author bublm1
-	 * @param track2
+	 * Zusammenstellung der Kollekionen von Objekten, die gezeichnet werden
+	 * @author burkt4
+	 * @param track
 	 */
 	public void setTrack(Track track) {
 		this.lanePanels.clear();
@@ -95,12 +91,16 @@ public class TrackPanel extends JPanel {
 
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		g.setFont(new Font("Arial", Font.PLAIN, MetricToPixel.getFontSize())); 
+		// Schrifgrösse global setzen
+		g.setFont(new Font("Arial", Font.PLAIN, MetricToPixel.getFontSize()));
+		// Perspektive anpassen
 		g.translate(MetricToPixel.scale(ParameterPool.VIEW_OFFSET), 0);
 		
+		// Schwarze Begrenzungsstreifen zeichnen oben
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, MetricToPixel.scale(track.getLane(0).getLength()), MetricToPixel.scale(trackOffset));
 		
+		// Distanz-Markierungen zeichnen
 		drawMarkers(g);	
 		
 		for (LanePanel lanePanel : this.lanePanels) {
@@ -120,11 +120,13 @@ public class TrackPanel extends JPanel {
 		int length = MetricToPixel.scale(track.getLane(0).getLength());
 		int width = MetricToPixel.scale(trackOffset);
 		
+		// Schwarze Begrenzungsstreifen zeichnen unten
 		g.setColor(Color.BLACK);
 		g.fillRect(xPosition, yPosition, length, width);
 	}
 
 	/**
+	 * Zeichent die Distanz-Markierungen
 	 * @author bublm1
 	 * @param g
 	 */
@@ -149,6 +151,10 @@ public class TrackPanel extends JPanel {
 		}
 	}
 
+	/**
+	 * Autos entfernen, die die Strecke verlassen haben. Neu generierte Autos hinzufügen. Alle Autos neu zeichnen
+	 * @author stahr2
+	 */
 	public void updateTrack() {
 		for (Car oldCar : this.track.getOldCars()) {
 			Optional<CarPanel> foundCar = this.carPanels.stream().filter(cp -> cp.getId() == oldCar.getId()).findFirst();
@@ -156,16 +162,20 @@ public class TrackPanel extends JPanel {
 				this.carPanels.remove(foundCar.get());
 			}
 		}
+
 		for (Car newCar : this.track.getNewCars()) {
 			this.carPanels.add(new CarPanel(newCar, this.track.getLanes().size(), trackOffset, this.track.getLanes().size() - 1));
 		}
+
 		this.track.clearNewCars();
 		this.track.clearOldCars();
 		this.repaint();
 	}
 
 	/**
+	 * Simulationsschritt zeichen
 	 * @author bublm1
+	 * @param simStep  Nummer des Zwischenschritts
 	 */
 	public void performSimStep(int simStep) {
 		for (CarPanel carPanel : this.carPanels) {

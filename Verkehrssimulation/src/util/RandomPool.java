@@ -1,6 +1,3 @@
-/**
- * 
- */
 package util;
 
 import java.awt.Color;
@@ -15,13 +12,8 @@ import model.Lane;
  */
 public class RandomPool {
 
-	private static Random r = new Random();
+	private static Random r = new Random();	// Zufalls-Generator
 	private static int id = 0; 				// Car ID Counter
-
-	/**
-	 * @author bublm1
-	 */
-	private RandomPool() { }
 
 	/**
 	 * Generiert eine neue zufällige Farbe
@@ -35,6 +27,7 @@ public class RandomPool {
 	public static double nextDouble() {
 		return r.nextDouble();
 	}
+	
 	/**
 	 * Generiert ein neues zufälliges Auto
 	 * @author stahr2
@@ -54,7 +47,6 @@ public class RandomPool {
 	 * @author burkt4
 	 * @return speed:	Neue zufällige Geschwindigkeit
 	 */
-	
 	public static int getNewCarSpeed(int maxVelocity) {
 		int fastest = maxVelocity;
 		int slowest = 3;
@@ -66,7 +58,6 @@ public class RandomPool {
 	 * @author burkt4
 	 * @return speed:	Neuer zufälliger Tröderlfaktor
 	 */
-	
 	public static double getNewTrödelFactor() {
 		return r.nextDouble() * (0.5 - 0.2) + 0.2;
 	}
@@ -83,16 +74,9 @@ public class RandomPool {
 	}
 
 	/**
-	 * @author bublm1
-	 * @return
-	 */
-	public static double getNextGaussian() {
-		return r.nextGaussian();
-	}
-
-	/**
-	 * @author bublm1
-	 * @return
+	 * Wird ein neues Auto generiert? Wird berechnet anhand der eingestellten Rate.
+	 * @author stahr2
+	 * @return true wenn ein neues Auto generiert werden soll
 	 */
 	public static boolean isSpawning() {
 		return r.nextDouble() <= ParameterPool.SPAWN_RATE;

@@ -1,6 +1,3 @@
-/**
- * 
- */
 package view.model;
 
 import java.awt.Color;
@@ -10,19 +7,17 @@ import model.Lane;
 import segment.Segment;
 import util.MetricToPixel;
 
-/**
- * @author bublm1
- */
 @SuppressWarnings("serial")
 public abstract class SegmentPanel extends AbstractPanel<Segment> {
 
 	protected Segment segment = super.object;
 	
 	/**
+	 * Zeichent ein Segment
 	 * @author bublm1
-	 * @param element
-	 * @param size
+	 * @param segment
 	 * @param fastLaneOffset
+	 * @param trackOffset
 	 */
 	public SegmentPanel(Segment segment, int fastLaneOffset, int trackOffset) {
 		super(segment, fastLaneOffset, trackOffset);
@@ -38,6 +33,7 @@ public abstract class SegmentPanel extends AbstractPanel<Segment> {
 		int length = MetricToPixel.scale(this.segment.end() - this.segment.start());
 		int width = MetricToPixel.scale(Lane.WIDTH);
 		
+		// Segment als langes Rechteck
 		g.fillRect(xPosition, yPosition, length, width);
 	}
 
